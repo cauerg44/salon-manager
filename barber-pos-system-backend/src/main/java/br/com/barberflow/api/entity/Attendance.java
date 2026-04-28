@@ -17,7 +17,8 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime moment;
+    private LocalDateTime createdAt;
+    private LocalDateTime finishedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -46,11 +47,12 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(Long id, LocalDateTime moment, Barber barber, Client client) {
+    public Attendance(Long id, Barber barber, Client client) {
         this.id = id;
-        this.moment = moment;
         this.barber = barber;
         this.client = client;
+        this.createdAt = LocalDateTime.now();
+        this.finishedAt = null;
         this.attendanceStatus = AttendanceStatus.WAITING;
         this.grossAmount = BigDecimal.ZERO;
     }
@@ -63,16 +65,28 @@ public class Attendance {
         this.id = id;
     }
 
-    public LocalDateTime getMoment() {
-        return moment;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setMoment(LocalDateTime moment) {
-        this.moment = moment;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(LocalDateTime finishedAt) {
+        this.finishedAt = finishedAt;
     }
 
     public AttendanceStatus getAttendanceStatus() {
         return attendanceStatus;
+    }
+
+    public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
     }
 
     public BigDecimal getGrossAmount() {

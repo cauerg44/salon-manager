@@ -31,10 +31,10 @@ INSERT INTO tb_procedure (name, base_price) VALUES ('Barba', 15.00);
 INSERT INTO tb_procedure (name, base_price) VALUES ('Sobrancelha', 10.00);
 INSERT INTO tb_procedure (name, base_price) VALUES ('Pigmentação', 20.00);
 
-INSERT INTO tb_attendance (moment, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 09:00:00', 40.00, 1, 1, 'FINISHED');
-INSERT INTO tb_attendance (moment, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 09:30:00', 55.00, 2, 2, 'FINISHED');
-INSERT INTO tb_attendance (moment, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 10:15:00', 25.00, 3, 3, 'IN_PROGRESS');
-INSERT INTO tb_attendance (moment, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 10:45:00', 0.00, 1, 4, 'WAITING');
+INSERT INTO tb_attendance (created_at, finished_at, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 09:00:00', '2026-04-28 09:40:00', 40.00, 1, 1, 'FINISHED');
+INSERT INTO tb_attendance (created_at, finished_at, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 09:30:00', '2026-04-28 10:20:00', 55.00, 2, 2, 'FINISHED');
+INSERT INTO tb_attendance (created_at, finished_at, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 10:15:00', NULL, 25.00, 3, 3, 'IN_PROGRESS');
+INSERT INTO tb_attendance (created_at, finished_at, gross_amount, barber_id, client_id, attendance_status) VALUES ('2026-04-28 10:45:00', NULL, 0.00, 1, 4, 'WAITING');
 
 
 INSERT INTO tb_attendance_procedure (attendance_id, procedure_id) VALUES (1, 2);
