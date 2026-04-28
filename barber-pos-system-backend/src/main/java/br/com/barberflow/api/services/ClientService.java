@@ -1,5 +1,6 @@
 package br.com.barberflow.api.services;
 
+import br.com.barberflow.api.dto.request.ClientInsertRequestDTO;
 import br.com.barberflow.api.dto.response.ClientResponseDTO;
 import br.com.barberflow.api.entity.Client;
 import br.com.barberflow.api.repository.ClientRepository;
@@ -19,5 +20,17 @@ public class ClientService {
     public Page<ClientResponseDTO> findAll(String name, Pageable pageable) {
         Page<Client> clients = repository.searchByClientName(name, pageable);
         return clients.map(client -> new ClientResponseDTO(client));
+    }
+
+    @Transactional
+    public ClientResponseDTO insert(ClientInsertRequestDTO dto) {
+        Client entity = new Client();
+        entity.setName(dto.name());
+        entity.setPhone(dto.phone());
+        entity.setBirthDate(dto.birthDate());
+
+        entity = repository.save(entity);
+
+        return new ClientResponseDTO(entity);
     }
 }
