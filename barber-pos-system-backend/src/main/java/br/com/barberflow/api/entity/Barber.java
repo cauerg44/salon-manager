@@ -52,6 +52,10 @@ public class Barber {
         return isActive;
     }
 
+    public void activate() {
+        isActive = true;
+    }
+
     public void deactivate() {
         isActive = false;
     }
