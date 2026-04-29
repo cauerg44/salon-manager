@@ -33,6 +33,12 @@ public class BarberController {
         return ResponseEntity.created(uri).body(result);
     }
 
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<BarberResponseDTO> patch(@PathVariable Long id, @Valid @RequestBody BarberRequestDTO dto) {
+        var result = service.patch(id, dto);
+        return ResponseEntity.ok(result);
+    }
+
     @PatchMapping(value = "/{id}/deactivate")
     public ResponseEntity<BarberResponseDTO> deactivateBarber(@PathVariable Long id) {
         var result = service.deactivate(id);

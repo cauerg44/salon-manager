@@ -38,6 +38,19 @@ public class BarberService {
     }
 
     @Transactional
+    public BarberResponseDTO patch(Long id, BarberRequestDTO dto) {
+        try {
+            Barber entity = repository.getReferenceById(id);
+            entity.setName(dto.name());
+            entity = repository.save(entity);
+            return new BarberResponseDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Barbeiro não encontrado com id: " + id);
+        }
+    }
+
+    @Transactional
     public BarberResponseDTO deactivate(Long id) {
         Barber barber = repository.findById(id).orElseThrow(() -> (
                 new ResourceNotFoundException("Barbeiro não encontrado")));
