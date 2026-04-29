@@ -1,6 +1,7 @@
 package br.com.barberflow.api.services;
 
-import br.com.barberflow.api.dto.request.BarberRequestDTO;
+import br.com.barberflow.api.dto.request.BarberInsertRequestDTO;
+import br.com.barberflow.api.dto.request.BarberPatchRequestDTO;
 import br.com.barberflow.api.dto.response.BarberResponseDTO;
 import br.com.barberflow.api.entity.Barber;
 import br.com.barberflow.api.repository.BarberRepository;
@@ -27,7 +28,7 @@ public class BarberService {
     }
 
     @Transactional
-    public BarberResponseDTO insert(BarberRequestDTO dto) {
+    public BarberResponseDTO insert(BarberInsertRequestDTO dto) {
         Barber entity = new Barber();
 
         entity.setName(dto.name());
@@ -38,7 +39,7 @@ public class BarberService {
     }
 
     @Transactional
-    public BarberResponseDTO patch(Long id, BarberRequestDTO dto) {
+    public BarberResponseDTO patch(Long id, BarberPatchRequestDTO dto) {
         try {
             Barber entity = repository.getReferenceById(id);
             entity.setName(dto.name());

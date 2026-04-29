@@ -1,6 +1,7 @@
 package br.com.barberflow.api.controller;
 
-import br.com.barberflow.api.dto.request.BarberRequestDTO;
+import br.com.barberflow.api.dto.request.BarberInsertRequestDTO;
+import br.com.barberflow.api.dto.request.BarberPatchRequestDTO;
 import br.com.barberflow.api.dto.response.BarberResponseDTO;
 import br.com.barberflow.api.services.BarberService;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class BarberController {
     }
 
     @PostMapping
-    public ResponseEntity<BarberResponseDTO> saveNewBarber(@Valid @RequestBody BarberRequestDTO dto) {
+    public ResponseEntity<BarberResponseDTO> saveNewBarber(@Valid @RequestBody BarberInsertRequestDTO dto) {
         var result = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(result.id()).toUri();
@@ -34,7 +35,7 @@ public class BarberController {
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<BarberResponseDTO> patch(@PathVariable Long id, @Valid @RequestBody BarberRequestDTO dto) {
+    public ResponseEntity<BarberResponseDTO> patch(@PathVariable Long id, @Valid @RequestBody BarberPatchRequestDTO dto) {
         var result = service.patch(id, dto);
         return ResponseEntity.ok(result);
     }
