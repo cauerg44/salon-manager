@@ -11,6 +11,7 @@ import br.com.barberflow.api.repository.AttendanceRepository;
 import br.com.barberflow.api.repository.BarberRepository;
 import br.com.barberflow.api.repository.ClientRepository;
 import br.com.barberflow.api.repository.ProcedureRepository;
+import br.com.barberflow.api.services.exception.DomainException;
 import br.com.barberflow.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,20 @@ public class AttendanceService {
         createDtoToEntity(entity, dto);
         entity = repository.save(entity);
         return new AttendanceResponseDTO(entity);
+    }
+
+    @Transactional
+    public AttendanceResponseDTO start(Long id) {
+        Attendance attendance = repository.findById(id)
+                .orElseThrow(() -> (new ResourceNotFoundException("Atendimento não encontrado.")));
+
+        if (attendance.getAttendanceStatus() == AttendanceStatus.WAITING) {
+            attendance.setAttendanceStatus(AttendanceStatus.IN_PROGRESS);
+            attendance = repository.save(attendance);
+
+            return new AttendanceResponseDTO(attendance);
+        }
+        else throw new DomainException("É possível iniciar atendimento apenas os clientes que estão em espera");
     }
 
     private void createDtoToEntity(Attendance entity, AttendanceInsertRequestDTO dto) {

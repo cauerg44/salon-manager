@@ -5,6 +5,7 @@ import java.time.Instant;
 import br.com.barberflow.api.dto.handler.CustomErrorDTO;
 import br.com.barberflow.api.dto.handler.ValidationErrorDTO;
 import br.com.barberflow.api.services.exception.DatabaseException;
+import br.com.barberflow.api.services.exception.DomainException;
 import br.com.barberflow.api.services.exception.ForbiddenException;
 import br.com.barberflow.api.services.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +28,13 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<CustomErrorDTO> database(DatabaseException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<CustomErrorDTO> domainException(DomainException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
