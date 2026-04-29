@@ -90,15 +90,19 @@ public class Attendance {
     }
 
     public BigDecimal getGrossAmount() {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (Procedure procedure : this.procedures) {
-            sum = sum.add(procedure.getBasePrice());
-        }
-        return sum;
+        return grossAmount;
     }
 
     public void setGrossAmount(BigDecimal grossAmount) {
         this.grossAmount = grossAmount;
+    }
+
+    public BigDecimal calculateGrossAmount() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (Procedure procedure : procedures) {
+            sum = sum.add(procedure.getBasePrice());
+        }
+        return sum;
     }
 
     public Barber getBarber() {
@@ -123,10 +127,12 @@ public class Attendance {
 
     public void addProcedure(Procedure procedure) {
         this.procedures.add(procedure);
+        this.grossAmount = calculateGrossAmount();
     }
 
     public void removeProcedure(Procedure procedure) {
         this.procedures.remove(procedure);
+        this.grossAmount = calculateGrossAmount();
     }
 
     public Payment getPayment() {

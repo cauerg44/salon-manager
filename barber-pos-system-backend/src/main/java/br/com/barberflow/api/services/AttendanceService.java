@@ -43,25 +43,26 @@ public class AttendanceService {
     }
 
     private void createDtoToEntity(Attendance entity, AttendanceInsertRequestDTO dto) {
-        try {
-            Barber barber = barberRepository.getReferenceById(dto.barberId());
-            Client client = clientRepository.getReferenceById(dto.clientId());
+        Barber barber = barberRepository.findById(dto.barberId())
+                .orElseThrow(() -> (new ResourceNotFoundException("Procedimento ou serviço não encontrado.")));
 
-            entity.setCreatedAt(LocalDateTime.now());
-            entity.setFinishedAt(null);
-            entity.setAttendanceStatus(AttendanceStatus.WAITING);
+        Client client = clientRepository.findById(dto.clientId())
+                .orElseThrow(() -> (new ResourceNotFoundException("Procedimento ou serviço não encontrado.")));
 
-            entity.getProcedures().clear();
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setFinishedAt(null);
+        entity.setAttendanceStatus(AttendanceStatus.WAITING);
 
-            for (long procedureId : dto.proceduresIds()) {
-                Procedure procedure = procedureRepository.getReferenceById(procedureId);
-                entity.addProcedure(procedure);
-            }
+        entity.setBarber(barber);
+        entity.setClient(client);
 
-            entity.setPayment(null);
+        entity.getProcedures().clear();
+        for (long procedureId : dto.proceduresIds()) {
+            Procedure procedure = procedureRepository.findById(procedureId)
+                    .orElseThrow(() -> (new ResourceNotFoundException("Procedimento ou serviço não encontrado.")));
+            entity.addProcedure(procedure);
         }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Barbeiro ou cliente não encontrados.");
-        }
+
+        entity.setPayment(null);
     }
 }
