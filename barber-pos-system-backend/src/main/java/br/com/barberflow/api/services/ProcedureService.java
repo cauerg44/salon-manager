@@ -1,5 +1,6 @@
 package br.com.barberflow.api.services;
 
+import br.com.barberflow.api.dto.request.ProcedureRequestDTO;
 import br.com.barberflow.api.dto.response.ProcedureResponseDTO;
 import br.com.barberflow.api.entity.Procedure;
 import br.com.barberflow.api.repository.ProcedureRepository;
@@ -20,5 +21,16 @@ public class ProcedureService {
     public List<ProcedureResponseDTO> findAll() {
         List<Procedure> list = repository.findAll();
         return list.stream().map(procedure -> new ProcedureResponseDTO(procedure)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ProcedureResponseDTO insert(ProcedureRequestDTO dto) {
+        Procedure entity = new Procedure();
+
+        entity.setName(dto.name());
+        entity.setBasePrice(dto.basePrice());
+
+        entity = repository.save(entity);
+        return new ProcedureResponseDTO(entity);
     }
 }
