@@ -1,6 +1,7 @@
 package br.com.barberflow.api.controller;
 
 import br.com.barberflow.api.dto.request.ClientInsertRequestDTO;
+import br.com.barberflow.api.dto.request.ClientPatchRequestDTO;
 import br.com.barberflow.api.dto.response.ClientResponseDTO;
 import br.com.barberflow.api.services.ClientService;
 import jakarta.validation.Valid;
@@ -32,5 +33,11 @@ public class ClientController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(result.id()).toUri();
         return ResponseEntity.created(uri).body(result);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable Long id, @Valid @RequestBody ClientPatchRequestDTO dto) {
+        var result = service.patch(id, dto);
+        return ResponseEntity.ok(result);
     }
 }

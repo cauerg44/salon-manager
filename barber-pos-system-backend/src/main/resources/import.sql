@@ -1,6 +1,7 @@
 INSERT INTO tb_barber (name, is_active) VALUES ('Júnior', true);
 INSERT INTO tb_barber (name, is_active) VALUES ('Daniel', true);
 INSERT INTO tb_barber (name, is_active) VALUES ('Allan', true);
+INSERT INTO tb_barber (name, is_active) VALUES ('Felipe', false);
 
 INSERT INTO tb_client (name, phone, birth_date) VALUES ('Felipe Santos', '71991223344', '1995-05-15');
 INSERT INTO tb_client (name, phone, birth_date) VALUES ('Ricardo Oliveira', '75988776655', '1988-10-20');
