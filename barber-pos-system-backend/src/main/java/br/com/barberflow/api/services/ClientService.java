@@ -5,14 +5,13 @@ import br.com.barberflow.api.dto.request.ClientPatchRequestDTO;
 import br.com.barberflow.api.dto.response.ClientResponseDTO;
 import br.com.barberflow.api.entity.Client;
 import br.com.barberflow.api.repository.ClientRepository;
+import br.com.barberflow.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.lang.module.ResolutionException;
 
 @Service
 public class ClientService {
@@ -48,7 +47,7 @@ public class ClientService {
             return new ClientResponseDTO(entity);
         }
         catch (EntityNotFoundException e) {
-            throw new ResolutionException("Cliente não encontrado.");
+            throw new ResourceNotFoundException("Cliente não encontrado com id: " + id);
         }
     }
 

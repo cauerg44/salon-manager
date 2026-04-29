@@ -4,6 +4,9 @@ import br.com.barberflow.api.dto.request.BarberRequestDTO;
 import br.com.barberflow.api.dto.response.BarberResponseDTO;
 import br.com.barberflow.api.entity.Barber;
 import br.com.barberflow.api.repository.BarberRepository;
+import br.com.barberflow.api.services.exception.DomainException;
+import br.com.barberflow.api.services.exception.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,5 +35,33 @@ public class BarberService {
 
         entity = repository.save(entity);
         return new BarberResponseDTO(entity);
+    }
+
+    @Transactional
+    public BarberResponseDTO deactivate(Long id) {
+        Barber barber = repository.findById(id).orElseThrow(() -> (
+                new ResourceNotFoundException("Barbeiro não encontrado")));
+
+        if (barber.getActive() == false) {
+            throw new DomainException("Barbeiro já inativo.");
+        }
+
+        barber.deactivate();
+        barber = repository.save(barber);
+        return new BarberResponseDTO(barber);
+    }
+
+    @Transactional
+    public BarberResponseDTO activate(Long id) {
+        Barber barber = repository.findById(id).orElseThrow(() -> (
+                new ResourceNotFoundException("Barbeiro não encontrado")));
+
+        if (barber.getActive() == true) {
+            throw new DomainException("Barbeiro já ativo.");
+        }
+
+        barber.activate();
+        barber = repository.save(barber);
+        return new BarberResponseDTO(barber);
     }
 }

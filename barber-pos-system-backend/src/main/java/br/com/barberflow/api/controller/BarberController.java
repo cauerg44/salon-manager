@@ -32,4 +32,16 @@ public class BarberController {
                 .buildAndExpand(result.id()).toUri();
         return ResponseEntity.created(uri).body(result);
     }
+
+    @PatchMapping(value = "/{id}/deactivate")
+    public ResponseEntity<BarberResponseDTO> deactivateBarber(@PathVariable Long id) {
+        var result = service.deactivate(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping(value = "/{id}/activate")
+    public ResponseEntity<BarberResponseDTO> activateBarber(@PathVariable Long id) {
+        var result = service.activate(id);
+        return ResponseEntity.ok(result);
+    }
 }
