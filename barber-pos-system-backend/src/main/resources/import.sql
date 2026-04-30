@@ -62,10 +62,10 @@ INSERT INTO appointment_service (appointment_id, service_id) VALUES (3, 1);
 INSERT INTO appointment_service (appointment_id, service_id) VALUES (5, 1);
 INSERT INTO appointment_service (appointment_id, service_id) VALUES (6, 6);
 
-INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, debt_amount, is_paid, finished_at) VALUES (1, 'PIX', 0.00, 40.00, 0.00, true, '2026-04-28 09:40:00');
-INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, debt_amount, is_paid, finished_at) VALUES (2, 'CASH', 5.00, 50.00, 0.00, true, '2026-04-28 10:20:00');
-INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, debt_amount, is_paid, finished_at) VALUES (5, 'CASH', 0.00, 20.00, 25.00, false, '2026-04-30 14:45:00');
-INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, debt_amount, is_paid, finished_at) VALUES (6, 'DEBIT', 0.00, 0.00, 120.00, false, '2026-04-30 16:00:00');
+INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, net_value, is_paid, finished_at) VALUES (1, 'PIX', 0.00, 40.00, 40.00, true, '2026-04-28 09:40:00');
+INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, net_value, is_paid, finished_at) VALUES (2, 'CASH', 5.00, 50.00, 50.00, true, '2026-04-28 10:20:00');
+INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, net_value, is_paid, finished_at) VALUES (5, 'CASH', 0.00, 20.00, 20.00, false, '2026-04-30 14:45:00');
+INSERT INTO payments (appointment_id, payment_method, discount, amount_paid, net_value, is_paid, finished_at) VALUES (6, 'DEBIT', 0.00, 0.00, 0.00, false, '2026-04-30 16:00:00');
 
-INSERT INTO debts (remaining_value, total_value, client_id, created_at, payment_id, updated_at, debt_status) VALUES (25.00, 25.00, 1, '2026-04-30 14:45:00', 5, '2026-04-30 14:45:00', 'PENDING');
-INSERT INTO debts (remaining_value, total_value, client_id, created_at, payment_id, updated_at, debt_status) VALUES (120.00, 120.00, 2, '2026-04-30 16:00:00', 6, '2026-04-30 16:00:00', 'PENDING');
+INSERT INTO debts (remaining_value, client_id, created_at, payment_id, updated_at, debt_status) VALUES (25.00, 1, '2026-04-30 14:45:00', 5, '2026-04-30 14:45:00', 'PENDING');
+INSERT INTO debts (remaining_value, client_id, created_at, payment_id, updated_at, debt_status) VALUES (120.00, 2, '2026-04-30 16:00:00', 6, '2026-04-30 16:00:00', 'PENDING');
