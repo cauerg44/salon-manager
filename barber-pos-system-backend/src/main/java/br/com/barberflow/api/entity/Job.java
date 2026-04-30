@@ -2,15 +2,13 @@ package br.com.barberflow.api.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "clients")
-public class Client {
+@Table(name = "services")
+public class Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +17,8 @@ public class Client {
     @Column(nullable = false)
     private String name;
 
-    private String phone;
-    private LocalDate birthDate;
-
-    @OneToMany(mappedBy = "client")
-    private List<Appointment> appointments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "client")
-    private List<Debt> debts = new ArrayList<>();
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal basePrice;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -34,14 +26,13 @@ public class Client {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public Client() {
+    public Job() {
     }
 
-    public Client(Long id, String name, String phone, LocalDate birthDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Job(Long id, String name, BigDecimal basePrice, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.phone = phone;
-        this.birthDate = birthDate;
+        this.basePrice = basePrice;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -62,36 +53,20 @@ public class Client {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public List<Debt> getDebts() {
-        return debts;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
     }
 
     public LocalDateTime getUpdatedAt() {
@@ -105,8 +80,8 @@ public class Client {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return Objects.equals(id, client.id);
+        Job procedure = (Job) o;
+        return Objects.equals(id, procedure.id);
     }
 
     @Override

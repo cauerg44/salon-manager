@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-@Table(name = "tb_payment")
+@Table(name = "payments")
 public class Payment {
 
     @Id
@@ -15,8 +16,8 @@ public class Payment {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "attendance_id")
-    private Attendance attendance;
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -26,21 +27,32 @@ public class Payment {
     private BigDecimal discount;
 
     @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal netValue;
+
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amountPaid;
 
     @Column(nullable = false)
-    private LocalDateTime moment;
+    private LocalDateTime finishedAt;
+
+    @Column(nullable = false)
+    private Boolean isPaid;
+
+    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL)
+    private Debt debt;
 
     public Payment() {
     }
 
-    public Payment(Long id, Attendance attendance, PaymentMethod paymentMethod, BigDecimal discount, LocalDateTime moment) {
+    public Payment(Long id, Appointment appointment, PaymentMethod paymentMethod, BigDecimal discount, BigDecimal netValue, BigDecimal amountPaid, BigDecimal debtAmount, LocalDateTime finishedAt, Boolean isPaid) {
         this.id = id;
-        this.attendance = attendance;
+        this.appointment = appointment;
         this.paymentMethod = paymentMethod;
         this.discount = discount;
-        this.amountPaid = attendance.getGrossAmount().subtract(discount);
-        this.moment = moment;
+        this.netValue = netValue;
+        this.amountPaid = amountPaid;
+        this.finishedAt = finishedAt;
+        this.isPaid = isPaid;
     }
 
     public Long getId() {
@@ -51,12 +63,12 @@ public class Payment {
         this.id = id;
     }
 
-    public Attendance getAttendance() {
-        return attendance;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setAttendance(Attendance attendance) {
-        this.attendance = attendance;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -75,6 +87,14 @@ public class Payment {
         this.discount = discount;
     }
 
+    public BigDecimal getNetValue() {
+        return netValue;
+    }
+
+    public void setNetValue(BigDecimal netValue) {
+        this.netValue = netValue;
+    }
+
     public BigDecimal getAmountPaid() {
         return amountPaid;
     }
@@ -83,11 +103,39 @@ public class Payment {
         this.amountPaid = amountPaid;
     }
 
-    public LocalDateTime getMoment() {
-        return moment;
+    public LocalDateTime getFinishedAt() {
+        return finishedAt;
     }
 
-    public void setMoment(LocalDateTime moment) {
-        this.moment = moment;
+    public void setFinishedAt(LocalDateTime finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    public Boolean getPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(Boolean paid) {
+        isPaid = paid;
+    }
+
+    public Debt getDebt() {
+        return debt;
+    }
+
+    public void setDebt(Debt debt) {
+        this.debt = debt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return Objects.equals(id, payment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

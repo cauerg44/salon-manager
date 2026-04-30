@@ -2,15 +2,12 @@ package br.com.barberflow.api.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
-@Table(name = "clients")
-public class Client {
+@Table(name = "professionals")
+public class Professional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +16,17 @@ public class Client {
     @Column(nullable = false)
     private String name;
 
-    private String phone;
-    private LocalDate birthDate;
+    @Column(nullable = false)
+    private Boolean isActive = true;
 
-    @OneToMany(mappedBy = "client")
+    @ManyToMany
+    @JoinTable(name = "professional_specialty",
+            joinColumns = @JoinColumn(name = "professional_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+    private Set<Specialty> specializations = new HashSet<>();
+
+    @OneToMany(mappedBy = "professional")
     private List<Appointment> appointments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "client")
-    private List<Debt> debts = new ArrayList<>();
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -34,14 +34,13 @@ public class Client {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public Client() {
+    public Professional() {
     }
 
-    public Client(Long id, String name, String phone, LocalDate birthDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Professional(Long id, String name, Boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.phone = phone;
-        this.birthDate = birthDate;
+        this.isActive = isActive;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -62,28 +61,24 @@ public class Client {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public Boolean getActive() {
+        return isActive;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public Set<Specialty> getSpecializations() {
+        return specializations;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setSpecializations(Set<Specialty> specializations) {
+        this.specializations = specializations;
     }
 
     public List<Appointment> getAppointments() {
         return appointments;
-    }
-
-    public List<Debt> getDebts() {
-        return debts;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -105,8 +100,8 @@ public class Client {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return Objects.equals(id, client.id);
+        Professional barber = (Professional) o;
+        return Objects.equals(id, barber.id);
     }
 
     @Override
