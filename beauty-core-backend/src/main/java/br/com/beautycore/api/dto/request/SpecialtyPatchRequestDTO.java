@@ -1,10 +1,10 @@
 package br.com.beautycore.api.dto.request;
 
-import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Size;
 
 public record SpecialtyPatchRequestDTO(
 
-        @Max(value = 30, message = "Nome da especialidade deve ter no máximo 30 caracteres")
+        @Size(max = 30, message = "Nome do serviço deve ter no máximo 30 caracteres")
         String name
 ) {
 }
