@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,8 @@ public class SpecialtyService {
         Specialty entity = new Specialty();
         entity.setName(dto.name());
         entity = repository.save(entity);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
         return new SpecialtyResponseDTO(entity.getId(), entity.getName());
     }
 
@@ -42,6 +45,8 @@ public class SpecialtyService {
             Specialty entity = repository.getReferenceById(id);
             entity.setName(dto.name());
             entity = repository.save(entity);
+            entity.setCreatedAt(LocalDateTime.now());
+            entity.setUpdatedAt(LocalDateTime.now());
             return new SpecialtyResponseDTO(entity.getId(), entity.getName());
         }
         catch (EntityNotFoundException e) {
