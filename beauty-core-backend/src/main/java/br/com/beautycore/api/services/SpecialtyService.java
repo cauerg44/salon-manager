@@ -1,10 +1,14 @@
 package br.com.beautycore.api.services;
 
+import br.com.beautycore.api.dto.request.SpecialtyCreateRequestDTO;
 import br.com.beautycore.api.dto.response.SpecialtyResponseDTO;
 import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.repository.SpecialtyRepository;
+import br.com.beautycore.api.services.exception.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -22,5 +26,35 @@ public class SpecialtyService {
         return list.stream()
                 .map(item -> new SpecialtyResponseDTO(item.getId(), item.getName()))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public SpecialtyResponseDTO save(SpecialtyCreateRequestDTO dto) {
+        Specialty entity = new Specialty();
+        entity.setName(dto.name());
+        entity = repository.save(entity);
+        return new SpecialtyResponseDTO(entity.getId(), entity.getName());
+    }
+
+    @Transactional
+    public SpecialtyResponseDTO patch(Long id, SpecialtyCreateRequestDTO dto) {
+        try {
+            Specialty entity = repository.getReferenceById(id);
+            entity.setName(dto.name());
+            entity = repository.save(entity);
+            return new SpecialtyResponseDTO(entity.getId(), entity.getName());
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Especialidade não encontrada");
+        }
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Especialidade não encontrada");
+        }
+        repository.deleteById(id);
+        return null;
     }
 }

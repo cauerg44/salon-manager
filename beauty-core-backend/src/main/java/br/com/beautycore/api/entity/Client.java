@@ -16,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Client {
 
@@ -42,4 +41,14 @@ public class Client {
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime updatedAt;
+
+    public Client(Long id, String name, String phone, LocalDate birthDate, BigDecimal credit, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.birthDate = birthDate;
+        this.credit = credit;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
