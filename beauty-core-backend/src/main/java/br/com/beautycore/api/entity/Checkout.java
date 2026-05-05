@@ -1,6 +1,5 @@
 package br.com.beautycore.api.entity;
 
-import br.com.beautycore.api.enums.PaymentMethod;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;

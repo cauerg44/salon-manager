@@ -24,6 +24,7 @@ public class Professional {
 
     private String name;
     private Boolean isActive;
+    private Boolean isWorking;
 
     @Setter(AccessLevel.NONE)
     @ManyToMany
