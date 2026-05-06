@@ -25,6 +25,8 @@ public class ClientService {
     @Autowired
     private ClientRepository repository;
 
+    private static final LocalDateTime NOW = LocalDateTime.now();
+
     @Transactional(readOnly = true)
     public Page<ClientResponseDTO> findAll(String name, Pageable pageable) {
         Page<Client> result = repository.searchByName(name, pageable);
@@ -49,7 +51,6 @@ public class ClientService {
 
             patchDtoToEntity(entity, dto);
 
-            entity.setUpdatedAt(LocalDateTime.now());
             entity = repository.save(entity);
 
             return new ClientResponseDTO(entity);
@@ -78,8 +79,9 @@ public class ClientService {
         entity.setPhone(dto.phone());
         entity.setBirthDate(dto.birthDate());
         entity.setCredit(BigDecimal.ZERO);
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
+
+        entity.setCreatedAt(NOW);
+        entity.setUpdatedAt(NOW);
     }
 
     private void patchDtoToEntity(Client entity, ClientPatchRequestDTO dto) {
@@ -98,5 +100,7 @@ public class ClientService {
         if (dto.credit() != null) {
             entity.setCredit(dto.credit());
         }
+
+        entity.setUpdatedAt(NOW);
     }
 }

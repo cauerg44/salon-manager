@@ -21,6 +21,8 @@ public class SpecialtyService {
     @Autowired
     private SpecialtyRepository repository;
 
+    private static final LocalDateTime NOW = LocalDateTime.now();
+
     @Transactional(readOnly = true)
     public List<SpecialtyResponseDTO> findAll() {
         List<Specialty> list = repository.findAll();
@@ -34,8 +36,10 @@ public class SpecialtyService {
         Specialty entity = new Specialty();
         entity.setName(dto.name());
         entity = repository.save(entity);
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
+
+        entity.setCreatedAt(NOW);
+        entity.setUpdatedAt(NOW);
+
         return new SpecialtyResponseDTO(entity.getId(), entity.getName());
     }
 
@@ -43,10 +47,11 @@ public class SpecialtyService {
     public SpecialtyResponseDTO patch(Long id, SpecialtyCreateRequestDTO dto) {
         try {
             Specialty entity = repository.getReferenceById(id);
+
             entity.setName(dto.name());
             entity = repository.save(entity);
-            entity.setCreatedAt(LocalDateTime.now());
-            entity.setUpdatedAt(LocalDateTime.now());
+            entity.setUpdatedAt(NOW);
+
             return new SpecialtyResponseDTO(entity.getId(), entity.getName());
         }
         catch (EntityNotFoundException e) {
@@ -55,11 +60,10 @@ public class SpecialtyService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public Void delete(Long id) {
+    public void delete(Long id) {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Especialidade não encontrada");
         }
         repository.deleteById(id);
-        return null;
     }
 }

@@ -44,4 +44,16 @@ public class ProfessionalController {
         var result = service.patch(id, dto);
         return ResponseEntity.ok(result);
     }
+
+    @PatchMapping("/{id}/deactivate")
+    public ResponseEntity<ProfessionalResponseDTO> deactivate(@PathVariable Long id) {
+        var result = service.deactivate(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping("/{id}/activate")
+    public ResponseEntity<ProfessionalResponseDTO> activate(@PathVariable Long id) {
+        var result = service.activate(id);
+        return ResponseEntity.ok(result);
+    }
 }

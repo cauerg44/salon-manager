@@ -10,6 +10,7 @@ import br.com.beautycore.api.repository.SpecialtyRepository;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,8 @@ public class ProfessionalService {
 
     @Autowired
     private SpecialtyRepository specialtyRepository;
+
+    private static final LocalDateTime NOW = LocalDateTime.now();
 
     @Transactional(readOnly = true)
     public List<ProfessionalResponseDTO> findAll() {
@@ -61,6 +64,41 @@ public class ProfessionalService {
         }
     }
 
+    @Transactional
+    public ProfessionalResponseDTO deactivate(Long id) {
+        try {
+            Professional entity = repository.getReferenceById(id);
+
+            entity.setIsActive(false);
+            entity.setIsWorking(false);
+            entity.setUpdatedAt(NOW);
+
+            entity = repository.save(entity);
+
+            return new ProfessionalResponseDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Profissional não encontrado");
+        }
+    }
+
+    @Transactional
+    public ProfessionalResponseDTO activate(Long id) {
+        try {
+            Professional entity = repository.getReferenceById(id);
+
+            entity.setIsActive(true);
+            entity.setUpdatedAt(NOW);
+
+            entity = repository.save(entity);
+
+            return new ProfessionalResponseDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Profissional não encontrado");
+        }
+    }
+
     private void createDtoToEntity(Professional entity, ProfessionalCreateRequestDTO dto) {
         entity.setName(dto.name());
         entity.setIsActive(true);
@@ -73,8 +111,8 @@ public class ProfessionalService {
             entity.addSpecialty(specialty);
         }
 
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
+        entity.setCreatedAt(NOW);
+        entity.setUpdatedAt(NOW);
     }
 
     private void patchDtoToEntity(Professional entity, ProfessionalPatchRequestDTO dto) {
@@ -91,6 +129,6 @@ public class ProfessionalService {
             }
         }
 
-        entity.setUpdatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(NOW);
     }
 }
