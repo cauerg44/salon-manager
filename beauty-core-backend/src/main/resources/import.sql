@@ -1,16 +1,26 @@
 -- 1. ESPECIALIZAÇÕES
-INSERT INTO specializations (id, name, created_at, updated_at) VALUES (nextval('sq_specializations'), 'Barbeiro Tradicional', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO specializations (id, name, created_at, updated_at) VALUES (nextval('sq_specializations'), 'Especialista em Barba', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO specializations (id, name, created_at, updated_at) VALUES (nextval('sq_specializations'), 'Barbeiro Kids', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO specializations (id, name, created_at, updated_at) VALUES (nextval('sq_specializations'), 'Cabeleleiro(a) tradicional', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO specializations (id, name, created_at, updated_at) VALUES (nextval('sq_specializations'), 'Cabeleleiro(a) kids', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO specializations (id, name, created_at, updated_at) VALUES (nextval('sq_specializations'), 'Manicure', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO specializations (id, name, created_at, updated_at) VALUES (nextval('sq_specializations'), 'Massagista', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 2. PROFISSIONAIS
 INSERT INTO professionals (id, name, is_active, is_working, created_at, updated_at) VALUES (nextval('sq_professionals'), 'Alan', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO professionals (id, name, is_active, is_working, created_at, updated_at) VALUES (nextval('sq_professionals'), 'Daniel', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO professionals (id, name, is_active, is_working, created_at, updated_at) VALUES (nextval('sq_professionals'), 'Júnior', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO professional_specialty (professional_id, specialty_id) VALUES (1, 1);
+INSERT INTO professional_specialty (professional_id, specialty_id) VALUES (1, 2);
+INSERT INTO professional_specialty (professional_id, specialty_id) VALUES (2, 2);
+INSERT INTO professional_specialty (professional_id, specialty_id) VALUES (3, 1);
+INSERT INTO professional_specialty (professional_id, specialty_id) VALUES (3, 2);
 
 -- 3. SERVIÇOS (JobItems)
-INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Corte de Cabelo Masculino', 45.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Barba Completa', 35.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Combo (Corte + Barba)', 70.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Corte de Cabelo Masculino', 25.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Barba', 15.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Sobrancelha', 10.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Hidratação', 50.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Corte feminino', 35.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 4. CLIENTES
 INSERT INTO clients (id, name, phone, credit, created_at, updated_at) VALUES (nextval('sq_clients'), 'Cauê Rodrigues', '71988887777', 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
