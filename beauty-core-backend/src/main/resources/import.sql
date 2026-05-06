@@ -30,17 +30,9 @@ INSERT INTO clients (id, name, phone, credit, created_at, updated_at) VALUES (ne
 INSERT INTO appointments (id, professional_id, client_id, appointment_status, created_at, finished_at) VALUES (nextval('sq_appointments'), 1, 1, 'FINISHED', '2026-05-04 10:00:00', '2026-05-04 10:45:00');
 INSERT INTO appointments (id, professional_id, client_id, appointment_status, created_at, finished_at) VALUES (nextval('sq_appointments'), 1, 2, 'FINISHED', '2026-05-04 11:00:00', '2026-05-04 12:00:00');
 
--- 6. APPOINTMENT_SERVICE (Vinculando os serviços aos agendamentos)
--- No Appointment 1, foi feito um Corte (ID 1) por 45.00 e uma Sobrancelha/Barba se tivesse.
-INSERT INTO appointment_service (appointment_id, service_id, price_at_moment) VALUES (1, 1, 45.00);
-INSERT INTO appointment_service (appointment_id, service_id, price_at_moment) VALUES (1, 2, 15.00);
--- No Appointment 2, foi feito o Combo (ID 3) por 70.00 e um adicional.
-INSERT INTO appointment_service (appointment_id, service_id, price_at_moment) VALUES (2, 3, 70.00);
-
--- 7. CHECKOUTS
-INSERT INTO checkouts (appointment_id, gross_value, discount, total_value, remaining_amount, is_paid, created_at, finished_at) VALUES (1, 60.00, 0.00, 60.00, 0.00, true, '2026-05-04 10:45:00', '2026-05-04 10:45:00');
-INSERT INTO checkouts (appointment_id, gross_value, discount, total_value, remaining_amount, is_paid, created_at) VALUES (2, 100.00, 10.00, 90.00, 40.00, false, '2026-05-04 12:00:00');
+INSERT INTO appointment_service (appointment_id, service_id, price_at_moment, discount) VALUES (1, 1, 25, 5);
+INSERT INTO appointment_service (appointment_id, service_id, price_at_moment, discount) VALUES (1, 2, 15.00, 5);
 
 -- 8. PAYMENTS
-INSERT INTO payments (id, checkout_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 1, 'PIX', 60.00, '2026-05-04 10:45:00');
-INSERT INTO payments (id, checkout_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 2, 'CASH', 50.00, '2026-05-04 12:00:00');
+INSERT INTO payments (id, appointment_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 1, 'PIX', 60.00, '2026-05-04 10:45:00');
+INSERT INTO payments (id, appointment_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 2, 'CASH', 50.00, '2026-05-04 12:00:00');

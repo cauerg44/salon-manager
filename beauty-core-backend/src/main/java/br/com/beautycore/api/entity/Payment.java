@@ -23,8 +23,8 @@ public class Payment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "checkout_id")
-    private Checkout checkout;
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

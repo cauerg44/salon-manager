@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,8 +39,13 @@ public class Appointment {
     @OneToMany(mappedBy = "id.appointment")
     private Set<AppointmentServiceEntity> services = new HashSet<>();
 
-    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
-    private Checkout checkout;
+    private BigDecimal totalValue;
+    private BigDecimal remainingValue;
+    private Boolean isPaid;
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "appointment")
+    private List<Payment> payments;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;
