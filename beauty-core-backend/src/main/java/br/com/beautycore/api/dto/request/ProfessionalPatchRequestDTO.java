@@ -9,7 +9,7 @@ public record ProfessionalPatchRequestDTO(
         @Size(max = 30, message = "Nome deve ter no máximo 30 caracteres")
         String name,
 
-        Set<@NotNull(message = "ID do especialidade não pode ser nulo") @Positive(message = "ID do especialidade deve ser positivo") Long> specializationsIds
+        Set<@Positive(message = "ID do especialidade deve ser positivo") Long> specializationsIds
 ) {
 
 }

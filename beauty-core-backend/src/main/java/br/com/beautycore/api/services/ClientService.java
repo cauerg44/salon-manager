@@ -10,14 +10,14 @@ import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -26,11 +26,9 @@ public class ClientService {
     private ClientRepository repository;
 
     @Transactional(readOnly = true)
-    public List<ClientResponseDTO> findAll() {
-        List<Client> list = repository.findAll();
-        return list.stream()
-                .map(client -> new ClientResponseDTO(client))
-                .collect(Collectors.toList());
+    public Page<ClientResponseDTO> findAll(String name, Pageable pageable) {
+        Page<Client> result = repository.searchByName(name, pageable);
+        return result.map(client -> new ClientResponseDTO(client));
     }
 
     @Transactional

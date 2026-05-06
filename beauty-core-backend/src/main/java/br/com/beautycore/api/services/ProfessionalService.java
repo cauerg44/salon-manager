@@ -46,20 +46,18 @@ public class ProfessionalService {
     }
 
     @Transactional
-    public void patch(Long id, ProfessionalPatchRequestDTO dto) {
+    public ProfessionalResponseDTO patch(Long id, ProfessionalPatchRequestDTO dto) {
         try {
             Professional entity = repository.getReferenceById(id);
 
             patchDtoToEntity(entity, dto);
 
-            entity.setUpdatedAt(LocalDateTime.now());
             entity = repository.save(entity);
 
-            // return new ProfessionalResponseDTO(entity);
-
+            return new ProfessionalResponseDTO(entity);
         }
         catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Professional não encontrado");
+            throw new ResourceNotFoundException("Profissional não encontrado");
         }
     }
 
@@ -68,6 +66,7 @@ public class ProfessionalService {
         entity.setIsActive(true);
         entity.setIsWorking(false);
 
+        entity.getSpecializations().clear();
         for (long specialtyId : dto.specializationsIds()) {
             Specialty specialty = specialtyRepository.findById(specialtyId)
                     .orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
@@ -79,6 +78,19 @@ public class ProfessionalService {
     }
 
     private void patchDtoToEntity(Professional entity, ProfessionalPatchRequestDTO dto) {
+        if (dto.name() != null) {
+            entity.setName(dto.name());
+        }
 
+        if (!dto.specializationsIds().isEmpty()) {
+            entity.getSpecializations().clear();
+            for (long specialtyId : dto.specializationsIds()) {
+                Specialty specialty = specialtyRepository.findById(specialtyId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
+                entity.addSpecialty(specialty);
+            }
+        }
+
+        entity.setUpdatedAt(LocalDateTime.now());
     }
 }

@@ -6,6 +6,8 @@ import br.com.beautycore.api.dto.response.ClientResponseDTO;
 import br.com.beautycore.api.services.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,8 +23,8 @@ public class ClientController {
     private ClientService service;
 
     @GetMapping
-    public ResponseEntity<List<ClientResponseDTO>> findAll() {
-        var result = service.findAll();
+    public ResponseEntity<Page<ClientResponseDTO>> findAllPaged(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
+        var result = service.findAll(name, pageable);
         return ResponseEntity.ok(result);
     }
 

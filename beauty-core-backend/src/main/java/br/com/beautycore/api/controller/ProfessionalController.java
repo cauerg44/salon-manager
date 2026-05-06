@@ -1,6 +1,7 @@
 package br.com.beautycore.api.controller;
 
 import br.com.beautycore.api.dto.request.ProfessionalCreateRequestDTO;
+import br.com.beautycore.api.dto.request.ProfessionalPatchRequestDTO;
 import br.com.beautycore.api.dto.response.ProfessionalResponseDTO;
 import br.com.beautycore.api.services.ProfessionalService;
 import jakarta.validation.Valid;
@@ -36,5 +37,11 @@ public class ProfessionalController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(result);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProfessionalResponseDTO> patch(@PathVariable Long id, @Valid @RequestBody ProfessionalPatchRequestDTO dto) {
+        var result = service.patch(id, dto);
+        return ResponseEntity.ok(result);
     }
 }
