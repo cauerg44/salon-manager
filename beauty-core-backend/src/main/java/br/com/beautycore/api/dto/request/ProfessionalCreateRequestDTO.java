@@ -12,5 +12,5 @@ public record ProfessionalCreateRequestDTO(
 
         @NotEmpty(message = "O profissional deve haver pelo menos 1 especialidade")
         Set<@NotNull(message = "ID da especialidade não pode ser nulo")
-        @Positive(message = "ID do especialidade deve ser positivo") Long> specializations
+        @Positive(message = "ID do especialidade deve ser positivo") Long> specializationsIds
 ) {}
