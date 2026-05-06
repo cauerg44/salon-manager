@@ -36,6 +36,7 @@ public class Appointment {
     @Enumerated(EnumType.STRING)
     private AppointmentStatus appointmentStatus;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "id.appointment")
     private Set<AppointmentServiceEntity> services = new HashSet<>();
 

@@ -1,14 +1,17 @@
 package br.com.beautycore.api.controller;
 
+import br.com.beautycore.api.dto.request.AppointmentCreateRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
 import br.com.beautycore.api.services.AppointmentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/v1/appointments")
@@ -21,5 +24,18 @@ public class AppointmentController {
     public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointments(Pageable pageable) {
         var result = service.findAll(pageable);
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping
+    public ResponseEntity<AppointmentResponseDTO> createAppointment(@Valid @RequestBody AppointmentCreateRequestDTO dto) {
+        var result = service.createAppointment(dto);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(result.id())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(result);
     }
 }
