@@ -1,6 +1,7 @@
 package br.com.beautycore.api.services;
 
 import br.com.beautycore.api.dto.request.AppointmentCreateRequestDTO;
+import br.com.beautycore.api.dto.request.AppointmentPatchRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
 import br.com.beautycore.api.entity.*;
 import br.com.beautycore.api.enums.AppointmentStatus;
@@ -61,11 +62,49 @@ public class AppointmentService {
             throw new DomainException("Apenas atendimentos com clientes em espera podem ser iniciados");
         }
 
+        if (!appointment.getProfessional().getIsWorking()) {
+            appointment.getProfessional().setIsWorking(true);
+        }
+
         appointment.setAppointmentStatus(AppointmentStatus.IN_PROGRESS);
         appointment.getClient().setInAppointment(true);
-        appointment = repository.save(appointment);
+        appointment.setUpdatedAt(NOW);
+
+        repository.save(appointment);
 
         return new AppointmentResponseDTO(appointment);
+    }
+
+    @Transactional
+    public AppointmentResponseDTO updateAppointmentServices(Long id, AppointmentPatchRequestDTO dto) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
+
+        AppointmentServiceEntity appointmentServiceEntity = new AppointmentServiceEntity();
+
+        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
+            appointment.getServices().clear();
+            BigDecimal sum = BigDecimal.ZERO;
+
+            for (long serviceId : dto.servicesIds()) {
+                JobItem service = jobItemRepository.findById(serviceId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
+
+                sum = sum.add(service.getBasePrice());
+
+                appointmentServiceEntity = new AppointmentServiceEntity(appointment, service, service.getBasePrice(), BigDecimal.ZERO);
+                appointment.getServices().add(appointmentServiceEntity);
+            }
+
+            appointment.setTotalValue(sum);
+            appointment.setRemainingValue(sum);
+
+            appointmentServiceRepository.save(appointmentServiceEntity);
+            repository.save(appointment);
+
+            return new AppointmentResponseDTO(appointment);
+        }
+        else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
     }
 
     private void createDtoToEntity(AppointmentCreateRequestDTO dto, Appointment entity, AppointmentServiceEntity appointmentServiceEntity) {
@@ -75,13 +114,15 @@ public class AppointmentService {
         Client client = clientRepository.findById(dto.clientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
-        if (!client.getInAppointment()) {
+        if (client.getInAppointment()) {
             throw new DomainException("Cliente se encontra em outro atendimento no momento.");
         }
 
         entity.setProfessional(professional);
+
         client.setInAppointment(false);
         entity.setClient(client);
+
         entity.setAppointmentStatus(AppointmentStatus.WAITING);
 
         entity.getServices().clear();

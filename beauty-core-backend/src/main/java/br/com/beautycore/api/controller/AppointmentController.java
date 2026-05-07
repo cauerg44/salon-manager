@@ -1,6 +1,7 @@
 package br.com.beautycore.api.controller;
 
 import br.com.beautycore.api.dto.request.AppointmentCreateRequestDTO;
+import br.com.beautycore.api.dto.request.AppointmentPatchRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
 import br.com.beautycore.api.services.AppointmentService;
 import jakarta.validation.Valid;
@@ -42,6 +43,12 @@ public class AppointmentController {
     @PatchMapping(value = "/{id}/start")
     public ResponseEntity<AppointmentResponseDTO> createAppointment(@PathVariable Long id) {
         var result = service.startAppointment(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping(value = "/{id}/services")
+    public ResponseEntity<AppointmentResponseDTO> updateAppointmentServices(@PathVariable Long id, @Valid @RequestBody AppointmentPatchRequestDTO dto) {
+        var result = service.updateAppointmentServices(id, dto);
         return ResponseEntity.ok(result);
     }
 }

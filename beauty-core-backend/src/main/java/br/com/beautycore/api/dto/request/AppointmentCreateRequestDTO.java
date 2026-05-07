@@ -15,6 +15,6 @@ public record AppointmentCreateRequestDTO(
         Long clientId,
 
         @NotEmpty(message = "O atendimento deve ter pelo menos 1 serviço")
-        Set<@NotNull(message = "ID da especialidade não pode ser nulo") @Positive(message = "ID do especialidade deve ser positivo") Long> servicesIds
+        Set<@NotNull(message = "ID da serviço não pode ser nulo") @Positive(message = "ID do serviço deve ser positivo") Long> servicesIds
 ) {
 }
