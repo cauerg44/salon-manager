@@ -53,9 +53,8 @@ public class AppointmentService {
     @Transactional
     public AppointmentResponseDTO createAppointment(AppointmentCreateRequestDTO dto) {
         Appointment entity = new Appointment();
-        AppointmentServiceEntity appointmentServiceEntity = new AppointmentServiceEntity();
 
-        createDtoToEntity(dto, entity, appointmentServiceEntity);
+        createDtoToEntity(dto, entity);
 
         return new AppointmentResponseDTO(entity);
     }
@@ -97,23 +96,37 @@ public class AppointmentService {
 
                 sum = sum.add(service.getBasePrice());
 
-                var appointmentServiceEntity = new AppointmentServiceEntity(appointment, service, service.getBasePrice(), BigDecimal.ZERO);
-                appointment.getServices().add(appointmentServiceEntity);
-
-                appointmentServiceRepository.save(appointmentServiceEntity);
+                appointment.getServices().add(new AppointmentServiceEntity(appointment, service, service.getBasePrice(), BigDecimal.ZERO));
             }
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);
+            appointment.setUpdatedAt(NOW);
 
             repository.save(appointment);
 
             return new AppointmentResponseDTO(appointment);
-        }
-        else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
+
+        } else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
     }
 
-    private void createDtoToEntity(AppointmentCreateRequestDTO dto, Appointment entity, AppointmentServiceEntity appointmentServiceEntity) {
+    @Transactional
+    public AppointmentResponseDTO cancelAppointment(Long id) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
+
+        if (appointment.getAppointmentStatus() != AppointmentStatus.WAITING) {
+            throw new DomainException("É possível cancelar somente os atendimentos em espera");
+        }
+
+        appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
+
+        appointment.setUpdatedAt(NOW);
+
+        return new AppointmentResponseDTO(appointment);
+    }
+
+    private void createDtoToEntity(AppointmentCreateRequestDTO dto, Appointment entity) {
         Professional professional = professionalRepository.findById(dto.professionalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
@@ -140,8 +153,7 @@ public class AppointmentService {
 
             sum = sum.add(service.getBasePrice());
 
-            appointmentServiceEntity = new AppointmentServiceEntity(entity, service, service.getBasePrice(), BigDecimal.ZERO);
-            entity.getServices().add(appointmentServiceEntity);
+            entity.getServices().add(new AppointmentServiceEntity(entity, service, service.getBasePrice(), BigDecimal.ZERO));
         }
 
         entity.setTotalValue(sum);
@@ -154,6 +166,5 @@ public class AppointmentService {
         entity.setFinishedAt(null);
 
         repository.save(entity);
-        appointmentServiceRepository.save(appointmentServiceEntity);
     }
 }

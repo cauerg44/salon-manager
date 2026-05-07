@@ -41,7 +41,9 @@ public class Appointment {
     private Set<AppointmentServiceEntity> services = new HashSet<>();
 
     private BigDecimal totalValue;
+
     private BigDecimal remainingValue;
+
     private Boolean isPaid;
 
     @Setter(AccessLevel.NONE)
