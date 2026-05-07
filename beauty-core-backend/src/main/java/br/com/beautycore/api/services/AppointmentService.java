@@ -35,7 +35,7 @@ public class AppointmentService {
     private JobItemRepository jobItemRepository;
 
     @Autowired
-    private AppointmentServiceRepository appointmentServiceRepository;
+    private PaymentService paymentService;
 
     @Transactional(readOnly = true)
     public Page<AppointmentResponseDTO> findAll(Pageable pageable) {
@@ -125,6 +125,11 @@ public class AppointmentService {
 
         return new AppointmentResponseDTO(appointment);
     }
+
+//    @Transactional
+//    public AppointmentResponseDTO finishAppointment(Long id) {
+//         paymentService.addPayment(id);
+//    }
 
     private void createDtoToEntity(AppointmentCreateRequestDTO dto, Appointment entity) {
         Professional professional = professionalRepository.findById(dto.professionalId())
