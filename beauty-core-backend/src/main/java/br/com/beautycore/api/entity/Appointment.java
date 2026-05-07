@@ -37,7 +37,7 @@ public class Appointment {
     private AppointmentStatus appointmentStatus;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "id.appointment")
+    @OneToMany(mappedBy = "id.appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AppointmentServiceEntity> services = new HashSet<>();
 
     private BigDecimal totalValue;

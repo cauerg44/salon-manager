@@ -27,6 +27,12 @@ public class AppointmentController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
+        var result = service.findById(id);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> createAppointment(@Valid @RequestBody AppointmentCreateRequestDTO dto) {
         var result = service.createAppointment(dto);

@@ -43,6 +43,13 @@ public class AppointmentService {
         return list.map(appointment -> new AppointmentResponseDTO(appointment));
     }
 
+    @Transactional(readOnly = true)
+    public AppointmentResponseDTO findById(Long id) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
+        return new AppointmentResponseDTO(appointment);
+    }
+
     @Transactional
     public AppointmentResponseDTO createAppointment(AppointmentCreateRequestDTO dto) {
         Appointment entity = new Appointment();
@@ -80,26 +87,25 @@ public class AppointmentService {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
-        AppointmentServiceEntity appointmentServiceEntity = new AppointmentServiceEntity();
-
         if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
-            appointment.getServices().clear();
             BigDecimal sum = BigDecimal.ZERO;
 
+            appointment.getServices().clear();
             for (long serviceId : dto.servicesIds()) {
                 JobItem service = jobItemRepository.findById(serviceId)
                         .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
 
                 sum = sum.add(service.getBasePrice());
 
-                appointmentServiceEntity = new AppointmentServiceEntity(appointment, service, service.getBasePrice(), BigDecimal.ZERO);
+                var appointmentServiceEntity = new AppointmentServiceEntity(appointment, service, service.getBasePrice(), BigDecimal.ZERO);
                 appointment.getServices().add(appointmentServiceEntity);
+
+                appointmentServiceRepository.save(appointmentServiceEntity);
             }
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);
 
-            appointmentServiceRepository.save(appointmentServiceEntity);
             repository.save(appointment);
 
             return new AppointmentResponseDTO(appointment);
