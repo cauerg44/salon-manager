@@ -62,6 +62,7 @@ public class AppointmentService {
         }
 
         appointment.setAppointmentStatus(AppointmentStatus.IN_PROGRESS);
+        appointment.getClient().setInAppointment(true);
         appointment = repository.save(appointment);
 
         return new AppointmentResponseDTO(appointment);
@@ -71,27 +72,19 @@ public class AppointmentService {
         Professional professional = professionalRepository.findById(dto.professionalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
-        Client client = clientRepository.findById(dto.professionalId())
+        Client client = clientRepository.findById(dto.clientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
-        if (professional.getIsWorking() == true) {
-            throw new DomainException("O profissional se encontra em outro atendimento no momento");
-        }
-
-        if (client.getInAppointment() == false) {
+        if (!client.getInAppointment()) {
             throw new DomainException("Cliente se encontra em outro atendimento no momento.");
         }
 
-        professional.setIsWorking(true);
         entity.setProfessional(professional);
-
-        client.setInAppointment(true);
+        client.setInAppointment(false);
         entity.setClient(client);
-
         entity.setAppointmentStatus(AppointmentStatus.WAITING);
 
         entity.getServices().clear();
-
         BigDecimal sum = BigDecimal.ZERO;
 
         for (long serviceId : dto.servicesIds()) {
