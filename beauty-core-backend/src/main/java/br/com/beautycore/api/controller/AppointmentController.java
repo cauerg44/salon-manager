@@ -38,4 +38,10 @@ public class AppointmentController {
 
         return ResponseEntity.created(uri).body(result);
     }
+
+    @PatchMapping(value = "/{id}/start")
+    public ResponseEntity<AppointmentResponseDTO> createAppointment(@PathVariable Long id) {
+        var result = service.startAppointment(id);
+        return ResponseEntity.ok(result);
+    }
 }

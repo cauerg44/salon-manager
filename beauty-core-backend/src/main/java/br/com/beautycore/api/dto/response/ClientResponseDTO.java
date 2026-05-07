@@ -14,7 +14,8 @@ public record ClientResponseDTO(
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate birthDate,
 
-        BigDecimal credit
+        BigDecimal credit,
+        Boolean inAppointment
 ) {
     public ClientResponseDTO(Client entity) {
         this(
@@ -22,7 +23,8 @@ public record ClientResponseDTO(
             entity.getName(),
             entity.getPhone(),
             entity.getBirthDate(),
-            entity.getCredit()
+            entity.getCredit(),
+            entity.getInAppointment()
         );
     }
 }

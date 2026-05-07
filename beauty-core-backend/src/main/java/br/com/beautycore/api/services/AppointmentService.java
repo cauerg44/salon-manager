@@ -52,6 +52,21 @@ public class AppointmentService {
         return new AppointmentResponseDTO(entity);
     }
 
+    @Transactional
+    public AppointmentResponseDTO startAppointment(Long id) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
+
+        if (appointment.getAppointmentStatus() != AppointmentStatus.WAITING) {
+            throw new DomainException("Apenas atendimentos com clientes em espera podem ser iniciados");
+        }
+
+        appointment.setAppointmentStatus(AppointmentStatus.IN_PROGRESS);
+        appointment = repository.save(appointment);
+
+        return new AppointmentResponseDTO(appointment);
+    }
+
     private void createDtoToEntity(AppointmentCreateRequestDTO dto, Appointment entity, AppointmentServiceEntity appointmentServiceEntity) {
         Professional professional = professionalRepository.findById(dto.professionalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
@@ -63,7 +78,7 @@ public class AppointmentService {
             throw new DomainException("O profissional se encontra em outro atendimento no momento");
         }
 
-        if (client.getInAppointment() == true) {
+        if (client.getInAppointment() == false) {
             throw new DomainException("Cliente se encontra em outro atendimento no momento.");
         }
 

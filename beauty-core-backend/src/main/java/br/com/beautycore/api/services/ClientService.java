@@ -79,6 +79,7 @@ public class ClientService {
         entity.setPhone(dto.phone());
         entity.setBirthDate(dto.birthDate());
         entity.setCredit(BigDecimal.ZERO);
+        entity.setInAppointment(false);
 
         entity.setCreatedAt(NOW);
         entity.setUpdatedAt(NOW);
