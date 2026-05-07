@@ -11,8 +11,8 @@ public record AppointmentResponseDTO(
         Long id,
         ProfessionalResponseDTO professional,
         ClientResponseDTO client,
-        AppointmentStatus status,
-        Set<JobItemResponseDTO> services,
+        AppointmentStatus appointmentStatus,
+        Set<JobItemWithDiscountResponseDTO> services,
         BigDecimal totalValue,
         BigDecimal remainingValue,
         Boolean isPaid
@@ -25,10 +25,11 @@ public record AppointmentResponseDTO(
                 entity.getAppointmentStatus(),
                 entity.getServices()
                         .stream()
-                        .map(item -> new JobItemResponseDTO(
+                        .map(item -> new JobItemWithDiscountResponseDTO(
                                 item.getService().getId(),
                                 item.getService().getName(),
-                                item.getService().getBasePrice()
+                                item.getService().getBasePrice(),
+                                item.getDiscount()
                         ))
                         .collect(Collectors.toSet()),
                 entity.getTotalValue(),

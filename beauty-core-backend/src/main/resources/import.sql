@@ -23,8 +23,8 @@ INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (next
 INSERT INTO services (id, name, base_price, created_at, updated_at) VALUES (nextval('sq_services'), 'Corte feminino', 35.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 4. CLIENTES
-INSERT INTO clients (id, name, phone, credit, created_at, updated_at) VALUES (nextval('sq_clients'), 'Cauê Rodrigues', '71988887777', 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO clients (id, name, phone, credit, created_at, updated_at) VALUES (nextval('sq_clients'), 'Lucas Oliveira', '71999881122', 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO clients (id, name, phone, credit, in_appointment, created_at, updated_at) VALUES (nextval('sq_clients'), 'Cauê Rodrigues', '71988887777', 0.00, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO clients (id, name, phone, credit, in_appointment, created_at, updated_at) VALUES (nextval('sq_clients'), 'Lucas Oliveira', '71999881122', 0.00, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 5. APPOINTMENTS
 INSERT INTO appointments (id, professional_id, client_id, appointment_status, created_at, finished_at) VALUES (nextval('sq_appointments'), 1, 1, 'FINISHED', '2026-05-04 10:00:00', '2026-05-04 10:45:00');

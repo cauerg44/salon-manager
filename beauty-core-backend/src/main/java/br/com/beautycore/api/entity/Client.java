@@ -31,6 +31,7 @@ public class Client {
     private LocalDate birthDate;
 
     private BigDecimal credit;
+    private Boolean InAppointment;
 
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "client")

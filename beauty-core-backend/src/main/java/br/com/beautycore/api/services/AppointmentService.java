@@ -60,11 +60,17 @@ public class AppointmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
         if (professional.getIsWorking() == true) {
-            throw new DomainException("O profissional se encontra em outro atendimento");
+            throw new DomainException("O profissional se encontra em outro atendimento no momento");
+        }
+
+        if (client.getInAppointment() == true) {
+            throw new DomainException("Cliente se encontra em outro atendimento no momento.");
         }
 
         professional.setIsWorking(true);
         entity.setProfessional(professional);
+
+        client.setInAppointment(true);
         entity.setClient(client);
 
         entity.setAppointmentStatus(AppointmentStatus.WAITING);
@@ -79,19 +85,20 @@ public class AppointmentService {
 
             sum = sum.add(service.getBasePrice());
 
-            appointmentServiceEntity.setService(service);
-            appointmentServiceEntity.setDiscount(BigDecimal.ZERO);
-
-            appointmentServiceEntity = appointmentServiceRepository.save(appointmentServiceEntity);
+            appointmentServiceEntity = new AppointmentServiceEntity(entity, service, service.getBasePrice(), BigDecimal.ZERO);
+            entity.getServices().add(appointmentServiceEntity);
         }
 
         entity.setTotalValue(sum);
-        entity.setRemainingValue(BigDecimal.ZERO);
+        entity.setRemainingValue(sum);
 
         entity.setIsPaid(false);
 
         entity.setCreatedAt(NOW);
         entity.setUpdatedAt(NOW);
         entity.setFinishedAt(null);
+
+        repository.save(entity);
+        appointmentServiceRepository.save(appointmentServiceEntity);
     }
 }
