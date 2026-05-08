@@ -58,9 +58,9 @@ public class AppointmentController {
         return ResponseEntity.ok(result);
     }
 
-    @PatchMapping(value = "/{id}/services")
-    public ResponseEntity<AppointmentResponseDTO> updateAppointmentServices(@PathVariable Long id, @Valid @RequestBody AppointmentPatchRequestDTO dto) {
-        var result = service.updateAppointmentServices(id, dto);
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @Valid @RequestBody AppointmentPatchRequestDTO dto) {
+        var result = service.updateAppointment(id, dto);
         return ResponseEntity.ok(result);
     }
 }

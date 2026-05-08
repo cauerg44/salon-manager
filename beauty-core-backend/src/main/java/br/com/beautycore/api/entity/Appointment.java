@@ -40,7 +40,8 @@ public class Appointment {
     @OneToMany(mappedBy = "id.appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AppointmentServiceEntity> services = new HashSet<>();
 
-    private BigDecimal totalValue;
+    private BigDecimal discount;
+    private BigDecimal totalValue; // -= discount
 
     private BigDecimal remainingValue;
 

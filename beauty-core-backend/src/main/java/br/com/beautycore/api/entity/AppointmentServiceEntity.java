@@ -19,13 +19,11 @@ public class AppointmentServiceEntity {
     private AppointmentServicePK id = new AppointmentServicePK();
 
     private BigDecimal priceAtMoment;
-    private BigDecimal discount;
 
-    public AppointmentServiceEntity(Appointment appointment, JobItem service, BigDecimal priceAtMoment, BigDecimal discount) {
+    public AppointmentServiceEntity(Appointment appointment, JobItem service, BigDecimal priceAtMoment) {
         id.setAppointment(appointment);
         id.setJobItem(service);
         this.priceAtMoment = priceAtMoment;
-        this.discount = discount;
     }
 
     public Appointment getAppointment() {

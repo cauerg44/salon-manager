@@ -82,13 +82,21 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO updateAppointmentServices(Long id, AppointmentPatchRequestDTO dto) {
+    public AppointmentResponseDTO updateAppointment(Long id, AppointmentPatchRequestDTO dto) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
-        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
-            BigDecimal sum = BigDecimal.ZERO;
+        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING && dto.professionalId() != null) {
+            Professional professional = professionalRepository.findById(dto.professionalId())
+                            .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
+            appointment.setProfessional(professional);
+        }
+        else throw new DomainException("É possível somente alterar o profissional se o atendimento não estiver em andamento");
+
+        BigDecimal sum = BigDecimal.ZERO;
+
+        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
             appointment.getServices().clear();
             for (long serviceId : dto.servicesIds()) {
                 JobItem service = jobItemRepository.findById(serviceId)
@@ -96,18 +104,29 @@ public class AppointmentService {
 
                 sum = sum.add(service.getBasePrice());
 
-                appointment.getServices().add(new AppointmentServiceEntity(appointment, service, service.getBasePrice(), BigDecimal.ZERO));
+                appointment.getServices().add(new AppointmentServiceEntity(appointment, service, service.getBasePrice()));
             }
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);
-            appointment.setUpdatedAt(NOW);
+        }
+        else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
 
-            repository.save(appointment);
+        if (dto.discount() != null && dto.discount().compareTo(appointment.getTotalValue()) > 0) {
+            throw new DomainException("O desconto não pode ser maior do que o preço do atendimento");
+        }
 
-            return new AppointmentResponseDTO(appointment);
+        if (dto.discount() != null) {
+            appointment.setDiscount(dto.discount());
+            appointment.setTotalValue(appointment.getTotalValue().subtract(dto.discount()));
+            appointment.setRemainingValue(appointment.getTotalValue());
+        }
 
-        } else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
+        appointment.setUpdatedAt(NOW);
+
+        repository.save(appointment);
+
+        return new AppointmentResponseDTO(appointment);
     }
 
     @Transactional
@@ -120,16 +139,10 @@ public class AppointmentService {
         }
 
         appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
-
         appointment.setUpdatedAt(NOW);
 
         return new AppointmentResponseDTO(appointment);
     }
-
-//    @Transactional
-//    public AppointmentResponseDTO finishAppointment(Long id) {
-//         paymentService.addPayment(id);
-//    }
 
     private void createDtoToEntity(AppointmentCreateRequestDTO dto, Appointment entity) {
         Professional professional = professionalRepository.findById(dto.professionalId())
@@ -158,9 +171,10 @@ public class AppointmentService {
 
             sum = sum.add(service.getBasePrice());
 
-            entity.getServices().add(new AppointmentServiceEntity(entity, service, service.getBasePrice(), BigDecimal.ZERO));
+            entity.getServices().add(new AppointmentServiceEntity(entity, service, service.getBasePrice()));
         }
 
+        entity.setDiscount(BigDecimal.ZERO);
         entity.setTotalValue(sum);
         entity.setRemainingValue(sum);
 
