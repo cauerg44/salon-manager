@@ -1,9 +1,13 @@
 package br.com.beautycore.api.services;
 
 import br.com.beautycore.api.dto.request.PaymentCreateRequestDTO;
+import br.com.beautycore.api.dto.response.PaymentResponseDTO;
 import br.com.beautycore.api.entity.Appointment;
+import br.com.beautycore.api.entity.Payment;
+import br.com.beautycore.api.enums.AppointmentStatus;
 import br.com.beautycore.api.repository.AppointmentRepository;
 import br.com.beautycore.api.repository.PaymentRepository;
+import br.com.beautycore.api.services.exception.DomainException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,28 +28,54 @@ public class PaymentService {
     private AppointmentRepository appointmentRepository;
 
     @Transactional
-    protected void addPayment(Long appointmentId, PaymentCreateRequestDTO dto) {
-        Appointment appointment = appointmentRepository.findById(appointmentId)
+    public PaymentResponseDTO createPayment(PaymentCreateRequestDTO dto) {
+        Appointment appointment = appointmentRepository.findById(dto.appointmentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
-        // totalValue = 20
-        // amountPaid = 20
-        // remaining = 0
-
-        BigDecimal remaining = dto.amount().subtract(appointment.getTotalValue());
-
-        // 1. If client pays total value of appointment
-        if (remaining.compareTo(BigDecimal.ZERO) == 0) {
-            appointment.setTotalValue(BigDecimal.ZERO);
-            appointment.setRemainingValue(BigDecimal.ZERO);
-            appointment.setIsPaid(true);
-            appointment.setUpdatedAt(NOW);
+        if (appointment.getAppointmentStatus() == AppointmentStatus.CANCELED) {
+            throw new DomainException("É possível somente associar pagamento com atendimentos não cancelados.");
         }
 
-        // 2. If client pays partial
-        if (remaining.compareTo(BigDecimal.ZERO) > 0 && remaining.compareTo(appointment.getTotalValue()) < 0) {
+        if (appointment.getIsPaid()) {
+            throw new DomainException("Atendimento já pago");
+        }
+
+        Payment payment = new Payment();
+
+        BigDecimal remaining = appointment.getTotalValue().subtract(dto.amount());
+
+        // 1. If clients pays appointment total price:
+        if (dto.amount().compareTo(appointment.getTotalValue()) == 0) {
+            appointment.setIsPaid(true);
             appointment.setRemainingValue(remaining);
             appointment.setUpdatedAt(NOW);
         }
+
+        // 2. If client pays partial:
+        if (dto.amount().compareTo(appointment.getTotalValue()) < 0) {
+            appointment.setIsPaid(false);
+            appointment.setRemainingValue(remaining);
+            appointment.setUpdatedAt(NOW);
+        }
+
+        // 3. If client pays more than appointment total price;
+        if (dto.amount().compareTo(appointment.getTotalValue()) > 0) {
+            appointment.setIsPaid(true);
+            appointment.setRemainingValue(BigDecimal.ZERO);
+            appointment.getClient().setCredit(remaining.abs());
+            appointment.setUpdatedAt(NOW);
+        }
+
+        payment.setAppointment(appointment);
+        payment.setPaymentMethod(dto.paymentMethod());
+        payment.setAmountPaid(dto.amount());
+        payment.setPaidAt(NOW);
+
+        appointment.getPayments().add(payment);
+
+        appointmentRepository.save(appointment);
+        repository.save(payment);
+
+        return new PaymentResponseDTO(payment);
     }
 }
