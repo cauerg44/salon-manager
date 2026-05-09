@@ -8,7 +8,7 @@ import br.com.beautycore.api.repository.ClientRepository;
 import br.com.beautycore.api.services.exception.DatabaseException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,13 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @Service
 public class ClientService {
 
-    @Autowired
-    private ClientRepository repository;
-
-    private static final LocalDateTime NOW = LocalDateTime.now();
+    private final ClientRepository repository;
 
     @Transactional(readOnly = true)
     public Page<ClientResponseDTO> findAll(String name, Pageable pageable) {
@@ -81,8 +79,8 @@ public class ClientService {
         entity.setCredit(BigDecimal.ZERO);
         entity.setInAppointment(false);
 
-        entity.setCreatedAt(NOW);
-        entity.setUpdatedAt(NOW);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
     }
 
     private void patchDtoToEntity(Client entity, ClientPatchRequestDTO dto) {
@@ -102,6 +100,6 @@ public class ClientService {
             entity.setCredit(dto.credit());
         }
 
-        entity.setUpdatedAt(NOW);
+        entity.setUpdatedAt(LocalDateTime.now());
     }
 }

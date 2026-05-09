@@ -10,6 +10,8 @@ import br.com.beautycore.api.repository.JobItemRepository;
 import br.com.beautycore.api.services.exception.DatabaseException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class JobItemService {
 
-    @Autowired
-    private JobItemRepository repository;
+    private final JobItemRepository repository;
 
     @Transactional(readOnly = true)
     public List<JobItemResponseDTO> findAll() {

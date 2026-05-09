@@ -9,6 +9,7 @@ import br.com.beautycore.api.repository.ProfessionalRepository;
 import br.com.beautycore.api.repository.SpecialtyRepository;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,16 +18,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class ProfessionalService {
 
-    @Autowired
-    private ProfessionalRepository repository;
-
-    @Autowired
-    private SpecialtyRepository specialtyRepository;
-
-    private static final LocalDateTime NOW = LocalDateTime.now();
+    private final ProfessionalRepository repository;
+    private final SpecialtyRepository specialtyRepository;
 
     @Transactional(readOnly = true)
     public List<ProfessionalResponseDTO> findAll() {
@@ -70,7 +67,7 @@ public class ProfessionalService {
 
             entity.setIsActive(false);
             entity.setIsWorking(false);
-            entity.setUpdatedAt(NOW);
+            entity.setUpdatedAt(LocalDateTime.now());
 
             entity = repository.save(entity);
 
@@ -87,7 +84,7 @@ public class ProfessionalService {
             Professional entity = repository.getReferenceById(id);
 
             entity.setIsActive(true);
-            entity.setUpdatedAt(NOW);
+            entity.setUpdatedAt(LocalDateTime.now());
 
             entity = repository.save(entity);
 
@@ -110,8 +107,8 @@ public class ProfessionalService {
             entity.addSpecialty(specialty);
         }
 
-        entity.setCreatedAt(NOW);
-        entity.setUpdatedAt(NOW);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
     }
 
     private void patchDtoToEntity(Professional entity, ProfessionalPatchRequestDTO dto) {
@@ -128,6 +125,6 @@ public class ProfessionalService {
             }
         }
 
-        entity.setUpdatedAt(NOW);
+        entity.setUpdatedAt(LocalDateTime.now());
     }
 }

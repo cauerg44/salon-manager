@@ -4,13 +4,17 @@ import br.com.beautycore.api.converter.AppointmentConverter;
 import br.com.beautycore.api.dto.request.AppointmentCreateRequestDTO;
 import br.com.beautycore.api.dto.request.AppointmentPatchRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
-import br.com.beautycore.api.entity.*;
+import br.com.beautycore.api.entity.Appointment;
+import br.com.beautycore.api.entity.Client;
+import br.com.beautycore.api.entity.Professional;
 import br.com.beautycore.api.enums.AppointmentStatus;
-import br.com.beautycore.api.repository.*;
+import br.com.beautycore.api.repository.AppointmentRepository;
+import br.com.beautycore.api.repository.ClientRepository;
+import br.com.beautycore.api.repository.JobItemRepository;
+import br.com.beautycore.api.repository.ProfessionalRepository;
 import br.com.beautycore.api.services.exception.DomainException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,8 +30,7 @@ public class AppointmentService {
     private final AppointmentRepository repository;
     private final ProfessionalRepository professionalRepository;
     private final ClientRepository clientRepository;
-    private final JobItemRepository jobItemRepository;
-    private final PaymentService paymentService;
+
     private final JobItemService jobItemService;
 
     @Transactional(readOnly = true)

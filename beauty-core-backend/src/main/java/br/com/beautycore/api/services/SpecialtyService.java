@@ -6,6 +6,7 @@ import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.repository.SpecialtyRepository;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,13 +16,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class SpecialtyService {
 
-    @Autowired
-    private SpecialtyRepository repository;
-
-    private static final LocalDateTime NOW = LocalDateTime.now();
+    private final SpecialtyRepository repository;
 
     @Transactional(readOnly = true)
     public List<SpecialtyResponseDTO> findAll() {
@@ -37,8 +36,8 @@ public class SpecialtyService {
         entity.setName(dto.name());
         entity = repository.save(entity);
 
-        entity.setCreatedAt(NOW);
-        entity.setUpdatedAt(NOW);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
 
         return new SpecialtyResponseDTO(entity.getId(), entity.getName());
     }
@@ -50,7 +49,7 @@ public class SpecialtyService {
 
             entity.setName(dto.name());
             entity = repository.save(entity);
-            entity.setUpdatedAt(NOW);
+            entity.setUpdatedAt(LocalDateTime.now());
 
             return new SpecialtyResponseDTO(entity.getId(), entity.getName());
         }
