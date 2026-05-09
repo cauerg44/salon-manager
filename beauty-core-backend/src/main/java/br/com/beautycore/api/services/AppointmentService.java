@@ -69,6 +69,26 @@ public class AppointmentService {
     }
 
     @Transactional
+    public AppointmentResponseDTO updateAppointment(Long id, AppointmentPatchRequestDTO dto) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
+
+        updateAppointmentValidationRules(appointment, dto);
+
+        if (dto.discount() != null) {
+            appointment.setDiscount(dto.discount());
+            appointment.setTotalValue(appointment.getTotalValue().subtract(dto.discount()));
+            appointment.setRemainingValue(appointment.getTotalValue());
+        }
+
+        appointment.setUpdatedAt(LocalDateTime.now());
+
+        Appointment appointmentUpdated = repository.save(appointment);
+
+        return new AppointmentResponseDTO(appointmentUpdated);
+    }
+
+    @Transactional
     public AppointmentResponseDTO startAppointment(Long id) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
@@ -91,54 +111,6 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO updateAppointment(Long id, AppointmentPatchRequestDTO dto) {
-        Appointment appointment = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
-
-        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING && dto.professionalId() != null) {
-            Professional professional = professionalRepository.findById(dto.professionalId())
-                            .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
-
-            appointment.setProfessional(professional);
-        }
-        else throw new DomainException("É possível somente alterar o profissional se o atendimento não estiver em andamento");
-
-        BigDecimal sum = BigDecimal.ZERO;
-
-        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
-            appointment.getServices().clear();
-            for (long serviceId : dto.servicesIds()) {
-                JobItem service = jobItemRepository.findById(serviceId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
-
-                sum = sum.add(service.getBasePrice());
-
-                appointment.getServices().add(new AppointmentServiceEntity(appointment, service, service.getBasePrice()));
-            }
-
-            appointment.setTotalValue(sum);
-            appointment.setRemainingValue(sum);
-        }
-        else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
-
-        if (dto.discount() != null && dto.discount().compareTo(appointment.getTotalValue()) > 0) {
-            throw new DomainException("O desconto não pode ser maior do que o preço do atendimento");
-        }
-
-        if (dto.discount() != null) {
-            appointment.setDiscount(dto.discount());
-            appointment.setTotalValue(appointment.getTotalValue().subtract(dto.discount()));
-            appointment.setRemainingValue(appointment.getTotalValue());
-        }
-
-        appointment.setUpdatedAt(LocalDateTime.now());
-
-        repository.save(appointment);
-
-        return new AppointmentResponseDTO(appointment);
-    }
-
-    @Transactional
     public AppointmentResponseDTO cancelAppointment(Long id) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
@@ -151,5 +123,28 @@ public class AppointmentService {
         appointment.setUpdatedAt(LocalDateTime.now());
 
         return new AppointmentResponseDTO(appointment);
+    }
+
+    private void updateAppointmentValidationRules(Appointment appointment, AppointmentPatchRequestDTO dto) {
+        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING && dto.professionalId() != null) {
+            Professional professional = professionalRepository.findById(dto.professionalId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
+
+            appointment.setProfessional(professional);
+        }
+        else throw new DomainException("É possível somente alterar o profissional se o atendimento não estiver em andamento");
+
+        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
+            appointment.getServices().clear();
+            BigDecimal sum = jobItemService.addServices(appointment, dto.servicesIds());
+
+            appointment.setTotalValue(sum);
+            appointment.setRemainingValue(sum);
+        }
+        else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
+
+        if (dto.discount() != null && dto.discount().compareTo(appointment.getTotalValue()) > 0) {
+            throw new DomainException("O desconto não pode ser maior do que o preço do atendimento");
+        }
     }
 }
