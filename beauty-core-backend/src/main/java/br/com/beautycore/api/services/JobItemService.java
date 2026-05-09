@@ -3,6 +3,7 @@ package br.com.beautycore.api.services;
 import br.com.beautycore.api.dto.request.JobItemCreateRequestDTO;
 import br.com.beautycore.api.dto.request.JobItemPatchRequestDTO;
 import br.com.beautycore.api.dto.response.JobItemResponseDTO;
+import br.com.beautycore.api.entity.AppointmentServiceEntity;
 import br.com.beautycore.api.entity.JobItem;
 import br.com.beautycore.api.repository.JobItemRepository;
 import br.com.beautycore.api.services.exception.DatabaseException;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,6 +77,20 @@ public class JobItemService {
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
         }
+    }
+
+    public BigDecimal addServices(Set<Long> servicesIds) {
+
+        BigDecimal sum = BigDecimal.ZERO;
+
+        for (long serviceId : servicesIds) {
+            JobItem service = repository.findById(serviceId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
+
+            sum = sum.add(service.getBasePrice());
+        }
+
+        return sum;
     }
 
     private void patchDtoToEntity(JobItem entity, JobItemPatchRequestDTO dto) {

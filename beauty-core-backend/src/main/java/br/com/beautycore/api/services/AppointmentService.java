@@ -1,5 +1,6 @@
 package br.com.beautycore.api.services;
 
+import br.com.beautycore.api.converter.AppointmentConverter;
 import br.com.beautycore.api.dto.request.AppointmentCreateRequestDTO;
 import br.com.beautycore.api.dto.request.AppointmentPatchRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
@@ -8,6 +9,7 @@ import br.com.beautycore.api.enums.AppointmentStatus;
 import br.com.beautycore.api.repository.*;
 import br.com.beautycore.api.services.exception.DomainException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,25 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @Service
 public class AppointmentService {
 
-    private static final LocalDateTime NOW = LocalDateTime.now();
-
-    @Autowired
-    private AppointmentRepository repository;
-
-    @Autowired
-    private ProfessionalRepository professionalRepository;
-
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private JobItemRepository jobItemRepository;
-
-    @Autowired
-    private PaymentService paymentService;
+    private final AppointmentRepository repository;
+    private final ProfessionalRepository professionalRepository;
+    private final ClientRepository clientRepository;
+    private final JobItemRepository jobItemRepository;
+    private final PaymentService paymentService;
+    private final JobItemService jobItemService;
 
     @Transactional(readOnly = true)
     public Page<AppointmentResponseDTO> findAll(Pageable pageable) {
@@ -52,11 +45,27 @@ public class AppointmentService {
 
     @Transactional
     public AppointmentResponseDTO createAppointment(AppointmentCreateRequestDTO dto) {
-        Appointment entity = new Appointment();
+        Professional professional = professionalRepository.findById(dto.professionalId())
+                .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
-        createDtoToEntity(dto, entity);
+        Client client = clientRepository.findById(dto.clientId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
-        return new AppointmentResponseDTO(entity);
+        if (client.getInAppointment()) {
+            throw new DomainException("Cliente se encontra em outro atendimento no momento.");
+        }
+
+        Appointment entity = AppointmentConverter.createDtoToEntityConverter(professional, client);
+
+        BigDecimal sum = jobItemService.addServices(dto.servicesIds());
+
+        entity.setDiscount(BigDecimal.ZERO);
+        entity.setTotalValue(sum);
+        entity.setRemainingValue(sum);
+
+        Appointment createdEntity = repository.save(entity);
+
+        return new AppointmentResponseDTO(createdEntity);
     }
 
     @Transactional
@@ -74,7 +83,7 @@ public class AppointmentService {
 
         appointment.setAppointmentStatus(AppointmentStatus.IN_PROGRESS);
         appointment.getClient().setInAppointment(true);
-        appointment.setUpdatedAt(NOW);
+        appointment.setUpdatedAt(LocalDateTime.now());
 
         repository.save(appointment);
 
@@ -122,7 +131,7 @@ public class AppointmentService {
             appointment.setRemainingValue(appointment.getTotalValue());
         }
 
-        appointment.setUpdatedAt(NOW);
+        appointment.setUpdatedAt(LocalDateTime.now());
 
         repository.save(appointment);
 
@@ -139,51 +148,8 @@ public class AppointmentService {
         }
 
         appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
-        appointment.setUpdatedAt(NOW);
+        appointment.setUpdatedAt(LocalDateTime.now());
 
         return new AppointmentResponseDTO(appointment);
-    }
-
-    private void createDtoToEntity(AppointmentCreateRequestDTO dto, Appointment entity) {
-        Professional professional = professionalRepository.findById(dto.professionalId())
-                .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
-
-        Client client = clientRepository.findById(dto.clientId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
-
-        if (client.getInAppointment()) {
-            throw new DomainException("Cliente se encontra em outro atendimento no momento.");
-        }
-
-        entity.setProfessional(professional);
-
-        client.setInAppointment(false);
-        entity.setClient(client);
-
-        entity.setAppointmentStatus(AppointmentStatus.WAITING);
-
-        entity.getServices().clear();
-        BigDecimal sum = BigDecimal.ZERO;
-
-        for (long serviceId : dto.servicesIds()) {
-            JobItem service = jobItemRepository.findById(serviceId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
-
-            sum = sum.add(service.getBasePrice());
-
-            entity.getServices().add(new AppointmentServiceEntity(entity, service, service.getBasePrice()));
-        }
-
-        entity.setDiscount(BigDecimal.ZERO);
-        entity.setTotalValue(sum);
-        entity.setRemainingValue(sum);
-
-        entity.setIsPaid(false);
-
-        entity.setCreatedAt(NOW);
-        entity.setUpdatedAt(NOW);
-        entity.setFinishedAt(null);
-
-        repository.save(entity);
     }
 }

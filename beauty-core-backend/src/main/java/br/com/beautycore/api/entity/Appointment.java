@@ -41,7 +41,7 @@ public class Appointment {
     private Set<AppointmentServiceEntity> services = new HashSet<>();
 
     private BigDecimal discount;
-    private BigDecimal totalValue; // -= discount
+    private BigDecimal totalValue;
 
     private BigDecimal remainingValue;
 
