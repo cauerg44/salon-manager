@@ -10,7 +10,6 @@ import br.com.beautycore.api.entity.Professional;
 import br.com.beautycore.api.enums.AppointmentStatus;
 import br.com.beautycore.api.repository.AppointmentRepository;
 import br.com.beautycore.api.repository.ClientRepository;
-import br.com.beautycore.api.repository.JobItemRepository;
 import br.com.beautycore.api.repository.ProfessionalRepository;
 import br.com.beautycore.api.services.exception.DomainException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
