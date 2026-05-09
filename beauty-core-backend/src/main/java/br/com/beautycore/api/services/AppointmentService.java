@@ -57,7 +57,7 @@ public class AppointmentService {
 
         Appointment entity = AppointmentConverter.createDtoToEntityConverter(professional, client);
 
-        BigDecimal sum = jobItemService.addServices(dto.servicesIds());
+        BigDecimal sum = jobItemService.addServices(entity, dto.servicesIds());
 
         entity.setDiscount(BigDecimal.ZERO);
         entity.setTotalValue(sum);

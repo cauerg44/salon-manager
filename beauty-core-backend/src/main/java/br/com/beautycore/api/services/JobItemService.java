@@ -3,6 +3,7 @@ package br.com.beautycore.api.services;
 import br.com.beautycore.api.dto.request.JobItemCreateRequestDTO;
 import br.com.beautycore.api.dto.request.JobItemPatchRequestDTO;
 import br.com.beautycore.api.dto.response.JobItemResponseDTO;
+import br.com.beautycore.api.entity.Appointment;
 import br.com.beautycore.api.entity.AppointmentServiceEntity;
 import br.com.beautycore.api.entity.JobItem;
 import br.com.beautycore.api.repository.JobItemRepository;
@@ -79,7 +80,7 @@ public class JobItemService {
         }
     }
 
-    public BigDecimal addServices(Set<Long> servicesIds) {
+    public BigDecimal addServices(Appointment entity, Set<Long> servicesIds) {
 
         BigDecimal sum = BigDecimal.ZERO;
 
@@ -88,6 +89,7 @@ public class JobItemService {
                     .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
 
             sum = sum.add(service.getBasePrice());
+            entity.getServices().add(new AppointmentServiceEntity(entity, service, service.getBasePrice()));
         }
 
         return sum;
