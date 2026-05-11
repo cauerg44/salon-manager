@@ -5,6 +5,7 @@ import br.com.beautycore.api.dto.response.PaymentResponseDTO;
 import br.com.beautycore.api.entity.Appointment;
 import br.com.beautycore.api.entity.Payment;
 import br.com.beautycore.api.enums.AppointmentStatus;
+import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.repository.AppointmentRepository;
 import br.com.beautycore.api.repository.PaymentRepository;
 import br.com.beautycore.api.services.exception.DomainException;
@@ -28,7 +29,8 @@ public class PaymentService {
     private AppointmentRepository appointmentRepository;
 
     @Transactional(readOnly = true)
-    public BigDecimal getTotalProfitInLive() {
+    public TotalProfitInLiveProjection getTotalProfitInLive() {
+
         LocalDateTime start = LocalDate.now().atStartOfDay();
         LocalDateTime end = LocalDate.now().atTime(23, 59, 59);
 

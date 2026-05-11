@@ -2,6 +2,7 @@ package br.com.beautycore.api.controller;
 
 import br.com.beautycore.api.dto.request.PaymentCreateRequestDTO;
 import br.com.beautycore.api.dto.response.PaymentResponseDTO;
+import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.services.PaymentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class PaymentController {
     private PaymentService service;
 
     @GetMapping(value = "/total-profit-in-live")
-    public ResponseEntity<BigDecimal> getTotalProfitInLive() {
+    public ResponseEntity<TotalProfitInLiveProjection> getTotalProfitInLive() {
         var result = service.getTotalProfitInLive();
         return ResponseEntity.ok(result);
     }
