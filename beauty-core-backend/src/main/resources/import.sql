@@ -37,5 +37,5 @@ INSERT INTO appointment_service (appointment_id, service_id, price_at_moment) VA
 INSERT INTO appointment_service (appointment_id, service_id, price_at_moment) VALUES (3, 2, 35.00);
 
 -- 7. PAYMENTS
-INSERT INTO payments (id, appointment_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 1, 'PIX', 35.00, '2026-05-04 10:45:00');
-INSERT INTO payments (id, appointment_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 2, 'CASH', 35.00, '2026-05-04 12:00:00');
+INSERT INTO payments (id, appointment_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 1, 'PIX', 35.00, '2026-05-11 10:45:00');
+INSERT INTO payments (id, appointment_id, payment_method, amount_paid, paid_at) VALUES (nextval('sq_payments'), 2, 'CASH', 35.00, '2026-05-11 12:00:00');

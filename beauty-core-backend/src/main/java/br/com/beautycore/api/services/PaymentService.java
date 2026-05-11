@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -25,6 +26,14 @@ public class PaymentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Transactional(readOnly = true)
+    public BigDecimal getTotalProfitInLive() {
+        LocalDateTime start = LocalDate.now().atStartOfDay();
+        LocalDateTime end = LocalDate.now().atTime(23, 59, 59);
+
+        return repository.getTotalProfitInLive(start, end);
+    }
 
     @Transactional
     public PaymentResponseDTO createPayment(PaymentCreateRequestDTO dto) {
