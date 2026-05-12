@@ -20,8 +20,7 @@ import java.util.Set;
 public class Appointment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_seq")
-    @SequenceGenerator(name = "appointment_seq", sequenceName = "sq_appointments", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

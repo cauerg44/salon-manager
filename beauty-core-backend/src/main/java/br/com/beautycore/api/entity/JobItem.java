@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 public class JobItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "service_seq", sequenceName = "sq_services", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

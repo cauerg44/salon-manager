@@ -17,8 +17,7 @@ import java.util.Set;
 public class Professional {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "professional_seq")
-    @SequenceGenerator(name = "professional_seq", sequenceName = "sq_professionals", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

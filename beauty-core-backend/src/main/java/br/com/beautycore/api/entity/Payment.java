@@ -18,8 +18,7 @@ import java.time.LocalDateTime;
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_seq")
-    @SequenceGenerator(name = "payment_seq", sequenceName = "sq_payments", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

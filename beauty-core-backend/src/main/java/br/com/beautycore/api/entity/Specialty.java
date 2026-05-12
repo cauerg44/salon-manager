@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 public class Specialty {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "specialty_seq")
-    @SequenceGenerator(name = "specialty_seq", sequenceName = "sq_specializations", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
