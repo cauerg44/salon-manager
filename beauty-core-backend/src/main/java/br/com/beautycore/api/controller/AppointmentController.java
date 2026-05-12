@@ -22,8 +22,8 @@ public class AppointmentController {
     private final AppointmentService service;
 
     @GetMapping
-    public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointments(Pageable pageable) {
-        var result = service.findAll(pageable);
+    public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointments(Pageable pageable, @RequestParam Boolean status) {
+        var result = service.findAllByStatus(pageable, status);
         return ResponseEntity.ok(result);
     }
 

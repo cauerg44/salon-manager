@@ -33,8 +33,8 @@ public class AppointmentService {
     private final JobItemService jobItemService;
 
     @Transactional(readOnly = true)
-    public Page<AppointmentResponseDTO> findAll(Pageable pageable) {
-        Page<Appointment> list = repository.findAll(pageable);
+    public Page<AppointmentResponseDTO> findAllByStatus(Pageable pageable, Boolean isPaid) {
+        Page<Appointment> list = repository.findAllByStatusAndOrderByCreatedAtDesc(pageable, isPaid);
         return list.map(appointment -> new AppointmentResponseDTO(appointment));
     }
 
