@@ -5,7 +5,7 @@ import br.com.beautycore.api.dto.request.AppointmentPatchRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
 import br.com.beautycore.api.services.AppointmentService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/v1/appointments")
+@RequiredArgsConstructor
 public class AppointmentController {
 
-    @Autowired
-    private AppointmentService service;
+    private final AppointmentService service;
 
     @GetMapping
     public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointments(Pageable pageable) {

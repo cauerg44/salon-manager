@@ -5,7 +5,7 @@ import br.com.beautycore.api.dto.request.ProfessionalPatchRequestDTO;
 import br.com.beautycore.api.dto.response.ProfessionalResponseDTO;
 import br.com.beautycore.api.services.ProfessionalService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "v1/professionals")
+@RequiredArgsConstructor
 public class ProfessionalController {
 
-    @Autowired
-    private ProfessionalService service;
+    private final ProfessionalService service;
 
     @GetMapping
     public ResponseEntity<List<ProfessionalResponseDTO>> findAll() {

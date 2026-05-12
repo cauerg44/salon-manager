@@ -4,7 +4,7 @@ import br.com.beautycore.api.dto.request.PaymentCreateRequestDTO;
 import br.com.beautycore.api.dto.response.PaymentResponseDTO;
 import br.com.beautycore.api.services.PaymentService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,10 +16,10 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/v1/payments")
+@RequiredArgsConstructor
 public class PaymentController {
 
-    @Autowired
-    private PaymentService service;
+    private final PaymentService service;
 
     @PostMapping
     public ResponseEntity<PaymentResponseDTO> createPayment(@Valid @RequestBody PaymentCreateRequestDTO dto) {

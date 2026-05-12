@@ -5,7 +5,7 @@ import br.com.beautycore.api.dto.request.ClientPatchRequestDTO;
 import br.com.beautycore.api.dto.response.ClientResponseDTO;
 import br.com.beautycore.api.services.ClientService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "v1/clients")
+@RequiredArgsConstructor
 public class ClientController {
 
-    @Autowired
-    private ClientService service;
+    private final ClientService service;
 
     @GetMapping
     public ResponseEntity<Page<ClientResponseDTO>> findAllPaged(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {

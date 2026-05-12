@@ -5,7 +5,7 @@ import br.com.beautycore.api.dto.request.JobItemPatchRequestDTO;
 import br.com.beautycore.api.dto.response.JobItemResponseDTO;
 import br.com.beautycore.api.services.JobItemService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "v1/services")
+@RequiredArgsConstructor
 public class JobItemController {
 
-    @Autowired
-    private JobItemService service;
+    private final JobItemService service;
 
     @GetMapping
     public ResponseEntity<List<JobItemResponseDTO>> findAll() {

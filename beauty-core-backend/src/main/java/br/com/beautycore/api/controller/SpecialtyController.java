@@ -4,7 +4,7 @@ import br.com.beautycore.api.dto.request.SpecialtyCreateRequestDTO;
 import br.com.beautycore.api.dto.response.SpecialtyResponseDTO;
 import br.com.beautycore.api.services.SpecialtyService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "v1/specializations")
+@RequiredArgsConstructor
 public class SpecialtyController {
 
-    @Autowired
-    private SpecialtyService service;
+    private final SpecialtyService service;
 
     @GetMapping
     public ResponseEntity<List<SpecialtyResponseDTO>> findAllSpecializations() {
