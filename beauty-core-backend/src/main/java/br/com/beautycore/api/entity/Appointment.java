@@ -1,7 +1,6 @@
 package br.com.beautycore.api.entity;
 
 import br.com.beautycore.api.enums.AppointmentStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -51,12 +50,7 @@ public class Appointment {
     @OneToMany(mappedBy = "appointment")
     private List<Payment> payments;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime finishedAt;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime updatedAt;
 }

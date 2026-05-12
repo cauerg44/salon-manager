@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,10 +36,7 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Appointment> appointments = new ArrayList<>();
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime updatedAt;
 
     public Client(Long id, String name, String phone, LocalDate birthDate, BigDecimal credit, LocalDateTime createdAt, LocalDateTime updatedAt) {

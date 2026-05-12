@@ -1,6 +1,5 @@
 package br.com.beautycore.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,10 +32,7 @@ public class Professional {
             inverseJoinColumns = @JoinColumn(name = "specialty_id"))
     private Set<Specialty> specializations = new HashSet<>();
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime updatedAt;
 
     public void addSpecialty(Specialty specialty) {
