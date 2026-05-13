@@ -20,6 +20,7 @@ public class SpecialtyController {
 
     private final SpecialtyService service;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<List<SpecialtyResponseDTO>> findAllSpecializations() {
         var result = service.findAll();
@@ -40,14 +41,16 @@ public class SpecialtyController {
         return ResponseEntity.created(uri).body(result);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<SpecialtyResponseDTO> updateSpecialty(@PathVariable Long id, @Valid @RequestBody SpecialtyCreateRequestDTO dto) {
         var result = service.patch(id, dto);
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<SpecialtyResponseDTO> updateSpecialty(@PathVariable Long id) {
+    public ResponseEntity<SpecialtyResponseDTO> deleteSpecialty(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

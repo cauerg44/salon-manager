@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,18 +22,21 @@ public class AppointmentController {
 
     private final AppointmentService service;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointments(Pageable pageable, @RequestParam Boolean status) {
         var result = service.findAllByStatus(pageable, status);
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{id}")
     public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
         var result = service.findById(id);
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> createAppointment(@Valid @RequestBody AppointmentCreateRequestDTO dto) {
         var result = service.createAppointment(dto);
@@ -46,18 +50,21 @@ public class AppointmentController {
         return ResponseEntity.created(uri).body(result);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/{id}/start")
-    public ResponseEntity<AppointmentResponseDTO> createAppointment(@PathVariable Long id) {
+    public ResponseEntity<AppointmentResponseDTO> startAppointment(@PathVariable Long id) {
         var result = service.startAppointment(id);
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/{id}/cancel")
     public ResponseEntity<AppointmentResponseDTO> cancelAppointment(@PathVariable Long id) {
         var result = service.cancelAppointment(id);
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @Valid @RequestBody AppointmentPatchRequestDTO dto) {
         var result = service.updateAppointment(id, dto);

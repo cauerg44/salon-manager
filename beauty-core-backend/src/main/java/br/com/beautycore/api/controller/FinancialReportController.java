@@ -6,6 +6,7 @@ import br.com.beautycore.api.services.FinancialReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class FinancialReportController {
 
     private final FinancialReportService service;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/total-profit-in-live")
     public ResponseEntity<TotalProfitInLiveProjection> getTotalProfitInLive() {
         var result = service.getTotalProfitInLive();
@@ -24,6 +26,7 @@ public class FinancialReportController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("#professionalId == authentication.principal.id or hasRole('ADMIN'")
     @GetMapping("/professionals/{professionalId}/total-profit")
     public ResponseEntity<TotalProfitByProfessionalProjection> getTotalProfitByProfessional(
             @PathVariable Long professionalId,
