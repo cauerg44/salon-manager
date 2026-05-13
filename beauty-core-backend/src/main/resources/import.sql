@@ -9,12 +9,13 @@ INSERT INTO specializations (name, created_at, updated_at) VALUES ('Manicure', C
 INSERT INTO specializations (name, created_at, updated_at) VALUES ('Massagista', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 3. PROFISSIONAIS
-INSERT INTO professionals (name, email, password, is_active, is_working, created_at, updated_at) VALUES ('Alan', 'alan@beautycore.com', '$2a$10$Y50UaEVPu8fzJr8n3hRzHuHnB8hXyGVX9D.W8Xy8Q8y8Q8y8Q8y8Q', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO professionals (name, email, password, is_active, is_working, created_at, updated_at) VALUES ('Daniel', 'daniel@beautycore.com', '$2a$10$Y50UaEVPu8fzJr8n3hRzHuHnB8hXyGVX9D.W8Xy8Q8y8Q8y8Q8y8Q', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO professionals (name, email, password, is_active, is_working, created_at, updated_at) VALUES ('Júnior', 'junior@beautycore.com', '$2a$10$Y50UaEVPu8fzJr8n3hRzHuHnB8hXyGVX9D.W8Xy8Q8y8Q8y8Q8y8Q', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO professionals (name, email, password, is_active, is_working, created_at, updated_at) VALUES ('Alan', 'alan@beautycore.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO professionals (name, email, password, is_active, is_working, created_at, updated_at) VALUES ('Daniel', 'daniel@beautycore.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO professionals (name, email, password, is_active, is_working, created_at, updated_at) VALUES ('Júnior', 'junior@beautycore.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 4. VÍNCULOS DE ACESSO E ESPECIALIDADE
 INSERT INTO professional_role (professional_id, role_id) VALUES (1, 1);
+INSERT INTO professional_role (professional_id, role_id) VALUES (1, 2);
 INSERT INTO professional_role (professional_id, role_id) VALUES (2, 2);
 INSERT INTO professional_role (professional_id, role_id) VALUES (3, 2);
 

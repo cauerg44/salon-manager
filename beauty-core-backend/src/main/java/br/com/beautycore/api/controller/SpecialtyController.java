@@ -6,6 +6,7 @@ import br.com.beautycore.api.services.SpecialtyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,6 +26,7 @@ public class SpecialtyController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<SpecialtyResponseDTO> createNewSpecialty(@Valid @RequestBody SpecialtyCreateRequestDTO dto) {
         var result = service.save(dto);
