@@ -25,7 +25,7 @@ public class TokenProvider {
         return buildToken(user.getUsername());
     }
 
-    public String getUsername(String token) {
+    public String extractUsername(String token) {
         return getClaims(token).getSubject();
     }
 

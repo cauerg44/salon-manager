@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name = "roles")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")

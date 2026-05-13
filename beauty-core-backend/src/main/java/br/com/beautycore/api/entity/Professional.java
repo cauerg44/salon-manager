@@ -15,6 +15,7 @@ import java.util.Set;
 @Table(name = "professionals")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -35,7 +36,7 @@ public class Professional implements UserDetails {
     private Boolean isActive;
     private Boolean isWorking;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "professional_role",
             joinColumns = @JoinColumn(name = "professional_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

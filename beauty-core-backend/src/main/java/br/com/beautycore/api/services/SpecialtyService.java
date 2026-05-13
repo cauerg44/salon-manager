@@ -2,6 +2,7 @@ package br.com.beautycore.api.services;
 
 import br.com.beautycore.api.dto.request.SpecialtyCreateRequestDTO;
 import br.com.beautycore.api.dto.response.SpecialtyResponseDTO;
+import br.com.beautycore.api.entity.Professional;
 import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.repository.SpecialtyRepository;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -63,5 +66,16 @@ public class SpecialtyService {
             throw new ResourceNotFoundException("Especialidade não encontrada");
         }
         repository.deleteById(id);
+    }
+
+    protected Set<Specialty> getSpecialtiesByIds(Set<Long> specializationsIds) {
+        Set<Specialty> set = new HashSet<>();
+
+        for (long specialtyId : specializationsIds) {
+            Specialty specialty = repository.findById(specialtyId).orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
+            set.add(specialty);
+        }
+
+        return set;
     }
 }
