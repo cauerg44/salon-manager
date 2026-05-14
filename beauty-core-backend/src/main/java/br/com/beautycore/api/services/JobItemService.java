@@ -80,7 +80,7 @@ public class JobItemService {
         }
     }
 
-    public BigDecimal addServices(Appointment entity, Set<Long> servicesIds) {
+    protected BigDecimal addServicesInAppointment(Appointment entity, Set<Long> servicesIds) {
 
         BigDecimal sum = BigDecimal.ZERO;
 

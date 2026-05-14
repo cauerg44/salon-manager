@@ -34,8 +34,8 @@ public class AppointmentService {
 
     @Transactional(readOnly = true)
     public Page<AppointmentResponseDTO> findAllByStatus(Pageable pageable, Boolean isPaid) {
-        Page<Appointment> list = repository.findAllByStatusAndOrderByCreatedAtDesc(pageable, isPaid);
-        return list.map(appointment -> new AppointmentResponseDTO(appointment));
+        Page<Appointment> page = repository.findAllByStatusAndOrderByCreatedAtDesc(pageable, isPaid);
+        return page.map(appointment -> new AppointmentResponseDTO(appointment));
     }
 
     @Transactional(readOnly = true)
@@ -46,7 +46,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO createAppointment(AppointmentCreateRequestDTO dto) {
+    public AppointmentResponseDTO save(AppointmentCreateRequestDTO dto) {
         Professional professional = professionalRepository.findById(dto.professionalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
@@ -59,7 +59,7 @@ public class AppointmentService {
 
         Appointment entity = AppointmentConverter.createDtoToEntityConverter(professional, client);
 
-        BigDecimal sum = jobItemService.addServices(entity, dto.servicesIds());
+        BigDecimal sum = jobItemService.addServicesInAppointment(entity, dto.servicesIds());
 
         entity.setDiscount(BigDecimal.ZERO);
         entity.setTotalValue(sum);
@@ -71,7 +71,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO updateAppointment(Long id, AppointmentPatchRequestDTO dto) {
+    public AppointmentResponseDTO patch(Long id, AppointmentPatchRequestDTO dto) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
@@ -91,7 +91,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO startAppointment(Long id) {
+    public AppointmentResponseDTO start(Long id) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
@@ -113,7 +113,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO cancelAppointment(Long id) {
+    public AppointmentResponseDTO cancel(Long id) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
@@ -138,7 +138,7 @@ public class AppointmentService {
 
         if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
             appointment.getServices().clear();
-            BigDecimal sum = jobItemService.addServices(appointment, dto.servicesIds());
+            BigDecimal sum = jobItemService.addServicesInAppointment(appointment, dto.servicesIds());
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);

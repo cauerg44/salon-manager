@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Service
@@ -48,7 +49,7 @@ public class AuthService {
         Role role = roleRepository.findByAuthority(RoleType.ROLE_PROFESSIONAL.name())
                 .orElseGet(() -> roleRepository.save(Role.builder().authority(RoleType.ROLE_PROFESSIONAL.name()).build()));
 
-        Set<Specialty> specializations = specialtyService.getSpecialtiesByIds(dto.specializationsIds());
+        Set<Specialty> specializations = specialtyService.addSpecializations(dto.specializationsIds());
 
         Professional professionalRegistered = professionalRepository.save(Professional.builder()
                 .name(dto.name())
@@ -58,6 +59,8 @@ public class AuthService {
                 .roles(Set.of(role))
                 .specializations(specializations)
                 .password(passwordEncoder.encode(dto.password()))
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build()
         );
 

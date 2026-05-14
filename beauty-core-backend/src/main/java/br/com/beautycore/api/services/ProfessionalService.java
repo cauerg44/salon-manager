@@ -33,17 +33,6 @@ public class ProfessionalService {
     }
 
     @Transactional
-    public ProfessionalResponseDTO save(ProfessionalCreateRequestDTO dto) {
-        Professional entity = new Professional();
-
-        createDtoToEntity(entity, dto);
-
-        entity = repository.save(entity);
-
-        return new ProfessionalResponseDTO(entity);
-    }
-
-    @Transactional
     public ProfessionalResponseDTO patch(Long id, ProfessionalPatchRequestDTO dto) {
         try {
             Professional entity = repository.getReferenceById(id);
@@ -92,22 +81,6 @@ public class ProfessionalService {
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Profissional não encontrado");
         }
-    }
-
-    private void createDtoToEntity(Professional entity, ProfessionalCreateRequestDTO dto) {
-        entity.setName(dto.name());
-        entity.setIsActive(true);
-        entity.setIsWorking(false);
-
-        entity.getSpecializations().clear();
-        for (long specialtyId : dto.specializationsIds()) {
-            Specialty specialty = specialtyRepository.findById(specialtyId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
-            entity.addSpecialty(specialty);
-        }
-
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
     }
 
     private void patchDtoToEntity(Professional entity, ProfessionalPatchRequestDTO dto) {

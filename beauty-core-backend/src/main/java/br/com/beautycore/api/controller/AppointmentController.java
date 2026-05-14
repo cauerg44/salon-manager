@@ -39,7 +39,7 @@ public class AppointmentController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> createAppointment(@Valid @RequestBody AppointmentCreateRequestDTO dto) {
-        var result = service.createAppointment(dto);
+        var result = service.save(dto);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -53,21 +53,21 @@ public class AppointmentController {
     @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/{id}/start")
     public ResponseEntity<AppointmentResponseDTO> startAppointment(@PathVariable Long id) {
-        var result = service.startAppointment(id);
+        var result = service.start(id);
         return ResponseEntity.ok(result);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/{id}/cancel")
     public ResponseEntity<AppointmentResponseDTO> cancelAppointment(@PathVariable Long id) {
-        var result = service.cancelAppointment(id);
+        var result = service.cancel(id);
         return ResponseEntity.ok(result);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @Valid @RequestBody AppointmentPatchRequestDTO dto) {
-        var result = service.updateAppointment(id, dto);
+        var result = service.patch(id, dto);
         return ResponseEntity.ok(result);
     }
 }

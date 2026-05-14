@@ -5,8 +5,6 @@ import br.com.beautycore.api.dto.response.PaymentResponseDTO;
 import br.com.beautycore.api.entity.Appointment;
 import br.com.beautycore.api.entity.Payment;
 import br.com.beautycore.api.enums.AppointmentStatus;
-import br.com.beautycore.api.projections.TotalProfitByProfessionalProjection;
-import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.repository.AppointmentRepository;
 import br.com.beautycore.api.repository.PaymentRepository;
 import br.com.beautycore.api.services.exception.DomainException;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -67,6 +64,7 @@ public class PaymentService {
             appointment.setIsPaid(true);
             appointment.setRemainingValue(remaining);
             appointment.setUpdatedAt(LocalDateTime.now());
+            return;
         }
 
         // 2. If client pays partial:
@@ -74,6 +72,7 @@ public class PaymentService {
             appointment.setIsPaid(false);
             appointment.setRemainingValue(remaining);
             appointment.setUpdatedAt(LocalDateTime.now());
+            return;
         }
 
         // 3. If client pays more than appointment total price;

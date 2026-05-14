@@ -68,7 +68,7 @@ public class SpecialtyService {
         repository.deleteById(id);
     }
 
-    protected Set<Specialty> getSpecialtiesByIds(Set<Long> specializationsIds) {
+    protected Set<Specialty> addSpecializations(Set<Long> specializationsIds) {
         Set<Specialty> set = new HashSet<>();
 
         for (long specialtyId : specializationsIds) {
