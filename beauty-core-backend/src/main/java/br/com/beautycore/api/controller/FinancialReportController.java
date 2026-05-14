@@ -26,7 +26,7 @@ public class FinancialReportController {
         return ResponseEntity.ok(result);
     }
 
-    @PreAuthorize("#professionalId == authentication.principal.id or hasRole('ADMIN'")
+    @PreAuthorize("#professionalId == authentication.principal.id or hasRole('ADMIN')")
     @GetMapping("/professionals/{professionalId}/total-profit")
     public ResponseEntity<TotalProfitByProfessionalProjection> getTotalProfitByProfessional(
             @PathVariable Long professionalId,
