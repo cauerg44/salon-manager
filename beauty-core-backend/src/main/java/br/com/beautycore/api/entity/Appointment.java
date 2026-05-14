@@ -38,9 +38,13 @@ public class Appointment {
     @OneToMany(mappedBy = "id.appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AppointmentServiceEntity> services = new HashSet<>();
 
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal discount;
+
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal totalValue;
 
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal remainingValue;
 
     private Boolean isPaid;

@@ -28,6 +28,7 @@ public class Client {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthDate;
 
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal credit;
     private Boolean InAppointment;
 

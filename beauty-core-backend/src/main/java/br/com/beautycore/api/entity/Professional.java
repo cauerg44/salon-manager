@@ -36,6 +36,7 @@ public class Professional implements UserDetails {
     private Boolean isActive;
     private Boolean isWorking;
 
+    @Setter(AccessLevel.NONE)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "professional_role",
             joinColumns = @JoinColumn(name = "professional_id"),

@@ -20,6 +20,8 @@ public class JobItem {
     private Long id;
 
     private String name;
+
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal basePrice;
 
     private LocalDateTime createdAt;

@@ -28,6 +28,7 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal amountPaid;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
