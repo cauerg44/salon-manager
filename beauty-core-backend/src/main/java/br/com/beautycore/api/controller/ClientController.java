@@ -50,7 +50,7 @@ public class ClientController {
         return ResponseEntity.ok(result);
     }
 
-//     @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);

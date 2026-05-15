@@ -1,8 +1,6 @@
 -- 1. Desativa temporariamente as travas de chave estrangeira
 SET FOREIGN_KEY_CHECKS = 0;
 
--- 2. Limpa as tabelas e RESETA os contadores de ID para 1
--- Verifique se os nomes das tabelas (plural/singular) batem com o seu banco
 TRUNCATE TABLE payments;
 TRUNCATE TABLE appointment_service;
 TRUNCATE TABLE appointments;
@@ -14,7 +12,7 @@ TRUNCATE TABLE roles;
 TRUNCATE TABLE clients;
 TRUNCATE TABLE services;
 
--- 3. Reativa as travas de segurança
+-- 2. Reativa as travas de segurança
 SET FOREIGN_KEY_CHECKS = 1;
 
 insert into specializations (name) VALUES ('Barbeiro');
@@ -57,7 +55,6 @@ insert into clients (name, phone, birth_date, credit) values ('Cauê', '11400289
 insert into clients (name, phone, birth_date, credit) values ('Herivelto', '1140028923', '1976-01-01', 00.00);
 insert into clients (name, phone, birth_date, credit) values ('Enzo', '1140028924', '2003-01-01', 00.00);
 insert into clients (name, phone, birth_date, credit) values ('Felipe', '1140028925', '2004-01-01', 00.00);
-insert into clients (name, phone, birth_date, credit) values ('Michael Jackson', '9140028925', '2004-01-01', 00.00);
 
 -- Atendimento 1: Cauê foi atendido com Júnior finalizado:
 insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid)
