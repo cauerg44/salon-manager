@@ -1,0 +1,30 @@
+header {
+  background-color: var(--bcf--bg-color-primary);
+  height: 8vh;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+
+header h1 {
+  font-weight: 700;
+  color: var(--bcf--font-color-primary);
+  font-size: 24px;
+}
+
+header h3 {
+  font-weight: 400;
+  color: var(--bcf--font-color-primary);
+  font-size: 16px;
+}
+
+header span {
+  color: white;
+  font-size: 28px;
+}

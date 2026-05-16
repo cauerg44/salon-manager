@@ -1,0 +1,10 @@
+.bcf-btn-primary {
+  border: none;
+  border-radius: 8px;
+  width: 140px;
+  height: 40px;
+  background-color: var(--bcf--bg-color-secondary);
+  color: var(--bcf--font-color-primary);
+  text-transform: uppercase;
+  font-weight: 700;
+}
