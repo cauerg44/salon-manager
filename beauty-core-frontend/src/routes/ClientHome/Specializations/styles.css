@@ -1,0 +1,8 @@
+.bcf-specialization-modal {
+  margin-top: 30px;
+}
+
+.bcf-specialization-modal h2 {
+  font-size: 32px;
+  color: var(--bcf--bg-color-tertiary);
+}
