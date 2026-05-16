@@ -1,0 +1,15 @@
+.bcf-home-modal {
+  margin-top: 30px;
+}
+
+.bcf-home-modal h2 {
+  font-size: 30px;
+  color: var(--bcf--font-color-secondary);
+  margin-bottom: 10px;
+}
+
+.bcf-home-modal h3 {
+  font-size: 20px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 25px;
+}
