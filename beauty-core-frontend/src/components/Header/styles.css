@@ -27,4 +27,5 @@ header h3 {
 header span {
   color: white;
   font-size: 28px;
+  cursor: pointer;
 }

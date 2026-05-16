@@ -9,7 +9,9 @@
   --bcf--font-color-primary: #fff;
   --bcf--font-color-secondary: #263238;
   --bcf--font-color-tertiary: #888888;
+  --bcf--font-color-quaternary: #1B4D3E;
 
+  --bfc--border-color-primary: #1B4D3E;
 }
 
 * {

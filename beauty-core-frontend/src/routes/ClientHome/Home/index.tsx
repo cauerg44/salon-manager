@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import './styles.css';
 
@@ -7,7 +8,10 @@ export default function Home() {
       <div className='bcf-home-modal'>
         <h2>Seja bem-vindo(a) novamente!</h2>
         <h3>Começe a usar o sistema para ter um melhor gerenciamento financeiro e fluxo do salão</h3>
-        <ButtonPrimary text="Começar" />
+
+        <Link to={"/general"}>
+          <ButtonPrimary text="Começar" />
+        </Link>
       </div>
     </section>
   );

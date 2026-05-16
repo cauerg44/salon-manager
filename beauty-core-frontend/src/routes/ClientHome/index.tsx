@@ -6,7 +6,9 @@ export default function ClientHome() {
   return (
     <>
       <Header />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }
