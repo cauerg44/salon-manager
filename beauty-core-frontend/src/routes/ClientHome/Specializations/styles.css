@@ -12,3 +12,9 @@
   color: var(--bcf--font-color-tertiary);
   margin-bottom: 15px;
 }
+
+.bcf-specialization-modal-buttons {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
+}

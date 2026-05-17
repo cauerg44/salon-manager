@@ -1,5 +1,5 @@
 
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import ButtonSecondary from '../../../components/ButtonSecondary';
 import './styles.css';
 
@@ -9,10 +9,13 @@ export default function Specializations() {
       <section id="specializations-section" className="bcf-container-1200px">
         <div className='bcf-specialization-modal'>
           <h2>Especialidades:</h2>
-          <NavLink to="/specializations/listing" className={({ isActive }) => isActive ? "menu-item menu-item-active" : "menu-item"}>
-            <h3>Listar especialidades:</h3>
-          </NavLink>
-          <ButtonSecondary text='Cadastrar' />
+          <h3>Gerencie as especialidades dos profissionais no salão de beleza: </h3>
+          <div className='bcf-specialization-modal-buttons'>
+            <Link to={"/specializations/listing"}>
+              <ButtonSecondary text='Listar' />
+            </Link>
+            <ButtonSecondary text='Cadastrar' />
+          </div>
         </div>
       </section>
       <Outlet />

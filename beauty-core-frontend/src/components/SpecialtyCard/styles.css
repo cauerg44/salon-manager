@@ -7,6 +7,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 0px 30px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.bcf-specialty-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
 }
 
 .bcf-specialty-card-icons {
@@ -15,5 +22,5 @@
 }
 
 .bcf-specialty-card-icons img {
-  margin-left: 10px;
+  margin-left: 15px;
 }
