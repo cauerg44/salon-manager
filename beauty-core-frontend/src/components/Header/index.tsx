@@ -1,8 +1,11 @@
 
+import { useState } from 'react';
 import './styles.css';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
+
+  const [professionalName, setProfessionalName] = useState<string>("");
 
   return (
     <header>
@@ -13,7 +16,11 @@ export default function Header() {
           <h1>Sistema PDV: Salão de Beleza</h1>
         </Link>
 
-        <h3>Olá, <b>Júnior!</b></h3>
+        {
+          professionalName
+            ? <h3>Olá, <b>{professionalName}!</b></h3>
+            : <h3>Login</h3>
+        }
       </nav>
     </header>
   );
