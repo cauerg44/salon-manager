@@ -3,7 +3,7 @@ import ClientHome from "./routes/ClientHome";
 import Home from "./routes/ClientHome/Home";
 import General from "./routes/ClientHome/General";
 import Specializations from "./routes/ClientHome/Specializations";
-
+import SpecializationsListing from "./routes/ClientHome/Specializations/SpecializationsListing";
 
 export default function App() {
 
@@ -15,7 +15,9 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="general" element={<General />} />
-            <Route path="specializations" element={<Specializations />} />
+            <Route path="specializations" element={<Specializations />}>
+              <Route path="listing" element={<SpecializationsListing />} />
+            </Route>
           </Route>
           <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>

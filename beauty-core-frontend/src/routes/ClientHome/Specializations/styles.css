@@ -4,5 +4,11 @@
 
 .bcf-specialization-modal h2 {
   font-size: 32px;
+  margin-bottom: 10px;
   color: var(--bcf--bg-color-tertiary);
+}
+
+.bcf-specialization-modal h3 {
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
 }
