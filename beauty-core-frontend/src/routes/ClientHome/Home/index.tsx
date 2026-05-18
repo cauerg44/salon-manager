@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import './styles.css';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,8 @@ import * as professionalService from '../../../services/professional-service.ts'
 
 export default function Home() {
 
+  const navigate = useNavigate();
+
   const [professionalLogged, setProfessionalLogged] = useState<ProfessionalLoggedDTO>();
 
   useEffect(() => {
@@ -14,9 +16,6 @@ export default function Home() {
       .then(response => {
         setProfessionalLogged(response.data);
         console.log(response.data);
-      })
-      .catch(error => {
-        console.log("Error: ", error);
       })
   }, []);
 
