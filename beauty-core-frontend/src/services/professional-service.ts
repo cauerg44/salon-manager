@@ -1,11 +1,12 @@
+import type { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/requests";
-import * as authService from './auth-service.ts';
 
 export function findProfessionalLogged() {
 
-  const headers = {
-    Authorization: "Bearer " + authService.getAccessToken()
+  const config: AxiosRequestConfig = {
+    url: `v1/professionals/me`,
+    withCredentials: true
   }
 
-  return requestBackend({ url: `v1/professionals/me`, headers });
+  return requestBackend(config);
 }
