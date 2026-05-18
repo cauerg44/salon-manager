@@ -1,6 +1,5 @@
 package br.com.beautycore.api.services;
 
-import br.com.beautycore.api.dto.request.ProfessionalCreateRequestDTO;
 import br.com.beautycore.api.dto.request.ProfessionalPatchRequestDTO;
 import br.com.beautycore.api.dto.response.ProfessionalResponseDTO;
 import br.com.beautycore.api.entity.Professional;
@@ -8,8 +7,10 @@ import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.repository.ProfessionalRepository;
 import br.com.beautycore.api.repository.SpecialtyRepository;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
+import br.com.beautycore.api.utils.CustomProfessionalUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +25,20 @@ public class ProfessionalService {
     private final ProfessionalRepository repository;
     private final SpecialtyRepository specialtyRepository;
 
+    private final CustomProfessionalUtil customProfessionalUtil;
+
     @Transactional(readOnly = true)
     public List<ProfessionalResponseDTO> findAll() {
         List<Professional> list = repository.findAll();
         return list.stream()
                 .map(professional -> new ProfessionalResponseDTO(professional))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public ProfessionalResponseDTO getMe() {
+        Professional entity = authenticated();
+        return new ProfessionalResponseDTO(entity);
     }
 
     @Transactional
@@ -98,5 +107,15 @@ public class ProfessionalService {
         }
 
         entity.setUpdatedAt(LocalDateTime.now());
+    }
+
+    protected Professional authenticated() {
+        try {
+            String username = customProfessionalUtil.getLoggedUsername();
+            return repository.findByEmail(username).get();
+        }
+        catch (Exception e) {
+            throw new UsernameNotFoundException("Invalid user");
+        }
     }
 }

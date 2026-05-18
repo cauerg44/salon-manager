@@ -25,6 +25,13 @@ public class ProfessionalController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/me")
+    public ResponseEntity<ProfessionalResponseDTO> findProfessionalLogged() {
+        var result = service.getMe();
+        return ResponseEntity.ok(result);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}")
     public ResponseEntity<ProfessionalResponseDTO> patch(@PathVariable Long id, @Valid @RequestBody ProfessionalPatchRequestDTO dto) {
