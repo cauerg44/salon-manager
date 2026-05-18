@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 3px solid var(--bfc--border-color-secondary);
+  border: 3px solid var(--bfc--border-color-tertiary);
   border-radius: 5px;
   padding: 35px 50px;
 }
@@ -27,13 +27,13 @@
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid var(--bfc--border-color-secondary);
+  border: 1px solid var(--bfc--border-color-tertiary);
   background-color: var(--bcf--bg-color-quaternary);
-  color: var(--bcf--font-color-secondary);
+  color: var(--bcf--font-color-quintanary);
 }
 
 .bcf-modal-form input::placeholder {
-  color: var(--bcf--font-color-tertiary);
+  color: var(--bcf--font-color-quintanary);
 }
 
 .bcf-modal-form input:focus {
