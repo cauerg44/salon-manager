@@ -1,21 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import './styles.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import type { ProfessionalLoggedDTO } from '../../../models/professional-logged';
 import * as professionalService from '../../../services/professional-service.ts';
+import { ContextProfessionalLogged } from '../../../utils/context-professional-logged.ts';
 
 export default function Home() {
 
-  const navigate = useNavigate();
-
   const [professionalLogged, setProfessionalLogged] = useState<ProfessionalLoggedDTO>();
+
+  const { setContextProfessionalLogged } = useContext(ContextProfessionalLogged);
 
   useEffect(() => {
     professionalService.findProfessionalLogged()
       .then(response => {
         setProfessionalLogged(response.data);
-        console.log(response.data);
+        setContextProfessionalLogged(response.data.name);
       })
   }, []);
 

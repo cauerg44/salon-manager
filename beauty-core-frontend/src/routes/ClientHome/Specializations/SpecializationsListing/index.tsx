@@ -12,7 +12,6 @@ export default function SpecializationsListing() {
     specializationService.findAll()
       .then(response => {
         setSpecializations(response.data);
-        console.log(response);
       })
   }, []);
 

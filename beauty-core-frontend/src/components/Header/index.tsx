@@ -1,25 +1,31 @@
 
-import { useState } from 'react';
+import { useContext } from 'react';
 import './styles.css';
 import { Link } from 'react-router-dom';
+import { ContextProfessionalLogged } from '../../utils/context-professional-logged.ts';
 
 export default function Header() {
 
-  const [professionalName, setProfessionalName] = useState<string>("");
+  const { contextProfessionalLogged } = useContext(ContextProfessionalLogged);
 
   return (
     <header>
       <nav className='bcf-container-1200px'>
-        <span>✄</span>
+        <Link to={"/home"}>
+          <span>✄</span>
+        </Link>
 
         <Link to={"/"}>
           <h1>Sistema PDV: Salão de Beleza</h1>
         </Link>
 
         {
-          professionalName
-            ? <h3>Olá, <b>{professionalName}!</b></h3>
-            : <h3>Login</h3>
+          contextProfessionalLogged
+            ? <h3>Olá, <b>{contextProfessionalLogged}!</b></h3>
+            :
+            <Link to={"/login"}>
+              <h3>Login</h3>
+            </Link>
         }
       </nav>
     </header>

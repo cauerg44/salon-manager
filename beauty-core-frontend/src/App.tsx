@@ -7,25 +7,31 @@ import SpecializationsListing from "./routes/ClientHome/Specializations/Speciali
 import Login from "./routes/ClientHome/Login";
 import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { history } from './utils/history';
+import { useState } from "react";
+import { ContextProfessionalLogged } from "./utils/context-professional-logged";
 
 export default function App() {
 
+  const [contextProfessionalLogged, setContextProfessionalLogged] = useState<string>('');
+
   return (
     <>
-      <HistoryRouter history={history}>
-        <Routes>
-          <Route path="/" element={<ClientHome />}>
-            <Route index element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="general" element={<General />} />
-            <Route path="specializations" element={<Specializations />}>
-              <Route path="listing" element={<SpecializationsListing />} />
+      <ContextProfessionalLogged.Provider value={{ contextProfessionalLogged, setContextProfessionalLogged }} >
+        <HistoryRouter history={history}>
+          <Routes>
+            <Route path="/" element={<ClientHome />}>
+              <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="general" element={<General />} />
+              <Route path="specializations" element={<Specializations />}>
+                <Route path="listing" element={<SpecializationsListing />} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="*" element={<Navigate to={"/"} />} />
-        </Routes>
-      </HistoryRouter>
+            <Route path="*" element={<Navigate to={"/"} />} />
+          </Routes>
+        </HistoryRouter>
+      </ContextProfessionalLogged.Provider>
     </>
   )
 }

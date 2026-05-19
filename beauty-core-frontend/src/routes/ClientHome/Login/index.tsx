@@ -2,8 +2,11 @@ import './styles.css';
 import { useState } from 'react';
 import type { CredentialsDTO } from '../../../models/auth';
 import * as authService from '../../../services/auth-service.ts';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<CredentialsDTO>({
     email: '',
@@ -15,6 +18,7 @@ export default function Login() {
     authService.loginRequest(formData)
       .then(response => {
         authService.saveAccessToken(response.data.token);
+        navigate("/home");
       })
       .catch(error => {
         console.log("Erro no login ", error)
@@ -42,7 +46,7 @@ export default function Login() {
           <input
             name='password'
             value={formData.password}
-            type="text"
+            type="password"
             placeholder='Senha'
             onChange={handleInputChange}
           />
