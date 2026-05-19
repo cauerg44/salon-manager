@@ -1,9 +1,9 @@
-#specializations-listing-section {
+#clients-listing-section {
   padding: 20px 0;
 }
 
-.bcf-specialty-cards-modal {
+.bcf-clients-cards-modal {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
 }
