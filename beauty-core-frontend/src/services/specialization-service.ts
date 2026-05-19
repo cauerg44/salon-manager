@@ -1,6 +1,12 @@
-import axios from "axios";
-import { BASE_URL } from "../utils/system";
+import { type AxiosRequestConfig } from "axios";
+import { requestBackend } from "../utils/requests";
 
 export function findAll() {
-  return axios.get(`${BASE_URL}/specializations`);
+
+  const config: AxiosRequestConfig = {
+    url: `/specializations`,
+    withCredentials: true
+  }
+
+  return requestBackend(config);
 }

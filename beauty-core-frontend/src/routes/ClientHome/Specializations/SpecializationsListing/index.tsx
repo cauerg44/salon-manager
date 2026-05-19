@@ -14,7 +14,7 @@ export default function SpecializationsListing() {
         setSpecializations(response.data);
         console.log(response);
       })
-  }, [specializations]);
+  }, []);
 
   return (
     <section id="specializations-listing-section" className="bcf-container-1200px">

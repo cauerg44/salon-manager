@@ -4,7 +4,7 @@ import { requestBackend } from "../utils/requests";
 export function findProfessionalLogged() {
 
   const config: AxiosRequestConfig = {
-    url: `v1/professionals/me`,
+    url: `/professionals/me`,
     withCredentials: true
   }
 

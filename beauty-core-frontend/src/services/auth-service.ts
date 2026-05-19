@@ -11,7 +11,7 @@ export function loginRequest(loginData: CredentialsDTO) {
 
   const config: AxiosRequestConfig = {
     method: "POST",
-    url: "/v1/auth/login",
+    url: "/auth/login",
     data: loginData,
     headers
   }
