@@ -17,6 +17,15 @@ export default function ClientsListing() {
 
   return (
     <section id='clients-listing-section' className='bcf-container-1200px'>
+      <h2 className='bcf-search-bar-message'>Barra de pesquisa:</h2>
+      <div className='bcf-search-bar'>
+        <button className='btn-left'>🔎︎</button>
+        <input
+          placeholder='Digite o nome do cliente'
+          type="text"
+        />
+        <button className='btn-right' type="reset">🗙</button>
+      </div>
       <div className='bcf-clients-cards-modal'>
         {
           clients.map(

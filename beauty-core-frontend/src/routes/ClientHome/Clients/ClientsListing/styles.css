@@ -7,3 +7,57 @@
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
 }
+
+.bcf-search-bar {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.bcf-search-bar input {
+  width: 100%;
+  height: 35px;
+  padding: 15px;
+  font-size: 15px;
+  color: var(--bcf--font-color-quintanary);
+  border: 1px solid var(--bfc--border-color-tertiary);
+  border-left: 0;
+  border-right: 0;
+}
+
+.bcf-search-bar input::placeholder {
+  color: var(--bcf--font-color-quintanary);
+}
+
+.bcf-search-bar input:focus {
+  outline: none;
+}
+
+.bcf-search-bar button {
+  color: var(--bcf--font-color-primary);
+  border: none;
+  width: 40px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn-left {
+  background-color: var(--bcf--bg-color-primary);
+  border-radius: 5px 0 0 5px;
+}
+
+.btn-right {
+  border-radius: 0 5px 5px 0;
+  background-color: var(--bcf--bg-color-quintanary);
+}
+
+.bcf-search-bar-message {
+  font-size: 28px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
+}
+
+@media(max-width: 576px) {
+  .bcf-search-bar-message {
+    font-size: 20px;
+  }
+}
