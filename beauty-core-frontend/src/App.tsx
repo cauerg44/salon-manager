@@ -9,6 +9,8 @@ import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { history } from './utils/history';
 import { useState } from "react";
 import { ContextProfessionalLogged } from "./utils/context-professional-logged";
+import ClientsListing from "./routes/ClientHome/Clients/ClientsListing";
+import Clients from "./routes/ClientHome/Clients";
 
 export default function App() {
 
@@ -26,6 +28,9 @@ export default function App() {
               <Route path="general" element={<General />} />
               <Route path="specializations" element={<Specializations />}>
                 <Route path="listing" element={<SpecializationsListing />} />
+              </Route>
+              <Route path="clients" element={<Clients />}>
+                <Route path="listing" element={<ClientsListing />} />
               </Route>
             </Route>
             <Route path="*" element={<Navigate to={"/"} />} />
