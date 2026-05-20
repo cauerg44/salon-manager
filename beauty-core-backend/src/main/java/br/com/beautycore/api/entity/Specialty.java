@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "specializations")
@@ -19,6 +20,9 @@ public class Specialty {
     private Long id;
 
     private String name;
+
+    @ManyToMany(mappedBy = "specializations")
+    private Set<Professional> professionals;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

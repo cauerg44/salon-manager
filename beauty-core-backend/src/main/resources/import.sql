@@ -27,6 +27,7 @@ insert into professionals (name, email, password) VALUES ('Thayla', 'thayla@beau
 
 insert into professional_specialty (professional_id, specialty_id) VALUES (1, 3);
 insert into professional_specialty (professional_id, specialty_id) VALUES (2, 1);
+insert into professional_specialty (professional_id, specialty_id) VALUES (2, 2);
 insert into professional_specialty (professional_id, specialty_id) VALUES (3, 1);
 insert into professional_specialty (professional_id, specialty_id) VALUES (4, 1);
 insert into professional_specialty (professional_id, specialty_id) VALUES (5, 2);
