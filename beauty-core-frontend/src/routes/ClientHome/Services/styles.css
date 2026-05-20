@@ -1,0 +1,15 @@
+.bcf-services-modal {
+  margin-top: 30px;
+}
+
+.bcf-services-modal h2 {
+  font-size: 30px;
+  color: var(--bcf--font-color-secondary);
+  margin-bottom: 10px;
+}
+
+.bcf-services-modal h3 {
+  font-size: 20px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 25px;
+}

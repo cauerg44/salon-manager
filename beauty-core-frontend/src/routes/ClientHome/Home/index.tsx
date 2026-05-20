@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import ButtonPrimary from '../../../components/ButtonPrimary';
+import ButtonPrimary from '../../../components/ButtonPrimary/index.tsx';
 import './styles.css';
 import { useContext, useEffect, useState } from 'react';
-import type { ProfessionalLoggedDTO } from '../../../models/professional-logged';
+import type { ProfessionalLoggedDTO } from '../../../models/professional-logged.ts';
 import * as professionalService from '../../../services/professional-service.ts';
 import { ContextProfessionalLogged } from '../../../utils/context-professional-logged.ts';
 
