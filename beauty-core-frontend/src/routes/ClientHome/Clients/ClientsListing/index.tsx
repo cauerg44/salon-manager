@@ -4,22 +4,40 @@ import { useEffect, useState } from 'react';
 import type { ClientDTO } from '../../../../models/client';
 import * as clientService from '../../../../services/client-service.ts';
 import SearchBar from '../../../../components/SearchBar/index.tsx';
+import ButtonTertiary from '../../../../components/ButtonTertiary/index.tsx';
+
+type QueryParams = {
+  page: number;
+  name: string;
+}
 
 export default function ClientsListing() {
 
+  const [isLastPage, setIsLastPage] = useState<boolean>(false);
+
   const [clients, setClients] = useState<ClientDTO[]>([]);
 
-  const [clientName, setClientName] = useState<string>("");
+  const [queryParams, setQueryParams] = useState<QueryParams>({
+    page: 0,
+    name: ""
+  });
 
   useEffect(() => {
-    clientService.findAllClientsPaged(0, clientName, 12)
+    clientService.findAllClientsPaged(queryParams.page, queryParams.name)
       .then(response => {
-        setClients(response.data.content);
-      })
-  }, [clientName]);
+        const nextPage = response.data.content;
+        setClients(clients.concat(nextPage));
+        setIsLastPage(response.data.last);
+      });
+  }, [queryParams]);
 
-  function handleSearch(text: string) {
-    setClientName(text);
+  function handleSearch(searchText: string) {
+    setClients([]);
+    setQueryParams({ ...queryParams, page: 0, name: searchText })
+  }
+
+  function handleNextPageClick() {
+    setQueryParams({ ...queryParams, page: queryParams.page + 1 });
   }
 
   return (
@@ -35,6 +53,14 @@ export default function ClientsListing() {
           )
         }
       </div>
+
+      {
+        !isLastPage &&
+        <div onClick={handleNextPageClick}>
+          <ButtonTertiary text='Carregar mais' />
+        </div>
+      }
+
     </section>
   );
 }
