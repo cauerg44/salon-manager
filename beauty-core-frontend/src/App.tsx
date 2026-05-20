@@ -12,6 +12,7 @@ import { ContextProfessionalLogged } from "./utils/context-professional-logged";
 import ClientsListing from "./routes/ClientHome/Clients/ClientsListing";
 import Clients from "./routes/ClientHome/Clients";
 import Services from "./routes/ClientHome/Services";
+import ServicesListing from "./routes/ClientHome/Services/ServicesListing";
 
 export default function App() {
 
@@ -27,7 +28,11 @@ export default function App() {
               <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="general" element={<General />} />
-              <Route path="services" element={<Services />} />
+
+              <Route path="services" element={<Services />}>
+                <Route path="listing" element={<ServicesListing />} />
+              </Route>
+
               <Route path="specializations" element={<Specializations />}>
                 <Route path="listing" element={<SpecializationsListing />} />
               </Route>
