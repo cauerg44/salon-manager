@@ -60,12 +60,16 @@ public class SpecialtyService {
         }
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional
     public void delete(Long id) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Especialidade não encontrada");
+        Specialty specialty = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
+
+        for (Professional professional : specialty.getProfessionals()) {
+            professional.getSpecializations().remove(specialty);
         }
-        repository.deleteById(id);
+
+        repository.delete(specialty);
     }
 
     protected Set<Specialty> addSpecializations(Set<Long> specializationsIds) {

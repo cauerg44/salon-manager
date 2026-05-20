@@ -27,6 +27,7 @@ insert into professionals (name, email, password) VALUES ('Thayla', 'thayla@beau
 
 insert into professional_specialty (professional_id, specialty_id) VALUES (1, 3);
 insert into professional_specialty (professional_id, specialty_id) VALUES (2, 1);
+insert into professional_specialty (professional_id, specialty_id) VALUES (2, 2);
 insert into professional_specialty (professional_id, specialty_id) VALUES (3, 1);
 insert into professional_specialty (professional_id, specialty_id) VALUES (4, 1);
 insert into professional_specialty (professional_id, specialty_id) VALUES (5, 2);
@@ -55,6 +56,39 @@ insert into clients (name, phone, birth_date, credit) values ('Cauê', '11400289
 insert into clients (name, phone, birth_date, credit) values ('Herivelto', '1140028923', '1976-01-01', 00.00);
 insert into clients (name, phone, birth_date, credit) values ('Enzo', '1140028924', '2003-01-01', 00.00);
 insert into clients (name, phone, birth_date, credit) values ('Felipe', '1140028925', '2004-01-01', 00.00);
+
+insert into clients (name, phone, birth_date, credit) values ('Marcos', '1140028926', '1995-02-11', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('João', '1140028927', '1998-03-15', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Pedro', '1140028928', '2001-07-20', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Lucas', '1140028929', '1999-05-09', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Matheus', '1140028930', '2000-12-01', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Gabriel', '1140028931', '1997-08-22', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Rafael', '1140028932', '1996-09-18', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Bruno', '1140028933', '2002-04-30', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Thiago', '1140028934', '1994-11-13', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('André', '1140028935', '1993-06-25', 00.00);
+
+insert into clients (name, phone, birth_date, credit) values ('Carlos', '1140028936', '1989-01-10', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Ricardo', '1140028937', '1991-02-14', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Daniel', '1140028938', '1988-10-05', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Fernando', '1140028939', '1990-03-28', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Vinicius', '1140028940', '2005-07-17', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Eduardo', '1140028941', '1992-09-21', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Gustavo', '1140028942', '2001-12-19', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Leandro', '1140028943', '1987-04-12', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Renato', '1140028944', '1996-08-08', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Caio', '1140028945', '2000-06-06', 00.00);
+
+insert into clients (name, phone, birth_date, credit) values ('Paulo', '1140028946', '1999-01-29', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Samuel', '1140028947', '2003-11-11', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Leonardo', '1140028948', '1995-05-24', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Murilo', '1140028949', '2002-02-02', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Nathan', '1140028950', '2004-10-10', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Igor', '1140028951', '1997-07-07', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Fábio', '1140028952', '1985-03-03', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Wesley', '1140028953', '1998-12-27', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Diego', '1140028954', '1991-09-09', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Roberto', '1140028955', '1986-06-16', 00.00);
 
 -- Atendimento 1: Cauê foi atendido com Júnior finalizado:
 insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid)
