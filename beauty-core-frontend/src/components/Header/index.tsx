@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import './styles.css';
 import { Link } from 'react-router-dom';
 import { ContextProfessionalLogged } from '../../utils/context-professional-logged.ts';
+import homeIcon from '../../assets/bcf-home-icon.svg';
 
 export default function Header() {
 
@@ -12,7 +13,7 @@ export default function Header() {
     <header>
       <nav className='bcf-container-1200px'>
         <Link to={"/home"}>
-          <span>✄</span>
+          <img src={homeIcon} alt="Tela inicial" />
         </Link>
 
         <Link to={"/"}>

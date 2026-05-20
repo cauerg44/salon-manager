@@ -25,9 +25,9 @@ header h3 {
   cursor: pointer;
 }
 
-header span {
-  color: white;
-  font-size: 28px;
+header img {
+  height: 22px;
+  width: 22px;
   cursor: pointer;
 }
 
