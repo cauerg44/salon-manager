@@ -12,7 +12,9 @@ export default function AppointmentsInWaitingCard({ appointmentDTO }: Props) {
       <div className='bcf-appointment-in-waiting-card-infos'>
         <h3>Profissional: {appointmentDTO.professional.name}</h3>
         <h3>Cliente: {appointmentDTO.client.name}</h3>
-        <h3 className='mb-20'>Status: ESPERANDO</h3>
+        <div className='bcf-appointment-in-waiting-card-status'>
+          Aguardando
+        </div>
         <h4>Preço total: <span>R$ {appointmentDTO.totalValue.toFixed(2)}</span></h4>
         <h4>Pago: Não</h4>
       </div>
