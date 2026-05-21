@@ -29,4 +29,11 @@
 .bcf-appointment-status-title-section {
   font-size: 30px;
   color: var(--bcf--font-color-tertiary);
+  margin-bottom: 30px;
+}
+
+.bcf-appointments-cards-container {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }

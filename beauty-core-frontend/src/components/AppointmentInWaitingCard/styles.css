@@ -1,0 +1,47 @@
+.bcf-appointment-in-waiting-card-infos {
+  padding: 10px;
+  background-color: var(--bcf--bg-color-primary);
+  color: var(--bcf--font-color-primary);
+  border-radius: 8px 8px 0 0;
+}
+
+.bcf-appointment-in-waiting-card-infos h3 {
+  font-size: 400;
+}
+
+.bcf-appointment-in-waiting-card-infos h4 {
+  font-weight: 500;
+}
+
+.bcf-appointment-in-waiting-card-infos span {
+  font-weight: 700;
+  color: var(--bcf--font-color-senary);
+}
+
+.bcf-appointment-in-waiting-card-services {
+  border-top: 0;
+  border: 2px solid var(--bfc--border-color-primary);
+  border-radius: 0 0 8px 8px;
+  background-color: var(--bcf--bg-color-quaternary);
+  padding: 10px 10px 0 10px;
+}
+
+.bcf-appointment-card-service-item {
+  background-color: var(--bcf--bg-color-senary);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.bcf-appointment-card-service-item h4 {
+  font-weight: 500;
+}
+
+.bcf-appointment-card-service-item span {
+  font-weight: 700;
+  color: var(--bcf--font-color-senary);
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
