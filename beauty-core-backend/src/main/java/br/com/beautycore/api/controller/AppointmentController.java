@@ -3,6 +3,7 @@ package br.com.beautycore.api.controller;
 import br.com.beautycore.api.dto.request.AppointmentCreateRequestDTO;
 import br.com.beautycore.api.dto.request.AppointmentPatchRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
+import br.com.beautycore.api.enums.AppointmentStatus;
 import br.com.beautycore.api.services.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class AppointmentController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointments(Pageable pageable, @RequestParam Boolean status) {
-        var result = service.findAllByStatus(pageable, status);
+    public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointments(Pageable pageable, @RequestParam String appointmentStatus) {
+        var result = service.findAllByStatus(pageable, appointmentStatus);
         return ResponseEntity.ok(result);
     }
 

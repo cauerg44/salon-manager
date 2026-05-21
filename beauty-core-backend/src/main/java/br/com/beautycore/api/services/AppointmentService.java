@@ -33,8 +33,11 @@ public class AppointmentService {
     private final JobItemService jobItemService;
 
     @Transactional(readOnly = true)
-    public Page<AppointmentResponseDTO> findAllByStatus(Pageable pageable, Boolean isPaid) {
-        Page<Appointment> page = repository.findAllByStatusAndOrderByCreatedAtDesc(pageable, isPaid);
+    public Page<AppointmentResponseDTO> findAllByStatus(Pageable pageable, String appointmentStatus) {
+
+        String status = AppointmentStatus.valueOf(appointmentStatus).name();
+
+        Page<Appointment> page = repository.findAllByStatusAndOrderByCreatedAtDesc(pageable, status);
         return page.map(appointment -> new AppointmentResponseDTO(appointment));
     }
 
