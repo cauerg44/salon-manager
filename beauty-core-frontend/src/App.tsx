@@ -13,6 +13,8 @@ import ClientsListing from "./routes/ClientHome/Clients/ClientsListing";
 import Clients from "./routes/ClientHome/Clients";
 import Services from "./routes/ClientHome/Services";
 import ServicesListing from "./routes/ClientHome/Services/ServicesListing";
+import FinancialReports from "./routes/ClientHome/FinancialReports";
+import TotalProfitInLive from "./routes/ClientHome/FinancialReports/TotalProfitInLive";
 
 export default function App() {
 
@@ -36,8 +38,13 @@ export default function App() {
               <Route path="specializations" element={<Specializations />}>
                 <Route path="listing" element={<SpecializationsListing />} />
               </Route>
+
               <Route path="clients" element={<Clients />}>
                 <Route path="listing" element={<ClientsListing />} />
+              </Route>
+
+              <Route path="financial-reports" element={<FinancialReports />}>
+                <Route path="total-profit-in-live" element={<TotalProfitInLive />} />
               </Route>
             </Route>
             <Route path="*" element={<Navigate to={"/"} />} />

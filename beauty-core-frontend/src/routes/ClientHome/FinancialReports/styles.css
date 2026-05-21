@@ -1,0 +1,27 @@
+.bcf-financial-reports-modal {
+  margin-top: 30px;
+}
+
+.bcf-financial-reports-modal h2 {
+  font-size: 30px;
+  color: var(--bcf--font-color-secondary);
+  margin-bottom: 10px;
+}
+
+.bcf-financial-reports-modal h3 {
+  font-size: 20px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 35px;
+}
+
+.bcf-financial-reports-modal h4 {
+  font-size: 18px;
+  color: var(--bcf--font-color-quaternary);
+  margin-bottom: 15px;
+  transition: 0.2s;
+}
+
+.bcf-financial-reports-modal h4:hover {
+  transform: translateY(-2px);
+  cursor: pointer;
+}

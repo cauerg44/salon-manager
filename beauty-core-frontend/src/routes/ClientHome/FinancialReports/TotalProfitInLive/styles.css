@@ -1,0 +1,19 @@
+#total-profit-in-live-section {
+  padding: 20px 0;
+}
+
+.bcf-total-profit-in-live-modal-container h2 {
+  font-size: 30px;
+  color: var(--bcf--font-color-secondary);
+  margin-bottom: 20px;
+}
+
+.bcf-total-profit-in-live-modal-container h3 {
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
+}
+
+.bcf-total-profit-in-live-modal-container span {
+  font-size: 20px;
+  color: var(--bcf--font-color-senary);
+}

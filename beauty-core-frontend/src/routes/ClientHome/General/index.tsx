@@ -23,7 +23,9 @@ export default function General() {
             <div className='bcf-action-item'>Especialidades</div>
           </Link>
 
-          <div className='bcf-action-item'>Pagamentos</div>
+          <Link to={"/financial-reports"}>
+            <div className='bcf-action-item'>Financeiro</div>
+          </Link>
         </div>
       </div>
     </section>
