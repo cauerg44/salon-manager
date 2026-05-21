@@ -1,6 +1,5 @@
 package br.com.beautycore.api.services;
 
-import br.com.beautycore.api.projections.TotalProfitByProfessionalProjection;
 import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.repository.FinancialReportRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +22,5 @@ public class FinancialReportService {
         LocalDateTime end = LocalDate.now().atTime(23, 59, 59);
 
         return repository.getTotalProfitInLive(start, end);
-    }
-
-    @Transactional(readOnly = true)
-    public TotalProfitByProfessionalProjection getTotalProfitByProfessional(Long professionalId, LocalDateTime start, LocalDateTime end) {
-        return repository.getTotalProfitByProfessional(professionalId, start, end);
     }
 }
