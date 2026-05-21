@@ -15,6 +15,8 @@ import Services from "./routes/ClientHome/Services";
 import ServicesListing from "./routes/ClientHome/Services/ServicesListing";
 import FinancialReports from "./routes/ClientHome/FinancialReports";
 import TotalProfitInLive from "./routes/ClientHome/FinancialReports/TotalProfitInLive";
+import Appointments from "./routes/ClientHome/Appointments";
+import AppointmentsInWaiting from "./routes/ClientHome/Appointments/AppointmentsInWaiting";
 
 export default function App() {
 
@@ -30,6 +32,10 @@ export default function App() {
               <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="general" element={<General />} />
+
+              <Route path="appointments" element={<Appointments />}>
+                <Route path="in-waiting" element={<AppointmentsInWaiting />} />
+              </Route>
 
               <Route path="services" element={<Services />}>
                 <Route path="listing" element={<ServicesListing />} />

@@ -8,7 +8,11 @@ export default function General() {
       <div className='bcf-general-modal'>
         <h2>Ações rápidas:</h2>
         <div className='bcf-actions-items-general'>
-          <div className='bcf-action-item'>Atendimentos</div>
+
+          <Link to={"/appointments"}>
+            <div className='bcf-action-item'>Atendimentos</div>
+          </Link>
+
           <div className='bcf-action-item'>Profissionais</div>
 
           <Link to={"/clients"}>
