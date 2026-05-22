@@ -17,8 +17,10 @@ export default function Appointments() {
             <h4>Listar atendimentos em andamento:</h4>
           </Link>
 
+          <Link to={"/appointments/finished"}>
+            <h4>Listar atendimentos finalizados:</h4>
+          </Link>
 
-          <h4>Listar atendimentos finalizados:</h4>
           <h4>Listar atendimentos cancelados:</h4>
           <h4>Listar atendimentos não pagos:</h4>
         </div>

@@ -16,7 +16,11 @@ export default function AppointmentsInProgressCard({ appointmentDTO }: Props) {
           Em atendimento
         </div>
         <h4>Preço total: <span>R$ {appointmentDTO.totalValue.toFixed(2)}</span></h4>
-        <h4>Pago: Não</h4>
+        {
+          appointmentDTO.isPaid === false
+            ? <h4>Pago: Não</h4>
+            : <h4>Pago: Sim</h4>
+        }
       </div>
 
       <div className='bcf-appointment-in-progress-card-services'>
