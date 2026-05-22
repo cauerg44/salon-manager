@@ -20,6 +20,7 @@ import AppointmentsInWaiting from "./routes/ClientHome/Appointments/Appointments
 import AppointmentsInProgress from "./routes/ClientHome/Appointments/AppointmentsInProgress";
 import AppointmentsFinished from "./routes/ClientHome/Appointments/AppointmentsFinished";
 import AppointmentsCanceled from "./routes/ClientHome/Appointments/AppointmentsCanceled";
+import AppointmentsNotPaid from "./routes/ClientHome/Appointments/AppointmentsNotPaid";
 
 export default function App() {
 
@@ -41,6 +42,7 @@ export default function App() {
                 <Route path="in-progress" element={<AppointmentsInProgress />} />
                 <Route path="finished" element={<AppointmentsFinished />} />
                 <Route path="canceled" element={<AppointmentsCanceled />} />
+                <Route path="not-paid" element={<AppointmentsNotPaid />} />
               </Route>
 
               <Route path="services" element={<Services />}>

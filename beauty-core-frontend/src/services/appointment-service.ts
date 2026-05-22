@@ -15,3 +15,16 @@ export function findAllAppointmentsByStatus(appointmentStatus: string, size = 12
 
   return requestBackend(config);
 }
+
+export function findAllAppointmentsNotPaid(size = 12) {
+
+  const config: AxiosRequestConfig = {
+    url: "/appointments/not-paid",
+    withCredentials: true,
+    params: {
+      size
+    }
+  }
+
+  return requestBackend(config);
+}

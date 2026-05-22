@@ -25,8 +25,10 @@ export default function Appointments() {
             <h4>Listar atendimentos cancelados:</h4>
           </Link>
 
+          <Link to={"/appointments/not-paid"}>
+            <h4>Listar atendimentos não pagos:</h4>
+          </Link>
 
-          <h4>Listar atendimentos não pagos:</h4>
         </div>
       </section>
       <Outlet />

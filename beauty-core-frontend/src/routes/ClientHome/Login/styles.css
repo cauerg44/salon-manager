@@ -29,11 +29,11 @@
   margin-bottom: 15px;
   border: 1px solid var(--bfc--border-color-tertiary);
   background-color: var(--bcf--bg-color-quaternary);
-  color: var(--bcf--font-color-quintanary);
+  color: var(--bfc--util-color-quaternary);
 }
 
 .bcf-modal-form input::placeholder {
-  color: var(--bcf--font-color-quintanary);
+  color: var(--bfc--util-color-quaternary);
 }
 
 .bcf-modal-form input:focus {
