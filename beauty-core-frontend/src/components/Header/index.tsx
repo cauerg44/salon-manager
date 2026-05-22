@@ -1,13 +1,9 @@
-
-import { useContext } from 'react';
 import './styles.css';
 import { Link } from 'react-router-dom';
-import { ContextProfessionalLogged } from '../../utils/context-professional-logged.ts';
 import homeIcon from '../../assets/bcf-home-icon.svg';
+import configIcon from '../../assets/bcf-config-icon.svg';
 
 export default function Header() {
-
-  const { contextProfessionalLogged } = useContext(ContextProfessionalLogged);
 
   return (
     <header>
@@ -17,17 +13,12 @@ export default function Header() {
         </Link>
 
         <Link to={"/"}>
-          <h1>Sistema PDV: Salão de Beleza</h1>
+          <h1>Sistema de Gestão: Salão de Beleza</h1>
         </Link>
 
-        {
-          contextProfessionalLogged
-            ? <h3>Olá, <b>{contextProfessionalLogged}!</b></h3>
-            :
-            <Link to={"/login"}>
-              <h3>Login</h3>
-            </Link>
-        }
+        <Link to={"/home"}>
+          <img src={configIcon} alt="Tela inicial" />
+        </Link>
       </nav>
     </header>
   );
