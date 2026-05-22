@@ -21,7 +21,11 @@ export default function Appointments() {
             <h4>Listar atendimentos finalizados:</h4>
           </Link>
 
-          <h4>Listar atendimentos cancelados:</h4>
+          <Link to={"/appointments/canceled"}>
+            <h4>Listar atendimentos cancelados:</h4>
+          </Link>
+
+
           <h4>Listar atendimentos não pagos:</h4>
         </div>
       </section>

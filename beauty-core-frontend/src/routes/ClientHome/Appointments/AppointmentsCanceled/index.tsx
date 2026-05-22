@@ -2,14 +2,14 @@ import './styles.css';
 import { useEffect, useState } from 'react';
 import type { AppointmentDTO } from '../../../../models/appointment';
 import * as appointmentService from '../../../../services/appointment-service.ts'
-import AppointmentFinishedCard from '../../../../components/AppointmentFinishedCard/index.tsx';
+import AppointmentCanceledCard from '../../../../components/AppointmentCanceledCard/index.tsx';
 
-export default function AppointmentsFinished() {
+export default function AppointmentsCanceled() {
 
   const [appointments, setAppointments] = useState<AppointmentDTO[]>([]);
 
   useEffect(() => {
-    appointmentService.findAllAppointmentsByStatus("FINISHED")
+    appointmentService.findAllAppointmentsByStatus("CANCELED")
       .then(response => {
         console.log(response.data);
         setAppointments(response.data.content);
@@ -17,13 +17,13 @@ export default function AppointmentsFinished() {
   }, []);
 
   return (
-    <section id="appointments-in-finished-section" className="bcf-container-1200px">
-      <h2 className='bcf-appointment-status-title-section'>Atendimentos finalizados:</h2>
+    <section id="appointments-canceled-section" className="bcf-container-1200px">
+      <h2 className='bcf-appointment-status-title-section'>Atendimentos cancelados:</h2>
 
       <div className='bcf-appointments-cards-container'>
         {
           appointments.map(
-            appointment => <AppointmentFinishedCard key={appointment.id} appointmentDTO={appointment} />
+            appointment => <AppointmentCanceledCard key={appointment.id} appointmentDTO={appointment} />
           )
         }
       </div>

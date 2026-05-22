@@ -7,7 +7,7 @@ type Props = {
 
 export default function AppointmentFinishedCard({ appointmentDTO }: Props) {
   return (
-    <div className='bcf-appointment-finished-card-container'>
+    <div className='bcf-appointment-card-container'>
 
       <div className='bcf-appointment-finished-card-infos'>
         <h3>Profissional: {appointmentDTO.professional.name}</h3>
@@ -15,6 +15,7 @@ export default function AppointmentFinishedCard({ appointmentDTO }: Props) {
         <div className='bcf-appointment-finished-card-status'>
           Finalizado
         </div>
+        <h4>Desconto: R$ {appointmentDTO.discount.toFixed(2)}</h4>
         <h4>Preço total: <span>R$ {appointmentDTO.totalValue.toFixed(2)}</span></h4>
         {
           appointmentDTO.isPaid === false

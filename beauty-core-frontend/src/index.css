@@ -19,7 +19,7 @@
   --bfc--border-color-secondary: #155a45;
   --bfc--border-color-tertiary: #c6c6c6;
 
-  --bfc--util-color-primary: #3d75c9;
+  --bfc--util-color-primary: #426aa6;
   --bfc--util-color-secondary: #4b44c9;
   --bfc--util-color-tertiary: #249e51;
 }
@@ -50,4 +50,15 @@ main {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+}
+
+/* Appointment card: */
+
+.bcf-appointment-card-container {
+  transition: 0.2s;
+}
+
+.bcf-appointment-card-container:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
 }
