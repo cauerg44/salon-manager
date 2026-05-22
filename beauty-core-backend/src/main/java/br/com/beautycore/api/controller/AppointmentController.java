@@ -31,6 +31,13 @@ public class AppointmentController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/not-paid")
+    public ResponseEntity<Page<AppointmentResponseDTO>> findAllAppointmentsNotPaid(Pageable pageable) {
+        var result = service.findAllAppointmentsNotPaid(pageable);
+        return ResponseEntity.ok(result);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{id}")
     public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
         var result = service.findById(id);

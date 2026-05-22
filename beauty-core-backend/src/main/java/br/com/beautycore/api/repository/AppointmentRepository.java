@@ -14,5 +14,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
         WHERE ap.appointment_status = :appointmentStatus
         ORDER BY ap.created_at DESC;
     """)
-    Page<Appointment> findAllByStatusAndOrderByCreatedAtDesc(Pageable pageable, String appointmentStatus);
+    Page<Appointment> findAllByStatusAndOrderByCreatedAtDesc(Pageable pageable, String appointmcentStatus);
+
+    @Query(nativeQuery = true, value = """
+        SELECT * FROM appointments ap
+        WHERE ap.appointment_status != 'CANCELED' AND ap.is_paid = false
+        ORDER BY ap.created_at DESC;
+    """)
+    Page<Appointment> findAllAppointmentsNotPaid(Pageable pageable);
 }

@@ -42,6 +42,13 @@ public class AppointmentService {
     }
 
     @Transactional(readOnly = true)
+    public Page<AppointmentResponseDTO> findAllAppointmentsNotPaid(Pageable pageable) {
+
+        Page<Appointment> page = repository.findAllAppointmentsNotPaid(pageable);
+        return page.map(appointment -> new AppointmentResponseDTO(appointment));
+    }
+
+    @Transactional(readOnly = true)
     public AppointmentResponseDTO findById(Long id) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
