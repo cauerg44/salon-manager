@@ -90,7 +90,10 @@ insert into clients (name, phone, birth_date, credit) values ('Wesley', '1140028
 insert into clients (name, phone, birth_date, credit) values ('Diego', '1140028954', '1991-09-09', 00.00);
 insert into clients (name, phone, birth_date, credit) values ('Roberto', '1140028955', '1986-06-16', 00.00);
 
--- Alguns registros com atendimentos em espera:
+-- ====================================================================
+-- 1. ATENDIMENTOS EM ESPERA (IDs de 1 a 5)
+-- ====================================================================
+
 insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (1, 6, 'WAITING', 0.00, 40.00, 0.00, true);
 insert into appointment_service (appointment_id, service_id, price_at_moment) values (1, 1, 25.00);
 
@@ -106,32 +109,62 @@ insert into appointment_service (appointment_id, service_id, price_at_moment) va
 insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (1, 10, 'WAITING', 0.00, 40.00, 0.00, true);
 insert into appointment_service (appointment_id, service_id, price_at_moment) values (5, 1, 25.00);
 
--- Alguns registros com atendimentos em progressp:
-insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 11, 'IN_PROGRESS', 0.00, 40.00, 0.00, true);
-insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 12, 'IN_PROGRESS', 0.00, 40.00, 0.00, true);
-insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 13, 'IN_PROGRESS', 0.00, 40.00, 0.00, true);
-insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 14, 'IN_PROGRESS', 0.00, 40.00, 0.00, true);
+
+-- ====================================================================
+-- 2. ATENDIMENTOS EM PROGRESSO (IDs de 6 a 10)
+-- ====================================================================
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 11, 'IN_PROGRESS', 0.00, 15.00, 0.00, true);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (6, 2, 15.00);
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 12, 'IN_PROGRESS', 0.00, 15.00, 0.00, true);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (7, 2, 15.00);
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 13, 'IN_PROGRESS', 0.00, 15.00, 0.00, true);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (8, 2, 15.00);
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 14, 'IN_PROGRESS', 0.00, 15.00, 0.00, true);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (9, 2, 15.00);
+
 insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 15, 'IN_PROGRESS', 0.00, 40.00, 0.00, true);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (10, 2, 25.00);
 
--- Atendimento 1: Cauê foi atendido com Júnior finalizado:
-insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid)
-values (2, 1, 'FINISHED', 0.00, 40.00, 0.00, true);
 
--- Atendimento 1: Cauê escolheu os serviços: Cabelo + Barba -> Total: R$40.00
+-- ====================================================================
+-- 3. ATENDIMENTOS FINALIZADOS (IDs 11 e 12)
+-- ====================================================================
+
+-- Atendimento 11: Cauê com Júnior
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (2, 1, 'FINISHED', 0.00, 40.00, 0.00, true);
+-- Serviços do Cauê: Cabelo + Barba
 insert into appointment_service (appointment_id, service_id, price_at_moment) values (11, 1, 25.00);
 insert into appointment_service (appointment_id, service_id, price_at_moment) values (11, 2, 15.00);
-
--- Atendimento 1: Cauê pagou o atendimento completo pelo PIX
+-- Pagamento do Cauê
 insert into payments (appointment_id, amount_paid, payment_method, paid_at) values (11, 40.00, 'PIX', '2026-05-14 18:00');
 
--- Atendimento 2: Felipe foi atendido com Alan finalizado:
-insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid)
-values (3, 2, 'FINISHED', 0.00, 50.00, 10.00, false);
-
--- Atendimento 2: Felipe escolheu os serviços: Cabelo + Barba + Sobrancelha -> Total: R$50.00
+-- Atendimento 12: Felipe com Alan
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (3, 2, 'FINISHED', 0.00, 50.00, 10.00, false);
+-- Serviços do Felipe: Cabelo + Barba + Sobrancelha
 insert into appointment_service (appointment_id, service_id, price_at_moment) values (12, 1, 25.00);
 insert into appointment_service (appointment_id, service_id, price_at_moment) values (12, 2, 15.00);
 insert into appointment_service (appointment_id, service_id, price_at_moment) values (12, 3, 10.00);
+
+
+-- ====================================================================
+-- 4. ATENDIMENTOS CANCELADOS (IDs de 13 a 16)
+-- ====================================================================
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (2, 17, 'CANCELED', 0.00, 25.00, 10.00, false);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (13, 1, 25.00);
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (2, 18, 'CANCELED', 0.00, 25.00, 10.00, false);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (14, 1, 25.00);
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (2, 19, 'CANCELED', 0.00, 25.00, 10.00, false);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (15, 1, 25.00);
+
+insert into appointments (professional_id, client_id, appointment_status, discount, total_value, remaining_value, is_paid) values (2, 20, 'CANCELED', 0.00, 25.00, 10.00, false);
+insert into appointment_service (appointment_id, service_id, price_at_moment) values (16, 1, 25.00);
 
 -- Atendimento 2: Felipe pagou o atendimento parcialmente pelo Dinheiro
 insert into payments (appointment_id, amount_paid, payment_method, paid_at) values (12, 40.00, 'CASH', '2026-05-14 18:00');
