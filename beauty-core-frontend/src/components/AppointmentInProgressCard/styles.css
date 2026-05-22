@@ -1,26 +1,26 @@
-.bcf-appointment-in-waiting-card-infos {
+.bcf-appointment-in-progress-card-infos {
   padding: 10px;
   background-color: var(--bcf--bg-color-primary);
   color: var(--bcf--font-color-primary);
   border-radius: 8px 8px 0 0;
 }
 
-.bcf-appointment-in-waiting-card-infos h3 {
+.bcf-appointment-in-progress-card-infos h3 {
   font-size: 400;
   margin-bottom: 10px;
 }
 
-.bcf-appointment-in-waiting-card-infos h4 {
+.bcf-appointment-in-progress-card-infos h4 {
   font-weight: 500;
   margin-bottom: 5px;
 }
 
-.bcf-appointment-in-waiting-card-infos span {
+.bcf-appointment-in-progress-card-infos span {
   font-weight: 700;
   color: var(--bcf--font-color-senary);
 }
 
-.bcf-appointment-in-waiting-card-services {
+.bcf-appointment-in-progress-card-services {
   border-top: 0;
   border: 2px solid var(--bfc--border-color-primary);
   border-radius: 0 0 8px 8px;
@@ -44,10 +44,10 @@
   color: var(--bcf--font-color-senary);
 }
 
-.bcf-appointment-in-waiting-card-status {
+.bcf-appointment-in-progress-card-status {
   margin: 10px 0;
   border-radius: 10px;
-  background-color: var(--bfc--util-color-primary);
+  background-color: var(--bfc--util-color-secondary);
   display: flex;
   align-items: center;
   justify-content: center;

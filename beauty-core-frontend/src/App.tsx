@@ -17,6 +17,7 @@ import FinancialReports from "./routes/ClientHome/FinancialReports";
 import TotalProfitInLive from "./routes/ClientHome/FinancialReports/TotalProfitInLive";
 import Appointments from "./routes/ClientHome/Appointments";
 import AppointmentsInWaiting from "./routes/ClientHome/Appointments/AppointmentsInWaiting";
+import AppointmentsInProgress from "./routes/ClientHome/Appointments/AppointmentsInProgress";
 
 export default function App() {
 
@@ -35,6 +36,7 @@ export default function App() {
 
               <Route path="appointments" element={<Appointments />}>
                 <Route path="in-waiting" element={<AppointmentsInWaiting />} />
+                <Route path="in-progress" element={<AppointmentsInProgress />} />
               </Route>
 
               <Route path="services" element={<Services />}>

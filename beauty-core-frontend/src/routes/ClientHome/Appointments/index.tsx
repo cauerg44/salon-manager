@@ -13,7 +13,11 @@ export default function Appointments() {
             <h4>Listar atendimentos em espera:</h4>
           </Link>
 
-          <h4>Listar atendimentos em andamento:</h4>
+          <Link to={"/appointments/in-progress"}>
+            <h4>Listar atendimentos em andamento:</h4>
+          </Link>
+
+
           <h4>Listar atendimentos finalizados:</h4>
           <h4>Listar atendimentos cancelados:</h4>
           <h4>Listar atendimentos não pagos:</h4>
