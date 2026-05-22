@@ -7,7 +7,7 @@ type Props = {
 
 export default function AppointmentsInProgressCard({ appointmentDTO }: Props) {
   return (
-    <div className='bcf-appointment-in-progress-card-container'>
+    <div className='bcf-appointment-card-container'>
 
       <div className='bcf-appointment-in-progress-card-infos'>
         <h3>Profissional: {appointmentDTO.professional.name}</h3>
