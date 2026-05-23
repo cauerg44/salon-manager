@@ -1,3 +1,12 @@
+.bfc-professional-card-modal-container {
+  transition: 0.2s;
+}
+
+.bfc-professional-card-modal-container:hover {
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
 .bfc-professional-card-modal-infos {
   border-radius: 8px 8px 0 0;
   background-color: var(--bcf--bg-color-primary);
