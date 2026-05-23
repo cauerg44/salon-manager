@@ -8,17 +8,19 @@ export default function AppointmentsInWaiting() {
 
   const [appointments, setAppointments] = useState<AppointmentDTO[]>([]);
 
+  const [count, setCount] = useState<number>();
+
   useEffect(() => {
     appointmentService.findAllAppointmentsByStatus("WAITING")
       .then(response => {
-        console.log(response.data);
+        setCount(response.data.content.length);
         setAppointments(response.data.content);
       })
   }, []);
 
   return (
     <section id="appointments-in-waiting-section" className="bcf-container-1200px">
-      <h2 className='bcf-appointment-status-title-section'>Atendimentos em espera:</h2>
+      <h2 className='bcf-appointment-status-title-section'>{count} atendimento(s) em espera:</h2>
 
       <div className='bcf-appointments-cards-container'>
         {
