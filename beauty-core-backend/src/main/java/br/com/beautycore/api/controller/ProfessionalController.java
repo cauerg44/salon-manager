@@ -5,6 +5,8 @@ import br.com.beautycore.api.dto.response.ProfessionalResponseDTO;
 import br.com.beautycore.api.services.ProfessionalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,8 @@ public class ProfessionalController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<List<ProfessionalResponseDTO>> findAll() {
-        var result = service.findAll();
+    public ResponseEntity<Page<ProfessionalResponseDTO>> findAll(Pageable pageable, @RequestParam(name = "name", defaultValue = "") String name) {
+        var result = service.findAll(pageable, name);
         return ResponseEntity.ok(result);
     }
 

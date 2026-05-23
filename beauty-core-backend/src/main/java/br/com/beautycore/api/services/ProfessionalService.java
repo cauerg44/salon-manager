@@ -10,6 +10,8 @@ import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import br.com.beautycore.api.utils.CustomProfessionalUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,11 +30,9 @@ public class ProfessionalService {
     private final CustomProfessionalUtil customProfessionalUtil;
 
     @Transactional(readOnly = true)
-    public List<ProfessionalResponseDTO> findAll() {
-        List<Professional> list = repository.findAll();
-        return list.stream()
-                .map(professional -> new ProfessionalResponseDTO(professional))
-                .collect(Collectors.toList());
+    public Page<ProfessionalResponseDTO> findAll(Pageable pageable, String name) {
+        Page<Professional> result = repository.searchByName(name, pageable);
+        return result.map(professional -> new ProfessionalResponseDTO(professional));
     }
 
     @Transactional(readOnly = true)

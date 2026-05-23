@@ -36,7 +36,10 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Appointment> appointments = new ArrayList<>();
 
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+
     private LocalDateTime updatedAt;
 
     public Client(Long id, String name, String phone, LocalDate birthDate, BigDecimal credit, LocalDateTime createdAt, LocalDateTime updatedAt) {
