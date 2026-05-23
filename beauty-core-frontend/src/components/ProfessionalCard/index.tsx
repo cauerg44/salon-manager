@@ -11,8 +11,10 @@ export default function ProfessionalCard({ professional }: Props) {
 
       <div className='bfc-professional-card-modal-infos'>
         <h3>{professional.name}</h3>
+
+
         {
-          professional.isActive
+          professional.isWorking
             ?
             <div className='bfc-professional-card-modal-info-status-working'>
               Trabalhando
