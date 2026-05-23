@@ -8,14 +8,14 @@
   height: 35px;
   padding: 15px;
   font-size: 15px;
-  color: var(--bcf--font-color-quintanary);
+  color: var(--bfc--util-color-quaternary);
   border: 1px solid var(--bfc--border-color-tertiary);
   border-left: 0;
   border-right: 0;
 }
 
 .bcf-search-bar input::placeholder {
-  color: var(--bcf--font-color-quintanary);
+  color: var(--bfc--util-color-quaternary);
 }
 
 .bcf-search-bar input:focus {

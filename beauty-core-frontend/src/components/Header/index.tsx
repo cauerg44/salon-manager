@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header>
       <nav className='bcf-container-1200px'>
-        <Link to={"/home"}>
+        <Link to={"/general"}>
           <img src={homeIcon} alt="Tela inicial" />
         </Link>
 
