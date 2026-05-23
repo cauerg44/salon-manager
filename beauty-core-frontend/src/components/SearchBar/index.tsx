@@ -3,9 +3,10 @@ import './styles.css';
 
 type Props = {
   onSearch: Function;
+  placeholderText: string;
 }
 
-export default function SearchBar({ onSearch }: Props) {
+export default function SearchBar({ onSearch, placeholderText }: Props) {
 
   const [text, setText] = useState<string>("");
 
@@ -29,7 +30,7 @@ export default function SearchBar({ onSearch }: Props) {
         <button type='submit' className='btn-left'>🔎︎</button>
         <input
           value={text}
-          placeholder='Digite o nome do cliente'
+          placeholder={placeholderText}
           type="text"
           onChange={handleInputChange}
         />

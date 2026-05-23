@@ -13,7 +13,9 @@ export default function General() {
             <div className='bcf-action-item'>Atendimentos</div>
           </Link>
 
-          <div className='bcf-action-item'>Profissionais</div>
+          <Link to={"/professionals"}>
+            <div className='bcf-action-item'>Professionais</div>
+          </Link>
 
           <Link to={"/clients"}>
             <div className='bcf-action-item'>Clientes</div>
@@ -30,6 +32,7 @@ export default function General() {
           <Link to={"/financial-reports"}>
             <div className='bcf-action-item'>Financeiro</div>
           </Link>
+
         </div>
       </div>
     </section>

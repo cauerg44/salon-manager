@@ -1,21 +1,21 @@
 import './styles.css';
-import ClientCard from '../../../../components/ClientCard';
 import { useEffect, useState } from 'react';
-import type { ClientDTO } from '../../../../models/client';
-import * as clientService from '../../../../services/client-service.ts';
+import * as professionalService from '../../../../services/professional-service.ts';
 import SearchBar from '../../../../components/SearchBar/index.tsx';
 import ButtonTertiary from '../../../../components/ButtonTertiary/index.tsx';
+import type { ProfessionalDTO } from '../../../../models/professional.ts';
+import ProfessionalCard from '../../../../components/ProfessionalCard/index.tsx';
 
 type QueryParams = {
   page: number;
   name: string;
 }
 
-export default function ClientsListing() {
+export default function ProfessionalsListing() {
 
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
 
-  const [clients, setClients] = useState<ClientDTO[]>([]);
+  const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);
 
   const [queryParams, setQueryParams] = useState<QueryParams>({
     page: 0,
@@ -23,16 +23,16 @@ export default function ClientsListing() {
   });
 
   useEffect(() => {
-    clientService.findAllClientsPaged(queryParams.page, queryParams.name)
+    professionalService.findAllProfessionals(queryParams.page, queryParams.name)
       .then(response => {
-        const nextPage = response.data.content;
-        setClients(clients.concat(nextPage));
+        const nextPage = response.data;
+        setProfessionals(professionals.concat(nextPage));
         setIsLastPage(response.data.last);
       });
   }, [queryParams]);
 
   function handleSearch(searchText: string) {
-    setClients([]);
+    setProfessionals([]);
     setQueryParams({ ...queryParams, page: 0, name: searchText })
   }
 
@@ -44,14 +44,16 @@ export default function ClientsListing() {
     <section id='professionals-listing-section' className='bcf-container-1200px'>
 
       <h2 className='bcf-search-bar-message'>Barra de pesquisa:</h2>
-      <SearchBar placeholderText='Digite o nome do cliente' onSearch={handleSearch} />
+      <SearchBar placeholderText='Digite o nome do profissional' onSearch={handleSearch} />
 
       <div className='bcf-professionals-cards-modal'>
+
         {
-          clients.map(
-            client => <ClientCard key={client.id} client={client} />
+          professionals.map(
+            professional => <ProfessionalCard key={professional.id} professional={professional} />
           )
         }
+
       </div>
 
       {
