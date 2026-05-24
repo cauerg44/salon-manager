@@ -40,7 +40,7 @@ axios.interceptors.response.use(
       history.push("/login")
     }
     if (error.response.status === 403) {
-      console.log("/home");
+      history.push("/home")
     }
     return Promise.reject(error);
   }
