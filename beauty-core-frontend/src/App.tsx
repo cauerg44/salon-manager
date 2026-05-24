@@ -22,6 +22,7 @@ import AppointmentsNotPaid from "./routes/ClientHome/Appointments/AppointmentsNo
 import Professionals from "./routes/ClientHome/Professionals";
 import ProfessionalsListing from "./routes/ClientHome/Professionals/ProfessionalsListing";
 import ProfessionalTotalProfit from "./routes/ClientHome/FinancialReports/ProfessionalTotalProfit";
+import Profile from "./routes/ClientHome/Profile";
 
 export default function App() {
 
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/" element={<ClientHome />}>
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="login" element={<Login />} />
             <Route path="general" element={<General />} />
 

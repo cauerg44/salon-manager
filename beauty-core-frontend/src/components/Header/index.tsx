@@ -1,7 +1,7 @@
 import './styles.css';
 import { Link } from 'react-router-dom';
 import homeIcon from '../../assets/bcf-home-icon.svg';
-import configIcon from '../../assets/bcf-config-icon.svg';
+import profileConfigIcon from '../../assets/bcf-profile-config-icon.svg';
 
 export default function Header() {
 
@@ -16,8 +16,8 @@ export default function Header() {
           <h1>Sistema de Gestão: Salão de Beleza</h1>
         </Link>
 
-        <Link to={"/home"}>
-          <img src={configIcon} alt="Tela inicial" />
+        <Link to={"/profile"}>
+          <img src={profileConfigIcon} alt="Tela inicial" />
         </Link>
       </nav>
     </header>
