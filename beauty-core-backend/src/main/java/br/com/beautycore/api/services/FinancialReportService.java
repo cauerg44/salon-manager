@@ -1,6 +1,7 @@
 package br.com.beautycore.api.services;
 
 import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
+import br.com.beautycore.api.projections.TotalProfitProfessionalProjection;
 import br.com.beautycore.api.repository.FinancialReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,11 @@ public class FinancialReportService {
 
     @Transactional(readOnly = true)
     public TotalProfitInLiveProjection getTotalProfitInLive() {
+        return repository.getTotalProfitInLive();
+    }
 
-        LocalDateTime start = LocalDate.now().atStartOfDay();
-        LocalDateTime end = LocalDate.now().atTime(23, 59, 59);
-
-        return repository.getTotalProfitInLive(start, end);
+    @Transactional(readOnly = true)
+    public TotalProfitProfessionalProjection getProfessionalTotalProfitInLive(Long professionalId) {
+        return repository.getProfessionalTotalProfit(professionalId);
     }
 }

@@ -2,9 +2,8 @@ package br.com.beautycore.api.projections;
 
 import java.math.BigDecimal;
 
-public interface TotalProfitByProfessionalProjection {
+public interface TotalProfitProfessionalProjection {
 
-    String getProfessional();
     BigDecimal getTotalProfit();
     BigDecimal getPix();
     BigDecimal getCash();
