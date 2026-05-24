@@ -5,3 +5,11 @@ export type TotalProfitInLiveDTO = {
   credit: number;
   totalProfitInLive: number;
 }
+
+export type ProfessionalTotalProfitInLive = {
+  pix: number;
+  cash: number;
+  debit: number;
+  credit: number;
+  totalProfit: number;
+}

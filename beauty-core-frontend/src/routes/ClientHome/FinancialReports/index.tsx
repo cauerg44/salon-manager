@@ -14,8 +14,8 @@ export default function FinancialReports() {
             <h4>Ver lucro total ao vivo no dia de hoje</h4>
           </Link>
 
-          <Link to={"/financial-reports/total-profit-by-professional"}>
-            <h4>Ver lucro de cada profissional</h4>
+          <Link to={"/financial-reports/professional-total-profit-in-live"}>
+            <h4>Ver meu lucro de hoje</h4>
           </Link>
         </div>
       </section>

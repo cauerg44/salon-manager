@@ -21,6 +21,7 @@ import AppointmentsCanceled from "./routes/ClientHome/Appointments/AppointmentsC
 import AppointmentsNotPaid from "./routes/ClientHome/Appointments/AppointmentsNotPaid";
 import Professionals from "./routes/ClientHome/Professionals";
 import ProfessionalsListing from "./routes/ClientHome/Professionals/ProfessionalsListing";
+import ProfessionalTotalProfit from "./routes/ClientHome/FinancialReports/ProfessionalTotalProfit";
 
 export default function App() {
 
@@ -60,6 +61,7 @@ export default function App() {
 
             <Route path="financial-reports" element={<FinancialReports />}>
               <Route path="total-profit-in-live" element={<TotalProfitInLive />} />
+              <Route path="professional-total-profit-in-live" element={<ProfessionalTotalProfit />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate to={"/"} />} />

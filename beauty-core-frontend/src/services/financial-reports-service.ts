@@ -10,3 +10,16 @@ export function getTotalProfitInLive() {
 
   return requestBackend(config);
 }
+
+export function getProfessionalTotalProfitInLive(professionalId: number) {
+
+  const config: AxiosRequestConfig = {
+    url: `/financial-reports/${professionalId}/professional-total-profit-in-live`,
+    withCredentials: true,
+    params: {
+      professionalId,
+    }
+  }
+
+  return requestBackend(config);
+}
