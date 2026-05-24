@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import ButtonSecondary from '../../../components/ButtonSecondary';
 import './styles.css';
+import ReturnGeneralPageButton from '../../../components/ReturnGeneralPageButtun';
 
 export default function Services() {
 
@@ -8,6 +9,7 @@ export default function Services() {
     <>
       <section id="services-section" className="bcf-container-1200px">
         <div className='bcf-services-modal'>
+          <ReturnGeneralPageButton />
           <h2>Serviços do salão:</h2>
           <h3>Gerencie os serviços dispóniveis no salão:</h3>
 

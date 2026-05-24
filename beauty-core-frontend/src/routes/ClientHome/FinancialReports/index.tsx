@@ -1,5 +1,6 @@
 import { Link, Outlet } from 'react-router-dom';
 import './styles.css';
+import ReturnGeneralPageButton from '../../../components/ReturnGeneralPageButtun';
 
 export default function FinancialReports() {
 
@@ -7,6 +8,9 @@ export default function FinancialReports() {
     <>
       <section id="financial-reports-section" className="bcf-container-1200px">
         <div className='bcf-financial-reports-modal'>
+
+          <ReturnGeneralPageButton />
+
           <h2>Relatório financeiro:</h2>
           <h3>Vizualize o lucro total ao vivo no dia, e por cada profissional:</h3>
 

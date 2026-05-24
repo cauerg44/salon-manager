@@ -1,3 +1,4 @@
+import ReturnGeneralPageButton from '../../../components/ReturnGeneralPageButtun';
 import './styles.css';
 import { Link, Outlet } from "react-router-dom";
 
@@ -6,6 +7,9 @@ export default function Appointments() {
     <>
       <section id="appointments-section" className="bcf-container-1200px">
         <div className='bcf-appointments-modal'>
+
+          <ReturnGeneralPageButton />
+
           <h2>Atendimentos:</h2>
           <h3>Gerencie todos os atendimentos do salão:</h3>
 
