@@ -17,6 +17,8 @@ export default function ProfessionalsListing() {
 
   const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);
 
+  const [countProfessionals, setCountProfessionals] = useState<number>();
+
   const [queryParams, setQueryParams] = useState<QueryParams>({
     page: 0,
     name: ""
@@ -25,9 +27,10 @@ export default function ProfessionalsListing() {
   useEffect(() => {
     professionalService.findAllProfessionals(queryParams.page, queryParams.name)
       .then(response => {
-        const nextPage = response.data;
+        const nextPage = response.data.content;
         setProfessionals(professionals.concat(nextPage));
         setIsLastPage(response.data.last);
+        setCountProfessionals(response.data.numberOfElements);
       });
   }, [queryParams]);
 
@@ -44,7 +47,10 @@ export default function ProfessionalsListing() {
     <section id='professionals-listing-section' className='bcf-container-1200px'>
 
       <h2 className='bcf-search-bar-message'>Barra de pesquisa:</h2>
+
       <SearchBar placeholderText='Digite o nome do profissional' onSearch={handleSearch} />
+
+      <h3 className='bcf-professionals-count-info'>{countProfessionals} profissionais encontrados:</h3>
 
       <div className='bcf-professionals-cards-modal'>
 
