@@ -96,3 +96,11 @@ main {
   color: var(--bcf--font-color-quintanary);
   margin-bottom: 20px;
 }
+
+.bcf-dialog-btn-container {
+  display: flex;
+}
+
+.bcf-dialog-btn-container button {
+  margin: 0 5px;
+}

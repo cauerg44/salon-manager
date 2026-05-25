@@ -5,12 +5,18 @@ import * as specializationService from '../../../../services/specialization-serv
 import editIcon from '../../../../assets/bcf-edit-icon.svg';
 import trashIcon from '../../../../assets/bcf-trash-icon.svg';
 import DialogModalInfo from '../../../../components/DialogInfo/index.tsx';
+import DialogConfirmation from '../../../../components/DialogConfirmation/index.tsx';
 
 export default function SpecializationsListing() {
 
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
     message: "Operação com sucesso!"
+  })
+
+  const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    visible: false,
+    message: "Tem certeza?"
   })
 
   const [specializations, setSpecializations] = useState<SpecialtyDTO[]>([]);
@@ -27,7 +33,11 @@ export default function SpecializationsListing() {
   }
 
   function handleDeleteClick() {
-    setDialogInfoData({ ...dialogInfoData, visible: true });
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: true });
+  }
+
+  function handleDialogConfirmationAnswer(answer: boolean) {
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: false });
   }
 
   return (
@@ -48,11 +58,20 @@ export default function SpecializationsListing() {
           }
         </div>
       </section>
+
       {
         dialogInfoData.visible &&
         <DialogModalInfo
           message={dialogInfoData.message}
           onDialogClose={handleDialogInfoClose}
+        />
+      }
+
+      {
+        dialogConfirmationData.visible &&
+        <DialogConfirmation
+          message={dialogConfirmationData.message}
+          onDialogAnswer={handleDialogConfirmationAnswer}
         />
       }
     </>
