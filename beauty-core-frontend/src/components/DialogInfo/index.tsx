@@ -1,12 +1,21 @@
 import ButtonPrimary from '../ButtonPrimary';
 
-export default function DialogModalInfo() {
-  return (
-    <div className='bcf-dialog-background'>
+type Props = {
+  message: string;
+  onDialogClose: Function;
+}
 
-      <div className='bcf-dialog-box'>
-        <h2>Operação com sucesso</h2>
-        <ButtonPrimary text='Ok' />
+export default function DialogModalInfo({ message, onDialogClose }: Props) {
+  return (
+    <div className='bcf-dialog-background' onClick={() => onDialogClose()}>
+
+      <div className='bcf-dialog-box' onClick={(event) => event.stopPropagation()} >
+        <h2>{message}</h2>
+
+        <div onClick={() => onDialogClose()}>
+          <ButtonPrimary text='Ok' />
+        </div>
+
       </div>
 
     </div>
