@@ -10,3 +10,14 @@ export function findAll() {
 
   return requestBackend(config);
 }
+
+export function deleteById(specialtyId: number) {
+
+  const config: AxiosRequestConfig = {
+    method: "DELETE",
+    url: `/specializations/${specialtyId}`,
+    withCredentials: true
+  }
+
+  return requestBackend(config);
+}

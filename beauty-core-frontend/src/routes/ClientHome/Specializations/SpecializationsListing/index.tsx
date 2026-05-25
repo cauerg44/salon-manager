@@ -16,6 +16,7 @@ export default function SpecializationsListing() {
 
   const [dialogConfirmationData, setDialogConfirmationData] = useState({
     visible: false,
+    id: 0,
     message: "Tem certeza?"
   })
 
@@ -32,11 +33,30 @@ export default function SpecializationsListing() {
     setDialogInfoData({ ...dialogInfoData, visible: false });
   }
 
-  function handleDeleteClick() {
-    setDialogConfirmationData({ ...dialogConfirmationData, visible: true });
+  function handleDeleteClick(specialtyId: number) {
+    setDialogConfirmationData({ ...dialogConfirmationData, id: specialtyId, visible: true });
   }
 
-  function handleDialogConfirmationAnswer(answer: boolean) {
+  function handleDialogConfirmationAnswer(answer: boolean, specialtyId: number) {
+    if (answer) {
+      specializationService.deleteById(specialtyId)
+        .then(() => {
+          setDialogInfoData({
+            ...dialogInfoData,
+            message: 'Operação feita com sucesso!',
+            visible: true
+          })
+          setSpecializations(specializations.filter(item => item.id !== specialtyId));
+        })
+        .catch(() => {
+          setDialogInfoData({
+            ...dialogInfoData,
+            message: 'Apenas o administrador pode remover!',
+            visible: true
+          })
+        });
+    }
+
     setDialogConfirmationData({ ...dialogConfirmationData, visible: false });
   }
 
@@ -51,7 +71,7 @@ export default function SpecializationsListing() {
                   <h3>{specialty.name}</h3>
                   <div className='bcf-specialty-card-icons'>
                     <img src={editIcon} alt="Edit icon" />
-                    <img onClick={handleDeleteClick} src={trashIcon} alt="Trash icon" />
+                    <img onClick={() => handleDeleteClick(specialty.id)} src={trashIcon} alt="Trash icon" />
                   </div>
                 </div>
             )
@@ -70,6 +90,7 @@ export default function SpecializationsListing() {
       {
         dialogConfirmationData.visible &&
         <DialogConfirmation
+          id={dialogConfirmationData.id}
           message={dialogConfirmationData.message}
           onDialogAnswer={handleDialogConfirmationAnswer}
         />
