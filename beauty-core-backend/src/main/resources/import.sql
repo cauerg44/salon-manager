@@ -24,6 +24,7 @@ insert into professionals (name, email, password) VALUES ('Júnior', 'junior@bea
 insert into professionals (name, email, password) VALUES ('Alan', 'alan@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
 insert into professionals (name, email, password) VALUES ('Daniel', 'daniel@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
 insert into professionals (name, email, password) VALUES ('Thayla', 'thayla@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
+insert into professionals (name, email, password) VALUES ('David', 'david@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
 
 insert into professional_specialty (professional_id, specialty_id) VALUES (1, 3);
 insert into professional_specialty (professional_id, specialty_id) VALUES (2, 1);
@@ -31,9 +32,14 @@ insert into professional_specialty (professional_id, specialty_id) VALUES (2, 2)
 insert into professional_specialty (professional_id, specialty_id) VALUES (3, 1);
 insert into professional_specialty (professional_id, specialty_id) VALUES (4, 1);
 insert into professional_specialty (professional_id, specialty_id) VALUES (5, 2);
+insert into professional_specialty (professional_id, specialty_id) VALUES (6, 1);
 
 insert into roles (authority) values ('ROLE_ADMIN');
 insert into roles (authority) values ('ROLE_PROFESSIONAL');
+insert into roles (authority) values ('ROLE_RECEPTIONIST');
+
+-- Associando David como recepionista
+insert into professional_role (professional_id, role_id) VALUES (6, 3);
 
 -- Júnior é o dono do salão de beleza e barbeiro
 insert into professional_role (professional_id, role_id) VALUES (2, 1);
