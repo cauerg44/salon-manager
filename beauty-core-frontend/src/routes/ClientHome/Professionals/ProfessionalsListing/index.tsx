@@ -4,7 +4,6 @@ import * as professionalService from '../../../../services/professional-service.
 import SearchBar from '../../../../components/SearchBar/index.tsx';
 import ButtonTertiary from '../../../../components/ButtonTertiary/index.tsx';
 import type { ProfessionalDTO } from '../../../../models/professional.ts';
-import ProfessionalCard from '../../../../components/ProfessionalCard/index.tsx';
 
 type QueryParams = {
   page: number;
@@ -56,7 +55,64 @@ export default function ProfessionalsListing() {
 
         {
           professionals.map(
-            professional => <ProfessionalCard key={professional.id} professional={professional} />
+            professional =>
+              <div key={professional.id} className='bfc-professional-card-modal-container'>
+
+                <div className='bfc-professional-card-modal-infos'>
+                  <h3>{professional.name}</h3>
+
+
+                  {
+                    professional.isWorking
+                      ?
+                      <div className='bfc-professional-card-modal-info-status-working'>
+                        Trabalhando
+                      </div>
+                      :
+                      <div className='bfc-professional-card-modal-info-status-available'>
+                        Disponível
+                      </div>
+                  }
+
+                  {
+                    professional.isActive
+                      ?
+                      <div className='bfc-professional-card-modal-info-status-active'>
+                        Ativo
+                      </div>
+                      :
+                      <div className='bfc-professional-card-modal-info-status-desactivated'>
+                        Inativo
+                      </div>
+                  }
+
+                </div>
+
+                <div className='bfc-professional-card-modal-specializations'>
+
+                  <h4>Especialidades do profissional</h4>
+
+                  {
+                    professional.specializations.map(
+                      specialty =>
+                        <div key={specialty.id} className='bfc-professional-card-modal-specialization-item'>
+                          {specialty.name}
+                        </div>
+                    )
+                  }
+
+                </div>
+
+                <div className='bfc-professional-card-modal-actions'>
+                  <div className='bfc-professional-card-action-option-activate'>
+                    Ativar
+                  </div>
+                  <div className='bfc-professional-card-action-option-deactivate'>
+                    Desativar
+                  </div>
+                </div>
+
+              </div>
           )
         }
 
