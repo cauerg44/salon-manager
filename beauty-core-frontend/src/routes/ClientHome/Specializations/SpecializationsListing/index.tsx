@@ -3,6 +3,7 @@ import SpecialtyCard from '../../../../components/SpecialtyCard';
 import { useEffect, useState } from 'react';
 import type { SpecialtyDTO } from '../../../../models/specialty';
 import * as specializationService from '../../../../services/specialization-service.ts';
+import DialogModalInfo from '../../../../components/DialogInfo/index.tsx';
 
 export default function SpecializationsListing() {
 
@@ -16,14 +17,17 @@ export default function SpecializationsListing() {
   }, []);
 
   return (
-    <section id="specializations-listing-section" className="bcf-container-1200px">
-      <div className='bcf-specialty-cards-modal'>
-        {
-          specializations.map(
-            specialty => <SpecialtyCard key={specialty.id} specialty={specialty} />
-          )
-        }
-      </div>
-    </section>
+    <>
+      <section id="specializations-listing-section" className="bcf-container-1200px">
+        <div className='bcf-specialty-cards-modal'>
+          {
+            specializations.map(
+              specialty => <SpecialtyCard key={specialty.id} specialty={specialty} />
+            )
+          }
+        </div>
+      </section>
+      <DialogModalInfo />
+    </>
   );
 }

@@ -65,3 +65,34 @@ main {
   transform: translateY(-5px);
   cursor: pointer;
 }
+
+/* Dialog modal styles */
+
+.bcf-dialog-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bcf-dialog-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bcf--bg-color-quaternary);
+  border-radius: 5px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bcf-dialog-box h2 {
+  font-size: 20px;
+  color: var(--bcf--font-color-quintanary);
+  margin-bottom: 20px;
+}
