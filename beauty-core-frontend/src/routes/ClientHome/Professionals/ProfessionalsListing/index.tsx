@@ -20,6 +20,7 @@ export default function ProfessionalsListing() {
   });
 
   const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    action: '',
     message: 'Tem certeza?',
     id: 0,
     visible: false
@@ -55,16 +56,55 @@ export default function ProfessionalsListing() {
     setQueryParams({ ...queryParams, page: queryParams.page + 1 });
   }
 
-  function handleDeactivateClick(professionalId: number) {
-    professionalService.deactivateProfessional(professionalId)
-      .then(() => {
-        setProfessionals([]);
-        setQueryParams({ ...queryParams, page: 0 });
-      })
+  function handleDialogInfoClose() {
+    setDialogInfoData({ ...dialogInfoData, visible: false });
   }
 
-  function handleConfirmationAnswer(answer: boolean, professionalId: number) {
-    // in progress
+  function handleDeactivateClick(professionalId: number) {
+    setDialogConfirmationData({ ...dialogConfirmationData, action: 'deactivate', message: 'Deseja desativar o profissional?', id: professionalId, visible: true });
+  }
+
+  function handleActivateClick(professionalId: number) {
+    setDialogConfirmationData({ ...dialogConfirmationData, action: 'activate', message: 'Deseja ativar o profissional?', id: professionalId, visible: true });
+  }
+
+  function handleConfirmationAnswer(answer: boolean) {
+    if (answer) {
+
+      if (dialogConfirmationData.action === 'activate') {
+        professionalService.activateProfessional(dialogConfirmationData.id)
+          .then(() => {
+            setProfessionals([]);
+            setQueryParams({ ...queryParams, page: 0 });
+          })
+          .catch(error => {
+            if (error.response.status === 403) {
+              setDialogInfoData({ ...dialogInfoData, message: 'Apenas o administrador realizar esta ação!', visible: true });
+              return;
+            }
+            setDialogInfoData({ ...dialogInfoData, message: 'Apenas o administrador pode realizar esta ação!', visible: true });
+          })
+      }
+
+      if (dialogConfirmationData.action === 'deactivate') {
+        professionalService.deactivateProfessional(dialogConfirmationData.id)
+          .then(() => {
+            setProfessionals([]);
+            setQueryParams({ ...queryParams, page: 0 });
+            setDialogInfoData({ ...dialogInfoData, message: 'Profissional desativado com sucesso!', visible: true });
+          })
+          .catch(error => {
+            console.log("deu erro", error);
+            if (error.response.status === 403) {
+              setDialogInfoData({ ...dialogInfoData, message: 'Apenas o administrador realizar esta ação!', visible: true });
+              return;
+            }
+            setDialogInfoData({ ...dialogInfoData, message: error.response.data.error, visible: true });
+          })
+      }
+    }
+
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: false });
   }
 
   return (
@@ -130,7 +170,7 @@ export default function ProfessionalsListing() {
                   </div>
 
                   <div className='bfc-professional-card-modal-actions'>
-                    <div className='bfc-professional-card-action-option-activate'>
+                    <div onClick={() => handleActivateClick(professional.id)} className='bfc-professional-card-action-option-activate'>
                       Ativar
                     </div>
                     <div onClick={() => handleDeactivateClick(professional.id)} className='bfc-professional-card-action-option-deactivate'>
@@ -152,6 +192,14 @@ export default function ProfessionalsListing() {
         }
 
       </section>
+
+      {
+        dialogInfoData.visible &&
+        <DialogModalInfo
+          message={dialogInfoData.message}
+          onDialogClose={handleDialogInfoClose}
+        />
+      }
 
       {
         dialogConfirmationData.visible &&
