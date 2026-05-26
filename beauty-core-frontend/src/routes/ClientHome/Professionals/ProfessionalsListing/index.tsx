@@ -4,6 +4,8 @@ import * as professionalService from '../../../../services/professional-service.
 import SearchBar from '../../../../components/SearchBar/index.tsx';
 import ButtonTertiary from '../../../../components/ButtonTertiary/index.tsx';
 import type { ProfessionalDTO } from '../../../../models/professional.ts';
+import DialogModalInfo from '../../../../components/DialogInfo/index.tsx';
+import DialogConfirmation from '../../../../components/DialogConfirmation/index.tsx';
 
 type QueryParams = {
   page: number;
@@ -11,6 +13,17 @@ type QueryParams = {
 }
 
 export default function ProfessionalsListing() {
+
+  const [dialogInfoData, setDialogInfoData] = useState({
+    message: 'Operação com sucesso!',
+    visible: false
+  });
+
+  const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    message: 'Tem certeza?',
+    id: 0,
+    visible: false
+  });
 
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
 
@@ -42,89 +55,113 @@ export default function ProfessionalsListing() {
     setQueryParams({ ...queryParams, page: queryParams.page + 1 });
   }
 
+  function handleDeactivateClick(professionalId: number) {
+    professionalService.deactivateProfessional(professionalId)
+      .then(() => {
+        setProfessionals([]);
+        setQueryParams({ ...queryParams, page: 0 });
+      })
+  }
+
+  function handleConfirmationAnswer(answer: boolean, professionalId: number) {
+    // in progress
+  }
+
   return (
-    <section id='professionals-listing-section' className='bcf-container-1200px'>
+    <>
+      <section id='professionals-listing-section' className='bcf-container-1200px'>
 
-      <h2 className='bcf-search-bar-message'>Barra de pesquisa:</h2>
+        <h2 className='bcf-search-bar-message'>Barra de pesquisa:</h2>
 
-      <SearchBar placeholderText='Digite o nome do profissional' onSearch={handleSearch} />
+        <SearchBar placeholderText='Digite o nome do profissional' onSearch={handleSearch} />
 
-      <h3 className='bcf-professionals-count-info'>{countProfessionals} profissionais encontrados:</h3>
+        <h3 className='bcf-professionals-count-info'>{countProfessionals} profissionais encontrados:</h3>
 
-      <div className='bcf-professionals-cards-modal'>
+        <div className='bcf-professionals-cards-modal'>
+
+          {
+            professionals.map(
+              professional =>
+                <div key={professional.id} className='bfc-professional-card-modal-container'>
+
+                  <div className='bfc-professional-card-modal-infos'>
+                    <h3>{professional.name}</h3>
+
+
+                    {
+                      professional.isWorking
+                        ?
+                        <div className='bfc-professional-card-modal-info-status-working'>
+                          Trabalhando
+                        </div>
+                        :
+                        <div className='bfc-professional-card-modal-info-status-available'>
+                          Disponível
+                        </div>
+                    }
+
+                    {
+                      professional.isActive
+                        ?
+                        <div className='bfc-professional-card-modal-info-status-active'>
+                          Ativo
+                        </div>
+                        :
+                        <div className='bfc-professional-card-modal-info-status-desactivated'>
+                          Inativo
+                        </div>
+                    }
+
+                  </div>
+
+                  <div className='bfc-professional-card-modal-specializations'>
+
+                    <h4>Especialidades do profissional</h4>
+
+                    {
+                      professional.specializations.map(
+                        specialty =>
+                          <div key={specialty.id} className='bfc-professional-card-modal-specialization-item'>
+                            {specialty.name}
+                          </div>
+                      )
+                    }
+
+                  </div>
+
+                  <div className='bfc-professional-card-modal-actions'>
+                    <div className='bfc-professional-card-action-option-activate'>
+                      Ativar
+                    </div>
+                    <div onClick={() => handleDeactivateClick(professional.id)} className='bfc-professional-card-action-option-deactivate'>
+                      Desativar
+                    </div>
+                  </div>
+
+                </div>
+            )
+          }
+
+        </div>
 
         {
-          professionals.map(
-            professional =>
-              <div key={professional.id} className='bfc-professional-card-modal-container'>
-
-                <div className='bfc-professional-card-modal-infos'>
-                  <h3>{professional.name}</h3>
-
-
-                  {
-                    professional.isWorking
-                      ?
-                      <div className='bfc-professional-card-modal-info-status-working'>
-                        Trabalhando
-                      </div>
-                      :
-                      <div className='bfc-professional-card-modal-info-status-available'>
-                        Disponível
-                      </div>
-                  }
-
-                  {
-                    professional.isActive
-                      ?
-                      <div className='bfc-professional-card-modal-info-status-active'>
-                        Ativo
-                      </div>
-                      :
-                      <div className='bfc-professional-card-modal-info-status-desactivated'>
-                        Inativo
-                      </div>
-                  }
-
-                </div>
-
-                <div className='bfc-professional-card-modal-specializations'>
-
-                  <h4>Especialidades do profissional</h4>
-
-                  {
-                    professional.specializations.map(
-                      specialty =>
-                        <div key={specialty.id} className='bfc-professional-card-modal-specialization-item'>
-                          {specialty.name}
-                        </div>
-                    )
-                  }
-
-                </div>
-
-                <div className='bfc-professional-card-modal-actions'>
-                  <div className='bfc-professional-card-action-option-activate'>
-                    Ativar
-                  </div>
-                  <div className='bfc-professional-card-action-option-deactivate'>
-                    Desativar
-                  </div>
-                </div>
-
-              </div>
-          )
+          !isLastPage &&
+          <div onClick={handleNextPageClick}>
+            <ButtonTertiary text='Carregar mais' />
+          </div>
         }
 
-      </div>
+      </section>
 
       {
-        !isLastPage &&
-        <div onClick={handleNextPageClick}>
-          <ButtonTertiary text='Carregar mais' />
-        </div>
+        dialogConfirmationData.visible &&
+        <DialogConfirmation
+          message={dialogConfirmationData.message}
+          id={dialogConfirmationData.id}
+          onDialogAnswer={handleConfirmationAnswer}
+        />
       }
 
-    </section>
+    </>
   );
 }
