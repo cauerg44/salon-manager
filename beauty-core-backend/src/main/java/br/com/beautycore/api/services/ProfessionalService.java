@@ -6,6 +6,7 @@ import br.com.beautycore.api.entity.Professional;
 import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.repository.ProfessionalRepository;
 import br.com.beautycore.api.repository.SpecialtyRepository;
+import br.com.beautycore.api.services.exception.DomainException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import br.com.beautycore.api.utils.CustomProfessionalUtil;
 import jakarta.persistence.EntityNotFoundException;
@@ -59,37 +60,37 @@ public class ProfessionalService {
 
     @Transactional
     public ProfessionalResponseDTO deactivate(Long id) {
-        try {
-            Professional entity = repository.getReferenceById(id);
+        Professional professional = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
-            entity.setIsActive(false);
-            entity.setIsWorking(false);
-            entity.setUpdatedAt(LocalDateTime.now());
-
-            entity = repository.save(entity);
-
-            return new ProfessionalResponseDTO(entity);
+        if (!professional.getIsActive()) {
+            throw new DomainException("Profissional já está desativado");
         }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Profissional não encontrado");
-        }
+
+        professional.setIsActive(false);
+        professional.setUpdatedAt(LocalDateTime.now());
+
+        Professional professionalDeactivated = repository.save(professional);
+
+        return new ProfessionalResponseDTO(professionalDeactivated);
     }
 
     @Transactional
     public ProfessionalResponseDTO activate(Long id) {
-        try {
-            Professional entity = repository.getReferenceById(id);
 
-            entity.setIsActive(true);
-            entity.setUpdatedAt(LocalDateTime.now());
+        Professional professional = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
-            entity = repository.save(entity);
-
-            return new ProfessionalResponseDTO(entity);
+        if (professional.getIsActive()) {
+            throw new DomainException("Profissional já está ativo");
         }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Profissional não encontrado");
-        }
+
+        professional.setIsActive(true);
+        professional.setUpdatedAt(LocalDateTime.now());
+
+        Professional professionalActivated = repository.save(professional);
+
+        return new ProfessionalResponseDTO(professionalActivated);
     }
 
     private void patchDtoToEntity(Professional entity, ProfessionalPatchRequestDTO dto) {

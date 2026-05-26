@@ -9,7 +9,6 @@ import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -23,6 +22,8 @@ import java.util.stream.Collectors;
 public class SpecialtyService {
 
     private final SpecialtyRepository repository;
+
+    private final ProfessionalService professionalService;
 
     @Transactional(readOnly = true)
     public List<SpecialtyResponseDTO> findAll() {
