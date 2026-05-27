@@ -27,7 +27,7 @@ export default function Profile() {
     <section id="profile-section" className="bcf-container-1200px">
       <div className='bcf-profile-modal'>
         <h2>Perfil:</h2>
-        <h3>Gerencie seu perfil, acesse as opções abaixo:</h3>
+        <h3>Olá <b>{professionalLogged?.name}</b>! Acesse as opções abaixo para gerenciar seu perfil:</h3>
 
         <Link to={"/appointments"}>
           <h4>Vizualizar os atendimentos</h4>
@@ -39,7 +39,7 @@ export default function Profile() {
         </Link>
 
         {
-          professionalLogged?.roles.some(role => role.authority === 'ROLE_ADMIN' || role.authority === 'ROLE_PROFESSIONAL') &&
+          professionalLogged?.roles.some(role => role.authority !== "ROLE_RECEPCIONIST") &&
           < Link to={"/financial-reports/professional-total-profit-in-live"}>
             <h4>Ver meu lucro no dia</h4>
           </Link>

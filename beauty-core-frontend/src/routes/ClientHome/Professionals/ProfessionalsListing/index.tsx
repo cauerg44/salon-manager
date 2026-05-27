@@ -82,7 +82,7 @@ export default function ProfessionalsListing() {
               setDialogInfoData({ ...dialogInfoData, message: 'Apenas o administrador realizar esta ação!', visible: true });
               return;
             }
-            setDialogInfoData({ ...dialogInfoData, message: 'Apenas o administrador pode realizar esta ação!', visible: true });
+            setDialogInfoData({ ...dialogInfoData, message: error.response.data.error, visible: true });
           })
       }
 
