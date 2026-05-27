@@ -11,15 +11,6 @@ export default function ProfessionalForm() {
 
   const isEditing = params.professionalId !== undefined;
 
-  useEffect(() => {
-    if (isEditing) {
-      professionalService.findProfessionalById(Number(params.professionalId))
-        .then(response => {
-          console.log(response.data);
-        })
-    }
-  }, [])
-
   const [formData, setFormData] = useState<any>({
     name: {
       value: "",
@@ -46,7 +37,19 @@ export default function ProfessionalForm() {
       type: "password",
       placeholder: "Senha",
     }
-  })
+  });
+
+  useEffect(() => {
+    if (isEditing) {
+      professionalService.findProfessionalById(Number(params.professionalId))
+        .then(response => {
+          console.log('formData', formData);
+          console.log('response.data', response.data);
+          const newFormData = forms.updateAll(formData, response.data);
+          setFormData(newFormData);
+        })
+    }
+  }, [])
 
   function handleInputChange(event: any) {
     setFormData(forms.update(formData, event.target.name, event.target.value));
@@ -74,17 +77,28 @@ export default function ProfessionalForm() {
               {...formData.email}
               onChange={handleInputChange}
             />
-            <FormInput
-              {...formData.password}
-              onChange={handleInputChange}
-            />
+            {
+              !isEditing &&
+              <FormInput
+                {...formData.password}
+                onChange={handleInputChange}
+              />
+            }
+
             {/* <select className='bcf-select' required>
               <option value="" disabled selected>Especialidades</option>
               <option value="1">Cabeleleiro(a)</option>
               <option value="2">Trancista</option>
               <option value="3">Esteticista</option>
             </select> */}
-            <button type='submit'>Registrar</button>
+            {
+              isEditing
+                ?
+                <button type='submit'>Salvar alterações</button>
+                :
+                <button type='submit'>Registrar</button>
+            }
+
           </form>
 
         </div>
