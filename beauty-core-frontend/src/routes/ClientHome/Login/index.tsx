@@ -2,6 +2,7 @@ import './styles.css';
 import { useState } from 'react';
 import * as authService from '../../../services/auth-service.ts';
 import { useNavigate } from 'react-router-dom';
+import FormInput from '../../../components/FormInput/index.tsx';
 
 export default function Login() {
 
@@ -51,18 +52,12 @@ export default function Login() {
       <div className='bcf-modal-form-login-container'>
         <h2>Login</h2>
         <form className='bcf-modal-form' onSubmit={handleSubmit}>
-          <input
-            name='email'
-            value={formData.email.value}
-            type="text"
-            placeholder='Email'
+          <FormInput
+            {...formData.email}
             onChange={handleInputChange}
           />
-          <input
-            name='password'
-            value={formData.password.value}
-            type="password"
-            placeholder='Senha'
+          <FormInput
+            {...formData.password}
             onChange={handleInputChange}
           />
           <button type='submit'>Entrar</button>
