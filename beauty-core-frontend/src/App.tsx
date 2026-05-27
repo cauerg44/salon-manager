@@ -23,6 +23,7 @@ import Professionals from "./routes/ClientHome/Professionals";
 import ProfessionalsListing from "./routes/ClientHome/Professionals/ProfessionalsListing";
 import ProfessionalTotalProfit from "./routes/ClientHome/FinancialReports/ProfessionalTotalProfit";
 import Profile from "./routes/ClientHome/Profile";
+import ProfessionalForm from "./routes/ClientHome/Professionals/ProfessionalForm";
 
 export default function App() {
 
@@ -47,6 +48,7 @@ export default function App() {
 
             <Route path="professionals" element={<Professionals />}>
               <Route path="listing" element={<ProfessionalsListing />} />
+              <Route path="create" element={<ProfessionalForm />} />
             </Route>
 
             <Route path="services" element={<Services />}>

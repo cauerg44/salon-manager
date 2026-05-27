@@ -1,0 +1,76 @@
+#professional-form-section {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bcf-form-title-section {
+  font-size: 28px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
+}
+
+.bcf-professional-form-modal-container {
+  padding: 20px 15px;
+  margin: 20px 0;
+  width: 300px;
+  border: 2px solid var(--bfc--border-color-tertiary);
+  border-radius: 5px;
+}
+
+.bcf-professional-form-modal-container h3 {
+  font-size: 24px;
+  text-align: center;
+  color: var(--bcf--font-color-tertiary);
+}
+
+.bcf-professional-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bcf-professional-form input {
+  padding: 10px;
+  border: 1px solid var(--bfc--util-color-quaternary);
+  margin-bottom: 10px;
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-professional-form input::placeholder {
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-professional-form input:focus {
+  outline: none;
+}
+
+.bcf-professional-form select {
+  padding: 10px;
+  margin-bottom: 10px;
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-professional-form select:hover {
+  outline: none;
+}
+
+.bcf-select option[disable] {
+  display: none;
+}
+
+.bcf-select option {
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-professional-form button {
+  width: 100%;
+}
+
+@media(max-width: 576px) {
+  .bcf-form-title-section {
+    font-size: 20px;
+  }
+}

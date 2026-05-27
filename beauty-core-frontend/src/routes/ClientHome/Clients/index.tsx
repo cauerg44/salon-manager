@@ -13,10 +13,13 @@ export default function Clients() {
           <h2>Clientes:</h2>
           <h3>Gerencie os clientes do salão: </h3>
           <div className='bcf-clients-modal-buttons'>
+
             <Link to={"/clients/listing"}>
               <ButtonSecondary text='Listar' />
             </Link>
+
             <ButtonSecondary text='Cadastrar' />
+
           </div>
         </div>
       </section>

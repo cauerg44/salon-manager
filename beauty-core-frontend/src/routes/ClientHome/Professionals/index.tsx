@@ -15,7 +15,10 @@ export default function Professionals() {
             <Link to={"/professionals/listing"}>
               <ButtonSecondary text='Listar' />
             </Link>
-            <ButtonSecondary text='Cadastrar' />
+
+            <Link to={"/professionals/create"}>
+              <ButtonSecondary text='Cadastrar' />
+            </Link>
           </div>
         </div>
       </section>
