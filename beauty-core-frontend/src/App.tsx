@@ -49,6 +49,7 @@ export default function App() {
             <Route path="professionals" element={<Professionals />}>
               <Route path="listing" element={<ProfessionalsListing />} />
               <Route path="create" element={<ProfessionalForm />} />
+              <Route path="edit/:professionalId" element={<ProfessionalForm />} />
             </Route>
 
             <Route path="services" element={<Services />}>

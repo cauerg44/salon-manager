@@ -6,6 +6,8 @@ import ButtonTertiary from '../../../../components/ButtonTertiary/index.tsx';
 import type { ProfessionalDTO } from '../../../../models/professional.ts';
 import DialogModalInfo from '../../../../components/DialogInfo/index.tsx';
 import DialogConfirmation from '../../../../components/DialogConfirmation/index.tsx';
+import editIcon from '../../../../assets/bcf-edit-icon.svg';
+import { useNavigate } from 'react-router-dom';
 
 type QueryParams = {
   page: number;
@@ -13,6 +15,8 @@ type QueryParams = {
 }
 
 export default function ProfessionalsListing() {
+
+  const navigate = useNavigate();
 
   const [dialogInfoData, setDialogInfoData] = useState({
     message: 'Operação com sucesso!',
@@ -107,6 +111,10 @@ export default function ProfessionalsListing() {
     setDialogConfirmationData({ ...dialogConfirmationData, visible: false });
   }
 
+  function handleEditProfessional(professionalId: number) {
+    navigate(`/professionals/edit/${professionalId}`)
+  }
+
   return (
     <>
       <section id='professionals-listing-section' className='bcf-container-1200px'>
@@ -176,6 +184,15 @@ export default function ProfessionalsListing() {
                     <div onClick={() => handleDeactivateClick(professional.id)} className='bfc-professional-card-action-option-deactivate'>
                       Desativar
                     </div>
+                  </div>
+
+                  <div className='bfc-professional-card-modal-action-edit'>
+
+                    <div onClick={() => handleEditProfessional(professional.id)} className='bfc-professional-card-edit-item'>
+                      <img src={editIcon} alt="Editar profissional" />
+                      Editar dados do profissional
+                    </div>
+
                   </div>
 
                 </div>

@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './styles.css';
 import FormInput from '../../../../components/FormInput';
 import * as forms from '../../../../utils/forms.ts';
+import * as professionalService from '../../../../services/professional-service.ts';
+import { useParams } from 'react-router-dom';
 
 export default function ProfessionalForm() {
+
+  const params = useParams();
+
+  const isEditing = params.professionalId !== undefined;
+
+  useEffect(() => {
+    if (isEditing) {
+      professionalService.findProfessionalById(Number(params.professionalId))
+        .then(response => {
+          console.log(response.data);
+        })
+    }
+  }, [])
 
   const [formData, setFormData] = useState<any>({
     name: {
@@ -50,7 +65,7 @@ export default function ProfessionalForm() {
         <div className='bcf-professional-form-modal-container'>
           <h3>Dados do profissional: </h3>
 
-          <form className='bcf-professional-form'>
+          <form onSubmit={handleSubmit} className='bcf-professional-form'>
             <FormInput
               {...formData.name}
               onChange={handleInputChange}
@@ -69,7 +84,7 @@ export default function ProfessionalForm() {
               <option value="2">Trancista</option>
               <option value="3">Esteticista</option>
             </select> */}
-            <button onSubmit={handleSubmit} type='submit'>Registrar</button>
+            <button type='submit'>Registrar</button>
           </form>
 
         </div>
