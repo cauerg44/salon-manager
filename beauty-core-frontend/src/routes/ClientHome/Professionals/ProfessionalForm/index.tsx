@@ -1,7 +1,45 @@
-import ButtonPrimary from '../../../../components/ButtonPrimary';
+import { useState } from 'react';
 import './styles.css';
+import FormInput from '../../../../components/FormInput';
+import * as forms from '../../../../utils/forms.ts';
 
 export default function ProfessionalForm() {
+
+  const [formData, setFormData] = useState<any>({
+    name: {
+      value: "",
+      id: "name",
+      name: "name",
+      type: "text",
+      placeholder: "Nome",
+    },
+    email: {
+      value: "",
+      id: "email",
+      name: "email",
+      type: "text",
+      placeholder: "Email",
+      validation: function (value: string) {
+        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
+      },
+      message: "Favor informar um email válido",
+    },
+    password: {
+      value: "",
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Senha",
+    }
+  })
+
+  function handleInputChange(event: any) {
+    setFormData(forms.update(formData, event.target.name, event.target.value));
+  }
+
+  function handleSubmit(event: any) {
+    event.preventDefault();
+  }
 
   return (
     <>
@@ -13,16 +51,25 @@ export default function ProfessionalForm() {
           <h3>Dados do profissional: </h3>
 
           <form className='bcf-professional-form'>
-            <input type="text" placeholder='Nome' />
-            <input type="text" placeholder='Email' />
-            <input type="password" placeholder='Senha' />
-            <select className='bcf-select' required>
+            <FormInput
+              {...formData.name}
+              onChange={handleInputChange}
+            />
+            <FormInput
+              {...formData.email}
+              onChange={handleInputChange}
+            />
+            <FormInput
+              {...formData.password}
+              onChange={handleInputChange}
+            />
+            {/* <select className='bcf-select' required>
               <option value="" disabled selected>Especialidades</option>
               <option value="1">Cabeleleiro(a)</option>
               <option value="2">Trancista</option>
               <option value="3">Esteticista</option>
-            </select>
-            <ButtonPrimary text='Registrar' />
+            </select> */}
+            <button onSubmit={handleSubmit} type='submit'>Registrar</button>
           </form>
 
         </div>
