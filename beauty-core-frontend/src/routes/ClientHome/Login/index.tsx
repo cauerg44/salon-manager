@@ -1,6 +1,5 @@
 import './styles.css';
 import { useState } from 'react';
-import type { CredentialsDTO } from '../../../models/auth';
 import * as authService from '../../../services/auth-service.ts';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,14 +7,30 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState<CredentialsDTO>({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState<any>({
+    email: {
+      value: "",
+      id: "email",
+      name: "email",
+      type: "text",
+      placeholder: "Email",
+      validation: function (value: string) {
+        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
+      },
+      message: "Favor informar um email válido",
+    },
+    password: {
+      value: "",
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Senha",
+    }
+  })
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    authService.loginRequest(formData)
+    authService.loginRequest({ email: formData.email.value, password: formData.password.value })
       .then(response => {
         authService.saveAccessToken(response.data.token);
         navigate("/home");
@@ -28,7 +43,7 @@ export default function Login() {
   function handleInputChange(event: any) {
     const value = event.target.value;
     const name = event.target.name;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: { ...formData[name], value: value } });
   }
 
   return (
@@ -38,14 +53,14 @@ export default function Login() {
         <form className='bcf-modal-form' onSubmit={handleSubmit}>
           <input
             name='email'
-            value={formData.email}
+            value={formData.email.value}
             type="text"
             placeholder='Email'
             onChange={handleInputChange}
           />
           <input
             name='password'
-            value={formData.password}
+            value={formData.password.value}
             type="password"
             placeholder='Senha'
             onChange={handleInputChange}
