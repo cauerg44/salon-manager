@@ -3,6 +3,7 @@ import { useState } from 'react';
 import * as authService from '../../../services/auth-service.ts';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../../../components/FormInput/index.tsx';
+import * as forms from '../../../utils/forms.ts';
 
 export default function Login() {
 
@@ -31,7 +32,8 @@ export default function Login() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    authService.loginRequest({ email: formData.email.value, password: formData.password.value })
+    console.log(forms.toValues(formData))
+    authService.loginRequest(forms.toValues(formData))
       .then(response => {
         authService.saveAccessToken(response.data.token);
         navigate("/home");
@@ -42,9 +44,7 @@ export default function Login() {
   }
 
   function handleInputChange(event: any) {
-    const value = event.target.value;
-    const name = event.target.name;
-    setFormData({ ...formData, [name]: { ...formData[name], value: value } });
+    setFormData(forms.update(formData, event.target.name, event.target.value));
   }
 
   return (
