@@ -40,10 +40,6 @@ export default function ProfessionalForm() {
   });
 
   useEffect(() => {
-
-    const obj = forms.validate(formData, "email");
-    console.log("Obj:", obj);
-
     if (isEditing) {
       professionalService.findProfessionalById(Number(params.professionalId))
         .then(response => {
@@ -54,7 +50,9 @@ export default function ProfessionalForm() {
   }, [])
 
   function handleInputChange(event: any) {
-    setFormData(forms.update(formData, event.target.name, event.target.value));
+    const dataUpdated = forms.update(formData, event.target.name, event.target.value);
+    const dataValidated = forms.validate(dataUpdated, event.target.name);
+    setFormData(dataValidated);
   }
 
   function handleSubmit(event: any) {
@@ -79,6 +77,9 @@ export default function ProfessionalForm() {
               {...formData.email}
               onChange={handleInputChange}
             />
+            <div className='bcf-form-error'>
+              {formData.email.message}
+            </div>
             {
               !isEditing &&
               <FormInput

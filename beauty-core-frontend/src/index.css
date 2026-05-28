@@ -25,6 +25,7 @@
   --bfc--util-color-quaternary: #c6c6c6;
   --bcf--util-color-quintanary: #888888;
   --bfc--util-color-senary: #3e6db8;
+  --bfc--util-color-7: #e95353;
 }
 
 * {
@@ -103,4 +104,23 @@ main {
 
 .bcf-dialog-btn-container button {
   margin: 0 5px;
+}
+
+
+/* color for erros: */
+
+.bcf-form-error {
+  color: var(--bfc--util-color-7);
+  font-size: 12px;
+  padding-left: 4px;
+  margin-bottom: 15px;
+  display: none;
+}
+
+.bcf-form-control[data-invalid="true"] {
+  border: 1px solid var(--bfc--util-color-7);
+}
+
+.bcf-form-control[data-invalid="true"]~div {
+  display: unset;
 }

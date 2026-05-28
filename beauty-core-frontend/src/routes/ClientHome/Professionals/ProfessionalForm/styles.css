@@ -39,6 +39,14 @@
   color: var(--bfc--util-color-quaternary);
 }
 
+.bcf-professional-form input[data-invalid="true"] {
+  border: 1px solid var(--bfc--util-color-7);
+}
+
+.bcf-professional-form input[data-invalid="true"]~div {
+  display: unset;
+}
+
 .bcf-professional-form input::placeholder {
   color: var(--bfc--util-color-quaternary);
 }
