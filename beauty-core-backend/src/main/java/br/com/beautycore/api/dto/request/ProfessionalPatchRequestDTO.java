@@ -9,6 +9,9 @@ public record ProfessionalPatchRequestDTO(
         @Size(max = 30, message = "Nome deve ter no máximo 30 caracteres")
         String name,
 
+        @Size(max = 100, message = "Email deve ser válido.")
+        String email,
+
         Set<@Positive(message = "ID do especialidade deve ser positivo") Long> specializationsIds
 ) {
 

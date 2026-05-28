@@ -28,6 +28,13 @@ public class ProfessionalController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ProfessionalResponseDTO> findAll(@PathVariable Long id) {
+        var result = service.findById(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/me")
     public ResponseEntity<ProfessionalResponseDTO> findProfessionalLogged() {
         var result = service.getMe();

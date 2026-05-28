@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public record ProfessionalResponseDTO(
         Long id,
         String name,
+        String email,
         Boolean isActive,
         Boolean isWorking,
         Set<SpecialtyResponseDTO> specializations,
@@ -18,6 +19,7 @@ public record ProfessionalResponseDTO(
         this(
             entity.getId(),
                 entity.getName(),
+                entity.getEmail(),
                 entity.getIsActive(),
                 entity.getIsWorking(),
                 entity.getSpecializations()

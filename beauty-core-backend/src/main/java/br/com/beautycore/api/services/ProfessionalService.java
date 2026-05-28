@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -34,6 +32,14 @@ public class ProfessionalService {
     public Page<ProfessionalResponseDTO> findAll(Pageable pageable, String name) {
         Page<Professional> result = repository.searchByName(name, pageable);
         return result.map(professional -> new ProfessionalResponseDTO(professional));
+    }
+
+    @Transactional(readOnly = true)
+    public ProfessionalResponseDTO findById(Long id) {
+        Professional result = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
+
+        return new ProfessionalResponseDTO(result);
     }
 
     @Transactional(readOnly = true)
