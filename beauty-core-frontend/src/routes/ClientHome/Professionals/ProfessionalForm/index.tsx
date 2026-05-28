@@ -18,6 +18,10 @@ export default function ProfessionalForm() {
       name: "name",
       type: "text",
       placeholder: "Nome",
+      validation: function (value: string) {
+        return value.length >= 3 && value.length <= 30
+      },
+      message: "Favor informar um nome de 3 e 80 caracteres"
     },
     email: {
       value: "",
@@ -36,6 +40,10 @@ export default function ProfessionalForm() {
       name: "password",
       type: "password",
       placeholder: "Senha",
+      validation: function (value: string) {
+        return value.length === 0;
+      },
+      message: "A senha não pode ser vazia",
     }
   });
 
@@ -77,14 +85,14 @@ export default function ProfessionalForm() {
               onTurnDirty={handleTurnDirty}
               onChange={handleInputChange}
             />
+            <div className='bcf-form-error'>{formData.name.message}</div>
+
             <FormInput
               {...formData.email}
               onTurnDirty={handleTurnDirty}
               onChange={handleInputChange}
             />
-            <div className='bcf-form-error'>
-              {formData.email.message}
-            </div>
+            <div className='bcf-form-error'>{formData.email.message}</div>
             {
               !isEditing &&
               <FormInput
@@ -93,6 +101,7 @@ export default function ProfessionalForm() {
                 onChange={handleInputChange}
               />
             }
+            <div className='bcf-form-error'>{formData.password.message}</div>
 
             {/* <select className='bcf-select' required>
               <option value="" disabled selected>Especialidades</option>

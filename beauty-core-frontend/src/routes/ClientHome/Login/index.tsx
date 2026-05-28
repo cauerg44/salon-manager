@@ -27,6 +27,10 @@ export default function Login() {
       name: "password",
       type: "password",
       placeholder: "Senha",
+      validation: function (value: string) {
+        return value.length === 0;
+      },
+      message: "A senha não pode ser vazia",
     }
   })
 
@@ -61,11 +65,15 @@ export default function Login() {
             onTurnDirty={handleTurnDirty}
             onChange={handleInputChange}
           />
+          <div className='bcf-form-error'>{formData.email.message}</div>
+
           <FormInput
             {...formData.password}
             onTurnDirty={handleTurnDirty}
             onChange={handleInputChange}
           />
+          <div className='bcf-form-error'>{formData.password.message}</div>
+
           <button type='submit'>Entrar</button>
         </form>
       </div>
