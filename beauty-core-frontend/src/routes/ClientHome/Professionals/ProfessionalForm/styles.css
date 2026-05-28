@@ -39,11 +39,11 @@
   color: var(--bfc--util-color-quaternary);
 }
 
-.bcf-professional-form input[data-invalid="true"] {
+.bcf-professional-form input[data-dirty="true"][data-invalid="true"] {
   border: 1px solid var(--bfc--util-color-7);
 }
 
-.bcf-professional-form input[data-invalid="true"]~div {
+.bcf-professional-form input[data-dirty="true"][data-invalid="true"]~div {
   display: unset;
 }
 

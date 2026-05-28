@@ -40,6 +40,10 @@ export default function ProfessionalForm() {
   });
 
   useEffect(() => {
+
+    const result = forms.toDirty(formData, "email");
+    console.log(result);
+
     if (isEditing) {
       professionalService.findProfessionalById(Number(params.professionalId))
         .then(response => {
@@ -59,6 +63,11 @@ export default function ProfessionalForm() {
     event.preventDefault();
   }
 
+  function handleTurnDirty(name: string) {
+    const newFormData = forms.toDirty(formData, name);
+    setFormData(newFormData);
+  }
+
   return (
     <>
       <section id='professional-form-section' className='bcf-container-1200px'>
@@ -71,10 +80,12 @@ export default function ProfessionalForm() {
           <form onSubmit={handleSubmit} className='bcf-professional-form'>
             <FormInput
               {...formData.name}
+              onTurnDirty={handleTurnDirty}
               onChange={handleInputChange}
             />
             <FormInput
               {...formData.email}
+              onTurnDirty={handleTurnDirty}
               onChange={handleInputChange}
             />
             <div className='bcf-form-error'>
@@ -84,6 +95,7 @@ export default function ProfessionalForm() {
               !isEditing &&
               <FormInput
                 {...formData.password}
+                onTurnDirty={handleTurnDirty}
                 onChange={handleInputChange}
               />
             }
