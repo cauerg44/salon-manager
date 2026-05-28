@@ -124,7 +124,11 @@ export default function ProfessionalForm() {
     request
       .then(() => {
         navigate("/professionals/listing");
-      });
+      })
+      .catch(error => {
+        const newInputs = forms.setBackendErrors(formData, error.response.data.errors);
+        setFormData(newInputs);
+      })
   }
 
   function handleTurnDirty(name: string) {

@@ -9,6 +9,8 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  const [submitResponseFail, setSubmitResponseFail] = useState(false);
+
   const [formData, setFormData] = useState<any>({
     email: {
       value: "",
@@ -36,14 +38,16 @@ export default function Login() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    console.log(forms.toValues(formData))
+
+    setSubmitResponseFail(false);
+
     authService.loginRequest(forms.toValues(formData))
       .then(response => {
         authService.saveAccessToken(response.data.token);
         navigate("/home");
       })
-      .catch(error => {
-        console.log("Erro no login ", error)
+      .catch(() => {
+        setSubmitResponseFail(true);
       })
   }
 
@@ -72,7 +76,13 @@ export default function Login() {
             onTurnDirty={handleTurnDirty}
             onChange={handleInputChange}
           />
-          <div className='bcf-form-error'>{formData.password.message}</div>
+
+          {
+            submitResponseFail &&
+            <div className='bcf-form-global-error'>
+              Usuário ou senha inválidos
+            </div>
+          }
 
           <button type='submit'>Entrar</button>
         </form>

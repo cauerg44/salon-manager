@@ -139,3 +139,16 @@ main {
   margin-bottom: 15px;
   font-size: 14px;
 }
+
+.bcf-form-global-error {
+  border: 2px solid var(--bfc--util-color-7);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: var(--bfc--util-color-7);
+  border-radius: 5px;
+  margin: 10px 0;
+  font-weight: 500;
+}
