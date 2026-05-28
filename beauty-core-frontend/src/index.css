@@ -133,3 +133,9 @@ main {
 .bcf-form-control[data-invalid="true"]~div {
   display: unset;
 }
+
+.bcf-form-select-container {
+  padding: unset;
+  margin-bottom: 15px;
+  font-size: 14px;
+}

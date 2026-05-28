@@ -7,6 +7,7 @@ import * as professionalService from '../../../../services/professional-service.
 import { useParams } from 'react-router-dom';
 import type { SpecialtyDTO } from '../../../../models/specialty.ts';
 import FormSelect from '../../../../components/FormSelect/index.tsx';
+import { selectStyles } from '../../../../utils/select.ts';
 
 export default function ProfessionalForm() {
 
@@ -126,7 +127,8 @@ export default function ProfessionalForm() {
             <div className='bcf-form-error'>{formData.password.message}</div>
             <FormSelect
               {...formData.specializations}
-              className='bcf-form-select'
+              className='bcf-form-select bcf-form-select-container'
+              styles={selectStyles}
               options={specializations}
               onChange={((obj: any) => {
                 const newFormData = forms.updateAndValidate(formData, "specializations", obj);
