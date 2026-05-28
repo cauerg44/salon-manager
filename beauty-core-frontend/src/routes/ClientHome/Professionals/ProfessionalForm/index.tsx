@@ -40,11 +40,13 @@ export default function ProfessionalForm() {
   });
 
   useEffect(() => {
+
+    const obj = forms.validate(formData, "email");
+    console.log("Obj:", obj);
+
     if (isEditing) {
       professionalService.findProfessionalById(Number(params.professionalId))
         .then(response => {
-          console.log('formData', formData);
-          console.log('response.data', response.data);
           const newFormData = forms.updateAll(formData, response.data);
           setFormData(newFormData);
         })
