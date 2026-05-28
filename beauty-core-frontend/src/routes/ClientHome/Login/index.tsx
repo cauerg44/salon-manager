@@ -44,7 +44,11 @@ export default function Login() {
   }
 
   function handleInputChange(event: any) {
-    setFormData(forms.update(formData, event.target.name, event.target.value));
+    setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
+  }
+
+  function handleTurnDirty(name: string) {
+    setFormData(forms.dirtyAndValidate(formData, name));
   }
 
   return (
@@ -54,10 +58,12 @@ export default function Login() {
         <form className='bcf-modal-form' onSubmit={handleSubmit}>
           <FormInput
             {...formData.email}
+            onTurnDirty={handleTurnDirty}
             onChange={handleInputChange}
           />
           <FormInput
             {...formData.password}
+            onTurnDirty={handleTurnDirty}
             onChange={handleInputChange}
           />
           <button type='submit'>Entrar</button>

@@ -41,9 +41,6 @@ export default function ProfessionalForm() {
 
   useEffect(() => {
 
-    const result = forms.toDirty(formData, "email");
-    console.log(result);
-
     if (isEditing) {
       professionalService.findProfessionalById(Number(params.professionalId))
         .then(response => {
@@ -54,9 +51,7 @@ export default function ProfessionalForm() {
   }, [])
 
   function handleInputChange(event: any) {
-    const dataUpdated = forms.update(formData, event.target.name, event.target.value);
-    const dataValidated = forms.validate(dataUpdated, event.target.name);
-    setFormData(dataValidated);
+    setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
   }
 
   function handleSubmit(event: any) {
@@ -64,8 +59,7 @@ export default function ProfessionalForm() {
   }
 
   function handleTurnDirty(name: string) {
-    const newFormData = forms.toDirty(formData, name);
-    setFormData(newFormData);
+    setFormData(forms.dirtyAndValidate(formData, name));
   }
 
   return (
