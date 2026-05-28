@@ -47,7 +47,7 @@ export default function ProfessionalForm() {
       type: "password",
       placeholder: "Senha",
       validation: function (value: string) {
-        return value.length === 0;
+        return value.length > 0;
       },
       message: "A senha não pode ser vazia",
     },
@@ -87,6 +87,8 @@ export default function ProfessionalForm() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+
+    console.log(forms.toValues(formData));
   }
 
   function handleTurnDirty(name: string) {
@@ -118,13 +120,17 @@ export default function ProfessionalForm() {
             <div className='bcf-form-error'>{formData.email.message}</div>
             {
               !isEditing &&
-              <FormInput
-                {...formData.password}
-                onTurnDirty={handleTurnDirty}
-                onChange={handleInputChange}
-              />
+              <>
+                <FormInput
+                  {...formData.password}
+                  onTurnDirty={handleTurnDirty}
+                  onChange={handleInputChange}
+                />
+                <div className='bcf-form-error'>{formData.password.message}</div>
+              </>
             }
-            <div className='bcf-form-error'>{formData.password.message}</div>
+
+
             <FormSelect
               {...formData.specializations}
               className='bcf-form-select bcf-form-select-container'
