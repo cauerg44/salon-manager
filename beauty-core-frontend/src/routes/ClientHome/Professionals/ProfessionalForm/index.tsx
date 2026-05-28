@@ -4,6 +4,7 @@ import FormInput from '../../../../components/FormInput';
 import * as forms from '../../../../utils/forms.ts';
 import * as specialtyService from '../../../../services/specialization-service.ts';
 import * as professionalService from '../../../../services/professional-service.ts';
+import * as authService from '../../../../services/auth-service.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SpecialtyDTO } from '../../../../models/specialty.ts';
 import FormSelect from '../../../../components/FormSelect/index.tsx';
@@ -109,21 +110,20 @@ export default function ProfessionalForm() {
     }
 
     const requestBody = forms.toValues(formData);
-
     requestBody.specializationsIds = requestBody.specializations.map((obj: SpecialtyDTO) => obj.id);
-
     delete requestBody.specializations;
 
     if (isEditing) {
       requestBody.id = Number(params.professionalId);
     }
 
-    professionalService.updateProfessional(requestBody)
+    const request = isEditing
+      ? professionalService.updateProfessional(requestBody)
+      : authService.registerRequest(requestBody)
+
+    request
       .then(() => {
         navigate("/professionals/listing");
-      })
-      .catch(error => {
-        console.log(error);
       });
   }
 

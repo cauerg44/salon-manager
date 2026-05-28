@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from "axios";
-import type { CredentialsDTO } from "../models/auth";
+import type { CredentialsDTO, RegisterRequestDTO } from "../models/auth";
 import { requestBackend } from "../utils/requests";
 import * as accessTokenRepository from '../localstorage/access-token-repository.ts';
 
@@ -14,6 +14,17 @@ export function loginRequest(loginData: CredentialsDTO) {
     url: "/auth/login",
     data: loginData,
     headers
+  }
+
+  return requestBackend(config);
+}
+
+export function registerRequest(registerData: RegisterRequestDTO) {
+
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: "/auth/register",
+    data: registerData
   }
 
   return requestBackend(config);
