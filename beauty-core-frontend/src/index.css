@@ -117,8 +117,17 @@ main {
   display: none;
 }
 
-.bcf-form-control[data-invalid="true"] {
+.bcf-form-control[data-invalid="true"][data-dirty="true"] {
   border: 1px solid var(--bfc--util-color-7);
+}
+
+.bcf-form-select[data-invalid="true"][data-dirty="true"] {
+  width: 100%;
+  border: 1px solid var(--bfc--util-color-7);
+}
+
+.bcf-form-select[data-invalid="true"][data-dirty="true"]~div {
+  display: unset;
 }
 
 .bcf-form-control[data-invalid="true"]~div {

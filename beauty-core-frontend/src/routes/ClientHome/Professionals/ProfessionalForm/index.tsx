@@ -5,8 +5,8 @@ import * as forms from '../../../../utils/forms.ts';
 import * as specialtyService from '../../../../services/specialization-service.ts';
 import * as professionalService from '../../../../services/professional-service.ts';
 import { useParams } from 'react-router-dom';
-import Select from 'react-select';
 import type { SpecialtyDTO } from '../../../../models/specialty.ts';
+import FormSelect from '../../../../components/FormSelect/index.tsx';
 
 export default function ProfessionalForm() {
 
@@ -49,6 +49,16 @@ export default function ProfessionalForm() {
         return value.length === 0;
       },
       message: "A senha não pode ser vazia",
+    },
+    specializations: {
+      value: [],
+      id: 'specializations',
+      name: 'specializations',
+      placeholder: 'Especialidades',
+      validation: function (value: SpecialtyDTO[]) {
+        return value.length > 0;
+      },
+      message: "Escolha ao menos uma especialidade"
     }
   });
 
@@ -114,12 +124,21 @@ export default function ProfessionalForm() {
               />
             }
             <div className='bcf-form-error'>{formData.password.message}</div>
-            <Select
+            <FormSelect
+              {...formData.specializations}
+              className='bcf-form-select'
               options={specializations}
+              onChange={((obj: any) => {
+                const newFormData = forms.updateAndValidate(formData, "specializations", obj);
+                console.log(newFormData.specializations)
+                setFormData(newFormData);
+              })}
+              onTurnDirty={handleTurnDirty}
               isMulti
-              getOptionLabel={(obj: { name: any; }) => obj.name}
-              getOptionValue={(obj: { id: any; }) => String(obj.id)}
+              getOptionLabel={(obj: any) => obj.name}
+              getOptionValue={(obj: any) => String(obj.id)}
             />
+            <div className='bcf-form-error'>{formData.specializations.message}</div>
             <div>
 
             </div>
