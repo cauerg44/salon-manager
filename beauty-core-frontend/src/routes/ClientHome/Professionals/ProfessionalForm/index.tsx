@@ -4,7 +4,7 @@ import FormInput from '../../../../components/FormInput';
 import * as forms from '../../../../utils/forms.ts';
 import * as specialtyService from '../../../../services/specialization-service.ts';
 import * as professionalService from '../../../../services/professional-service.ts';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { SpecialtyDTO } from '../../../../models/specialty.ts';
 import FormSelect from '../../../../components/FormSelect/index.tsx';
 import { selectStyles } from '../../../../utils/select.ts';
@@ -12,6 +12,8 @@ import { selectStyles } from '../../../../utils/select.ts';
 export default function ProfessionalForm() {
 
   const params = useParams();
+
+  const navigate = useNavigate();
 
   const isEditing = params.professionalId !== undefined;
 
@@ -35,7 +37,7 @@ export default function ProfessionalForm() {
       name: "email",
       type: "text",
       placeholder: "Email",
-      validation: function (value: string) {
+      validation: function (value: string = "") {
         return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
       },
       message: "Favor informar um email válido",
@@ -46,7 +48,7 @@ export default function ProfessionalForm() {
       name: "password",
       type: "password",
       placeholder: "Senha",
-      validation: function (value: string) {
+      validation: function (value: string = "") {
         return value.length > 0;
       },
       message: "A senha não pode ser vazia",
@@ -88,13 +90,41 @@ export default function ProfessionalForm() {
   function handleSubmit(event: any) {
     event.preventDefault();
 
-    const formDataValidated = forms.dirtyAndValidateAll(formData);
+    let formDataToValidate = formData;
+
+    if (isEditing) {
+      const { password, ...rest } = formData;
+      formDataToValidate = rest;
+    }
+
+    const formDataValidated = forms.dirtyAndValidateAll(formDataToValidate);
+
     if (forms.hasAnyInvalid(formDataValidated)) {
-      setFormData(formDataValidated);
+      setFormData({
+        ...formData,
+        ...formDataValidated
+      });
+
       return;
     }
 
-    // console.log(forms.toValues(formData));
+    const requestBody = forms.toValues(formData);
+
+    requestBody.specializationsIds = requestBody.specializations.map((obj: SpecialtyDTO) => obj.id);
+
+    delete requestBody.specializations;
+
+    if (isEditing) {
+      requestBody.id = Number(params.professionalId);
+    }
+
+    professionalService.updateProfessional(requestBody)
+      .then(() => {
+        navigate("/professionals/listing");
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   function handleTurnDirty(name: string) {

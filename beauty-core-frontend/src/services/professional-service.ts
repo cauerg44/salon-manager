@@ -1,5 +1,18 @@
 import type { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/requests";
+import type { ProfessionalDTO } from "../models/professional";
+
+export function updateProfessional(request: ProfessionalDTO) {
+
+  const config: AxiosRequestConfig = {
+    method: "PATCH",
+    url: `/professionals/${request.id}`,
+    withCredentials: true,
+    data: request
+  }
+
+  return requestBackend(config);
+}
 
 export function findProfessionalLogged() {
 
