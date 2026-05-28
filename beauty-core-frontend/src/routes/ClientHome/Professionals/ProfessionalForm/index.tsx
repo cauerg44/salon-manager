@@ -2,14 +2,19 @@ import { useEffect, useState } from 'react';
 import './styles.css';
 import FormInput from '../../../../components/FormInput';
 import * as forms from '../../../../utils/forms.ts';
+import * as specialtyService from '../../../../services/specialization-service.ts';
 import * as professionalService from '../../../../services/professional-service.ts';
 import { useParams } from 'react-router-dom';
+import Select from 'react-select';
+import type { SpecialtyDTO } from '../../../../models/specialty.ts';
 
 export default function ProfessionalForm() {
 
   const params = useParams();
 
   const isEditing = params.professionalId !== undefined;
+
+  const [specializations, setSpecializations] = useState<SpecialtyDTO[]>([]);
 
   const [formData, setFormData] = useState<any>({
     name: {
@@ -46,6 +51,13 @@ export default function ProfessionalForm() {
       message: "A senha não pode ser vazia",
     }
   });
+
+  useEffect(() => {
+    specialtyService.findAll()
+      .then(response => {
+        setSpecializations(response.data);
+      })
+  }, []);
 
   useEffect(() => {
 
@@ -102,6 +114,15 @@ export default function ProfessionalForm() {
               />
             }
             <div className='bcf-form-error'>{formData.password.message}</div>
+            <Select
+              options={specializations}
+              isMulti
+              getOptionLabel={(obj: { name: any; }) => obj.name}
+              getOptionValue={(obj: { id: any; }) => String(obj.id)}
+            />
+            <div>
+
+            </div>
 
             {/* <select className='bcf-select' required>
               <option value="" disabled selected>Especialidades</option>
