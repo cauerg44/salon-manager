@@ -62,10 +62,11 @@ export default function Login() {
   return (
     <section id="login-section" className="bcf-container-1200px">
       <div className='bcf-modal-form-login-container'>
+
         <h2>Login</h2>
+
         <form className='bcf-modal-form' onSubmit={handleSubmit}>
 
-          {/* CONTAINER DO EMAIL */}
           <div className="bcf-form-control">
             <FormInput
               {...formData.email}
@@ -75,7 +76,6 @@ export default function Login() {
             <div className='bcf-form-error'>{formData.email.message}</div>
           </div>
 
-          {/* CONTAINER DA SENHA */}
           <div className="bcf-form-control">
             <FormInput
               {...formData.password}
@@ -85,7 +85,6 @@ export default function Login() {
             <div className='bcf-form-error'>{formData.password.message}</div>
           </div>
 
-          {/* ERRO GLOBAL (Fica fora dos blocos acima, direto no form) */}
           {
             submitResponseFail &&
             <div className='bcf-form-global-error'>
@@ -95,7 +94,9 @@ export default function Login() {
 
           <button type='submit'>Entrar</button>
         </form>
+
       </div>
+
     </section>
   );
 }

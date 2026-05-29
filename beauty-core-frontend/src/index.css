@@ -152,3 +152,54 @@ main {
   margin: 15px 0;
   font-weight: 500;
 }
+
+
+/* global form styles */
+
+.bcf-modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.bcf-form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.bcf-modal-form input {
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--bfc--border-color-tertiary);
+  background-color: var(--bcf--bg-color-quaternary);
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-modal-form input::placeholder {
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-modal-form input:focus {
+  outline: none;
+}
+
+.bcf-modal-form input[data-dirty="true"][data-invalid="true"] {
+  border: 1px solid var(--bfc--util-color-7);
+  margin-bottom: 2px;
+}
+
+.bcf-modal-form input[data-dirty="true"][data-invalid="true"]+div {
+  display: unset;
+}
+
+.bcf-modal-form button {
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--bcf--font-color-quaternary);
+  color: var(--bcf--font-color-primary);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}

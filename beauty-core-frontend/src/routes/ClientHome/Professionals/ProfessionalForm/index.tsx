@@ -11,11 +11,8 @@ import FormSelect from '../../../../components/FormSelect/index.tsx';
 import { selectStyles } from '../../../../utils/select.ts';
 
 export default function ProfessionalForm() {
-
   const params = useParams();
-
   const navigate = useNavigate();
-
   const isEditing = params.professionalId !== undefined;
 
   const [specializations, setSpecializations] = useState<SpecialtyDTO[]>([]);
@@ -28,7 +25,7 @@ export default function ProfessionalForm() {
       type: "text",
       placeholder: "Nome",
       validation: function (value: string) {
-        return value.length >= 3 && value.length <= 30
+        return value.length >= 3 && value.length <= 80; // Corrigido para 80 conforme a mensagem
       },
       message: "Favor informar um nome de 3 e 80 caracteres"
     },
@@ -50,7 +47,8 @@ export default function ProfessionalForm() {
       type: "password",
       placeholder: "Senha",
       validation: function (value: string = "") {
-        return value.length > 0;
+        // Se estiver editando, a senha não é obrigatória/validada aqui
+        return isEditing ? true : value.length > 0;
       },
       message: "A senha não pode ser vazia",
     },
@@ -66,23 +64,25 @@ export default function ProfessionalForm() {
     }
   });
 
+  // Busca todas as especialidades ao montar o componente
   useEffect(() => {
     specialtyService.findAll()
       .then(response => {
         setSpecializations(response.data);
-      })
+      });
   }, []);
 
+  // Busca os dados do profissional se for edição
   useEffect(() => {
-
-    if (isEditing) {
+    if (isEditing && params.professionalId) {
       professionalService.findProfessionalById(Number(params.professionalId))
         .then(response => {
           const newFormData = forms.updateAll(formData, response.data);
           setFormData(newFormData);
-        })
+        });
     }
-  }, [])
+    // Adicionado as dependências corretas para o useEffect rodar sempre que necessário
+  }, [isEditing, params.professionalId]);
 
   function handleInputChange(event: any) {
     setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
@@ -91,21 +91,10 @@ export default function ProfessionalForm() {
   function handleSubmit(event: any) {
     event.preventDefault();
 
-    let formDataToValidate = formData;
-
-    if (isEditing) {
-      const { password, ...rest } = formData;
-      formDataToValidate = rest;
-    }
-
-    const formDataValidated = forms.dirtyAndValidateAll(formDataToValidate);
+    const formDataValidated = forms.dirtyAndValidateAll(formData);
 
     if (forms.hasAnyInvalid(formDataValidated)) {
-      setFormData({
-        ...formData,
-        ...formDataValidated
-      });
-
+      setFormData({ ...formData, ...formDataValidated });
       return;
     }
 
@@ -115,11 +104,12 @@ export default function ProfessionalForm() {
 
     if (isEditing) {
       requestBody.id = Number(params.professionalId);
+      delete requestBody.password;
     }
 
     const request = isEditing
       ? professionalService.updateProfessional(requestBody)
-      : authService.registerRequest(requestBody)
+      : authService.registerRequest(requestBody);
 
     request
       .then(() => {
@@ -128,7 +118,7 @@ export default function ProfessionalForm() {
       .catch(error => {
         const newInputs = forms.setBackendErrors(formData, error.response.data.errors);
         setFormData(newInputs);
-      })
+      });
   }
 
   function handleTurnDirty(name: string) {
@@ -139,76 +129,66 @@ export default function ProfessionalForm() {
     <>
       <section id='professional-form-section' className='bcf-container-1200px'>
 
-        <h2 className='bcf-form-title-section'>Novo profissional:</h2>
+        <h2 className='bcf-form-title-section'>
+          {isEditing ? "Editar profissional:" : "Novo profissional:"}
+        </h2>
 
         <div className='bcf-professional-form-modal-container'>
           <h3>Dados do profissional: </h3>
 
           <form onSubmit={handleSubmit} className='bcf-professional-form'>
-            <FormInput
-              {...formData.name}
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className='bcf-form-error'>{formData.name.message}</div>
 
-            <FormInput
-              {...formData.email}
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className='bcf-form-error'>{formData.email.message}</div>
-            {
-              !isEditing &&
-              <>
+            <div className="bcf-form-control">
+              <FormInput
+                {...formData.name}
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className='bcf-form-error'>{formData.name.message}</div>
+            </div>
+
+            <div className="bcf-form-control">
+              <FormInput
+                {...formData.email}
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className='bcf-form-error'>{formData.email.message}</div>
+            </div>
+
+            {!isEditing && (
+              <div className="bcf-form-control">
                 <FormInput
                   {...formData.password}
                   onTurnDirty={handleTurnDirty}
                   onChange={handleInputChange}
                 />
                 <div className='bcf-form-error'>{formData.password.message}</div>
-              </>
-            }
-
+              </div>
+            )}
 
             <FormSelect
               {...formData.specializations}
               className='bcf-form-select bcf-form-select-container'
               styles={selectStyles}
               options={specializations}
-              onChange={((obj: any) => {
+              onChange={(obj: any) => {
                 const newFormData = forms.updateAndValidate(formData, "specializations", obj);
-                console.log(newFormData.specializations)
                 setFormData(newFormData);
-              })}
+              }}
               onTurnDirty={handleTurnDirty}
               isMulti
               getOptionLabel={(obj: any) => obj.name}
               getOptionValue={(obj: any) => String(obj.id)}
             />
             <div className='bcf-form-error'>{formData.specializations.message}</div>
-            <div>
 
-            </div>
-
-            {/* <select className='bcf-select' required>
-              <option value="" disabled selected>Especialidades</option>
-              <option value="1">Cabeleleiro(a)</option>
-              <option value="2">Trancista</option>
-              <option value="3">Esteticista</option>
-            </select> */}
-            {
-              isEditing
-                ?
-                <button type='submit'>Salvar alterações</button>
-                :
-                <button type='submit'>Registrar</button>
-            }
+            <button type='submit'>
+              {isEditing ? 'Salvar alterações' : 'Registrar'}
+            </button>
 
           </form>
-
         </div>
-
       </section>
     </>
   );
