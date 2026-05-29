@@ -30,7 +30,7 @@ export default function Login() {
       type: "password",
       placeholder: "Senha",
       validation: function (value: string) {
-        return value.length === 0;
+        return value.length > 0;
       },
       message: "A senha não pode ser vazia",
     }
@@ -64,19 +64,28 @@ export default function Login() {
       <div className='bcf-modal-form-login-container'>
         <h2>Login</h2>
         <form className='bcf-modal-form' onSubmit={handleSubmit}>
-          <FormInput
-            {...formData.email}
-            onTurnDirty={handleTurnDirty}
-            onChange={handleInputChange}
-          />
-          <div className='bcf-form-error'>{formData.email.message}</div>
 
-          <FormInput
-            {...formData.password}
-            onTurnDirty={handleTurnDirty}
-            onChange={handleInputChange}
-          />
+          {/* CONTAINER DO EMAIL */}
+          <div className="bcf-form-control">
+            <FormInput
+              {...formData.email}
+              onTurnDirty={handleTurnDirty}
+              onChange={handleInputChange}
+            />
+            <div className='bcf-form-error'>{formData.email.message}</div>
+          </div>
 
+          {/* CONTAINER DA SENHA */}
+          <div className="bcf-form-control">
+            <FormInput
+              {...formData.password}
+              onTurnDirty={handleTurnDirty}
+              onChange={handleInputChange}
+            />
+            <div className='bcf-form-error'>{formData.password.message}</div>
+          </div>
+
+          {/* ERRO GLOBAL (Fica fora dos blocos acima, direto no form) */}
           {
             submitResponseFail &&
             <div className='bcf-form-global-error'>
