@@ -27,6 +27,13 @@ public class SpecialtyController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<SpecialtyResponseDTO> findSpecialtyById(@PathVariable Long id) {
+        var result = service.findById(id);
+        return ResponseEntity.ok(result);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<SpecialtyResponseDTO> createNewSpecialty(@Valid @RequestBody SpecialtyCreateRequestDTO dto) {

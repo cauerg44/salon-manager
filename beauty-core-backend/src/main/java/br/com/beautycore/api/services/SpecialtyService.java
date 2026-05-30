@@ -33,6 +33,14 @@ public class SpecialtyService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public SpecialtyResponseDTO findById(Long id) {
+        Specialty specialty = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
+
+        return new SpecialtyResponseDTO(specialty.getId(), specialty.getName());
+    }
+
     @Transactional
     public SpecialtyResponseDTO save(SpecialtyCreateRequestDTO dto) {
         Specialty entity = new Specialty();
