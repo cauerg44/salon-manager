@@ -24,6 +24,7 @@ import ProfessionalsListing from "./routes/ClientHome/Professionals/Professional
 import ProfessionalTotalProfit from "./routes/ClientHome/FinancialReports/ProfessionalTotalProfit";
 import Profile from "./routes/ClientHome/Profile";
 import ProfessionalForm from "./routes/ClientHome/Professionals/ProfessionalForm";
+import SpecialtyForm from "./routes/ClientHome/Specializations/SpecialtyForm";
 
 export default function App() {
 
@@ -58,6 +59,8 @@ export default function App() {
 
             <Route path="specializations" element={<Specializations />}>
               <Route path="listing" element={<SpecializationsListing />} />
+              <Route path="create" element={<SpecialtyForm />} />
+              <Route path="edit/:specialtyId" element={<SpecialtyForm />} />
             </Route>
 
             <Route path="clients" element={<Clients />}>

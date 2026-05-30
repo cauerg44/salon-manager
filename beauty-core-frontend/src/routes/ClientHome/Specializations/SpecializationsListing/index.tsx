@@ -6,8 +6,11 @@ import editIcon from '../../../../assets/bcf-edit-icon.svg';
 import trashIcon from '../../../../assets/bcf-trash-icon.svg';
 import DialogModalInfo from '../../../../components/DialogInfo/index.tsx';
 import DialogConfirmation from '../../../../components/DialogConfirmation/index.tsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function SpecializationsListing() {
+
+  const navigate = useNavigate();
 
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
@@ -35,6 +38,10 @@ export default function SpecializationsListing() {
 
   function handleDeleteClick(specialtyId: number) {
     setDialogConfirmationData({ ...dialogConfirmationData, id: specialtyId, visible: true });
+  }
+
+  function handleEditClick(specialtyId: number) {
+    navigate(`/specializations/edit/${specialtyId}`);
   }
 
   function handleDialogConfirmationAnswer(answer: boolean, specialtyId: number) {
@@ -70,7 +77,7 @@ export default function SpecializationsListing() {
                 <div key={specialty.id} className='bcf-specialty-card'>
                   <h3>{specialty.name}</h3>
                   <div className='bcf-specialty-card-icons'>
-                    <img src={editIcon} alt="Edit icon" />
+                    <img onClick={() => handleEditClick(specialty.id)} src={editIcon} alt="Edit icon" />
                     <img onClick={() => handleDeleteClick(specialty.id)} src={trashIcon} alt="Trash icon" />
                   </div>
                 </div>

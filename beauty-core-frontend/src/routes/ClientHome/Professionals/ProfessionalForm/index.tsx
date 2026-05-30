@@ -11,8 +11,11 @@ import FormSelect from '../../../../components/FormSelect/index.tsx';
 import { selectStyles } from '../../../../utils/select.ts';
 
 export default function ProfessionalForm() {
+
   const params = useParams();
+
   const navigate = useNavigate();
+
   const isEditing = params.professionalId !== undefined;
 
   const [specializations, setSpecializations] = useState<SpecialtyDTO[]>([]);
@@ -25,7 +28,7 @@ export default function ProfessionalForm() {
       type: "text",
       placeholder: "Nome",
       validation: function (value: string) {
-        return value.length >= 3 && value.length <= 80; // Corrigido para 80 conforme a mensagem
+        return value.length >= 3 && value.length <= 80;
       },
       message: "Favor informar um nome de 3 e 80 caracteres"
     },
@@ -47,7 +50,6 @@ export default function ProfessionalForm() {
       type: "password",
       placeholder: "Senha",
       validation: function (value: string = "") {
-        // Se estiver editando, a senha não é obrigatória/validada aqui
         return isEditing ? true : value.length > 0;
       },
       message: "A senha não pode ser vazia",
@@ -64,7 +66,6 @@ export default function ProfessionalForm() {
     }
   });
 
-  // Busca todas as especialidades ao montar o componente
   useEffect(() => {
     specialtyService.findAll()
       .then(response => {
@@ -72,17 +73,15 @@ export default function ProfessionalForm() {
       });
   }, []);
 
-  // Busca os dados do profissional se for edição
   useEffect(() => {
-    if (isEditing && params.professionalId) {
+    if (isEditing) {
       professionalService.findProfessionalById(Number(params.professionalId))
         .then(response => {
           const newFormData = forms.updateAll(formData, response.data);
           setFormData(newFormData);
         });
     }
-    // Adicionado as dependências corretas para o useEffect rodar sempre que necessário
-  }, [isEditing, params.professionalId]);
+  }, []);
 
   function handleInputChange(event: any) {
     setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
@@ -94,7 +93,7 @@ export default function ProfessionalForm() {
     const formDataValidated = forms.dirtyAndValidateAll(formData);
 
     if (forms.hasAnyInvalid(formDataValidated)) {
-      setFormData({ ...formData, ...formDataValidated });
+      setFormData(formDataValidated);
       return;
     }
 
@@ -156,16 +155,18 @@ export default function ProfessionalForm() {
               <div className='bcf-form-error'>{formData.email.message}</div>
             </div>
 
-            {!isEditing && (
-              <div className="bcf-form-control">
-                <FormInput
-                  {...formData.password}
-                  onTurnDirty={handleTurnDirty}
-                  onChange={handleInputChange}
-                />
-                <div className='bcf-form-error'>{formData.password.message}</div>
-              </div>
-            )}
+            {
+              !isEditing && (
+                <div className="bcf-form-control">
+                  <FormInput
+                    {...formData.password}
+                    onTurnDirty={handleTurnDirty}
+                    onChange={handleInputChange}
+                  />
+                  <div className='bcf-form-error'>{formData.password.message}</div>
+                </div>
+              )
+            }
 
             <FormSelect
               {...formData.specializations}

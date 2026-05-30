@@ -13,10 +13,15 @@ export default function Specializations() {
           <h2>Especialidades:</h2>
           <h3>Gerencie as especialidades dos profissionais no salão de beleza: </h3>
           <div className='bcf-specialization-modal-buttons'>
+
             <Link to={"/specializations/listing"}>
               <ButtonSecondary text='Listar' />
             </Link>
-            <ButtonSecondary text='Cadastrar' />
+
+            <Link to={"/specializations/create"}>
+              <ButtonSecondary text='Cadastrar' />
+            </Link>
+
           </div>
         </div>
       </section>
