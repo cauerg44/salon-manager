@@ -31,6 +31,14 @@ public class ClientService {
         return result.map(client -> new ClientResponseDTO(client));
     }
 
+    @Transactional(readOnly = true)
+    public ClientResponseDTO findById(Long id) {
+        Client result = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+
+        return new ClientResponseDTO(result);
+    }
+
     @Transactional
     public ClientResponseDTO save(ClientCreateRequestDTO dto) {
         Client entity = new Client();
