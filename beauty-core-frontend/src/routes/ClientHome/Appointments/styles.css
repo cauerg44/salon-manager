@@ -11,7 +11,12 @@
 .bcf-appointments-modal h3 {
   font-size: 20px;
   color: var(--bcf--font-color-tertiary);
-  margin-bottom: 35px;
+  margin-bottom: 10px;
+}
+
+.bcf-appointments-modal button {
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .bcf-appointments-modal h4 {

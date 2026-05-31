@@ -27,6 +27,7 @@ import ProfessionalForm from "./routes/ClientHome/Professionals/ProfessionalForm
 import SpecialtyForm from "./routes/ClientHome/Specializations/SpecialtyForm";
 import ClientForm from "./routes/ClientHome/Clients/ClientForm";
 import ServiceForm from "./routes/ClientHome/Services/ServiceForm";
+import AppointmentForm from "./routes/ClientHome/Appointments/AppointmentForm";
 
 export default function App() {
 
@@ -47,6 +48,7 @@ export default function App() {
               <Route path="finished" element={<AppointmentsFinished />} />
               <Route path="canceled" element={<AppointmentsCanceled />} />
               <Route path="not-paid" element={<AppointmentsNotPaid />} />
+              <Route path="create" element={<AppointmentForm />} />
             </Route>
 
             <Route path="professionals" element={<Professionals />}>

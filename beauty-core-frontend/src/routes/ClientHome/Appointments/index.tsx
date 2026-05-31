@@ -1,3 +1,4 @@
+import ButtonSecondary from '../../../components/ButtonSecondary';
 import ReturnGeneralPageButton from '../../../components/ReturnGeneralPageButtun';
 import './styles.css';
 import { Link, Outlet } from "react-router-dom";
@@ -12,6 +13,10 @@ export default function Appointments() {
 
           <h2>Atendimentos:</h2>
           <h3>Gerencie todos os atendimentos do salão:</h3>
+
+          <Link to={"/appointments/create"}>
+            <ButtonSecondary text='Novo atendimento' />
+          </Link>
 
           <Link to={"/appointments/in-waiting"}>
             <h4>Listar atendimentos em espera:</h4>
