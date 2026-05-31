@@ -36,6 +36,14 @@ public class JobItemService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public JobItemResponseDTO findById(Long id) {
+        JobItem result = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
+
+        return new JobItemResponseDTO(result.getId(), result.getName(), result.getBasePrice());
+    }
+
     @Transactional
     public JobItemResponseDTO save(JobItemCreateRequestDTO dto) {
         JobItem entity = new JobItem();

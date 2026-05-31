@@ -28,6 +28,13 @@ public class JobItemController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<JobItemResponseDTO> findServiceById(@PathVariable Long id) {
+        var result = service.findById(id);
+        return ResponseEntity.ok(result);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<JobItemResponseDTO> create(@Valid @RequestBody JobItemCreateRequestDTO dto) {
