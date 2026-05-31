@@ -30,6 +30,13 @@ public class ClientController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ClientResponseDTO> findClientById(@PathVariable Long id) {
+        var result = service.findById(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseEntity<ClientResponseDTO> create(@Valid @RequestBody ClientCreateRequestDTO dto) {
         var result = service.save(dto);
