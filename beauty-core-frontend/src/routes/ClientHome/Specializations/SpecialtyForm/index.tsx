@@ -48,15 +48,19 @@ export default function SpecialtyForm() {
   function handleSubmit(event: any) {
     event.preventDefault();
 
+    // Suja todos os campos e valida
     const formDataValidated = forms.dirtyAndValidateAll(formData);
 
+    // Se algum campo for inválido
     if (forms.hasAnyInvalid(formDataValidated)) {
       setFormData(formDataValidated);
       return;
     }
 
+    // Transforma o formData para Payload
     const requestBody = forms.toValues(formData);
 
+    // Se estiver editando, pega o ID
     if (isEditing) {
       requestBody.id = Number(params.specialtyId);
     }

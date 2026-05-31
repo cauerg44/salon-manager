@@ -1,5 +1,4 @@
-
-
+import { InputMask } from "@react-input/mask";
 
 export default function FormInput(props: any) {
 
@@ -8,11 +7,26 @@ export default function FormInput(props: any) {
     invalid = "false",
     dirty = "false",
     onTurnDirty,
+    mask,
+    replacement,
     ...inputProps
   } = props;
 
-  function handleBluer() {
+  function handleBlur() {
     onTurnDirty(props.name);
+  }
+
+  if (mask) {
+    return (
+      <InputMask
+        {...inputProps}
+        mask={mask}
+        replacement={replacement}
+        data-invalid={invalid}
+        data-dirty={dirty}
+        onBlur={handleBlur}
+      />
+    );
   }
 
   return (
@@ -20,6 +34,7 @@ export default function FormInput(props: any) {
       {...inputProps}
       data-invalid={invalid}
       data-dirty={dirty}
-      onBlur={handleBluer} />
+      onBlur={handleBlur}
+    />
   );
 }

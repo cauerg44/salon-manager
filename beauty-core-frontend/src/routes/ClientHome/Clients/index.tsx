@@ -18,7 +18,9 @@ export default function Clients() {
               <ButtonSecondary text='Listar' />
             </Link>
 
-            <ButtonSecondary text='Cadastrar' />
+            <Link to={"/clients/create"}>
+              <ButtonSecondary text='Cadastrar' />
+            </Link>
 
           </div>
         </div>

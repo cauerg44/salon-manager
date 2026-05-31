@@ -25,6 +25,7 @@ import ProfessionalTotalProfit from "./routes/ClientHome/FinancialReports/Profes
 import Profile from "./routes/ClientHome/Profile";
 import ProfessionalForm from "./routes/ClientHome/Professionals/ProfessionalForm";
 import SpecialtyForm from "./routes/ClientHome/Specializations/SpecialtyForm";
+import ClientForm from "./routes/ClientHome/Clients/ClientForm";
 
 export default function App() {
 
@@ -65,6 +66,8 @@ export default function App() {
 
             <Route path="clients" element={<Clients />}>
               <Route path="listing" element={<ClientsListing />} />
+              <Route path="create" element={<ClientForm />} />
+              <Route path="edit/:clientId" element={<ClientForm />} />
             </Route>
 
             <Route path="financial-reports" element={<FinancialReports />}>
