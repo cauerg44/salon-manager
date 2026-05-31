@@ -14,10 +14,15 @@ export default function Services() {
           <h3>Gerencie os serviços dispóniveis no salão:</h3>
 
           <div className='bcf-specialization-modal-buttons'>
+
             <Link to={"/services/listing"}>
               <ButtonSecondary text='Listar' />
             </Link>
-            <ButtonSecondary text='Cadastrar' />
+
+            <Link to={"/services/create"}>
+              <ButtonSecondary text='Cadastrar' />
+            </Link>
+
           </div>
 
         </div>

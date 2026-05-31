@@ -26,6 +26,7 @@ import Profile from "./routes/ClientHome/Profile";
 import ProfessionalForm from "./routes/ClientHome/Professionals/ProfessionalForm";
 import SpecialtyForm from "./routes/ClientHome/Specializations/SpecialtyForm";
 import ClientForm from "./routes/ClientHome/Clients/ClientForm";
+import ServiceForm from "./routes/ClientHome/Services/ServiceForm";
 
 export default function App() {
 
@@ -56,6 +57,8 @@ export default function App() {
 
             <Route path="services" element={<Services />}>
               <Route path="listing" element={<ServicesListing />} />
+              <Route path="create" element={<ServiceForm />} />
+              <Route path="edit/:serviceId" element={<ServiceForm />} />
             </Route>
 
             <Route path="specializations" element={<Specializations />}>

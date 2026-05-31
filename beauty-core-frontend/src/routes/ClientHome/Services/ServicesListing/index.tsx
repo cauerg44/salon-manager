@@ -6,8 +6,11 @@ import editIcon from '../../../../assets/bcf-edit-icon.svg';
 import trashIcon from '../../../../assets/bcf-trash-icon.svg';
 import DialogConfirmation from '../../../../components/DialogConfirmation/index.tsx';
 import DialogModalInfo from '../../../../components/DialogInfo/index.tsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function ServicesListing() {
+
+  const navigate = useNavigate();
 
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
@@ -31,6 +34,11 @@ export default function ServicesListing() {
 
   function handleDeleteClick(serviceId: number) {
     setDialogConfirmationData({ ...dialogConfirmationData, id: serviceId, visible: true });
+  }
+
+  function handleEditClick(serviceId: number) {
+    navigate(`/services/edit/${serviceId}`);
+    console.log("cliquei")
   }
 
   function handleDialogInfoClose() {
@@ -78,7 +86,7 @@ export default function ServicesListing() {
 
                   <div className='bcf-services-card-actions'>
 
-                    <div className='bcf-services-card-action-item'>
+                    <div onClick={() => handleEditClick(serviceItem.id)} className='bcf-services-card-action-item'>
                       <img src={editIcon} alt="Editar serviço" />
                       <h5>Editar</h5>
                     </div>
