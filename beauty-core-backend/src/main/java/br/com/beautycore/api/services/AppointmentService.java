@@ -101,6 +101,24 @@ public class AppointmentService {
     }
 
     @Transactional
+    public AppointmentResponseDTO finish(Long id) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
+
+        if (appointment.getAppointmentStatus() != AppointmentStatus.IN_PROGRESS) {
+            throw new DomainException("Apenas atendimentos em andamento podem ser finalizados");
+        }
+
+        appointment.setAppointmentStatus(AppointmentStatus.FINISHED);
+        appointment.getClient().setInAppointment(false);
+        appointment.setUpdatedAt(LocalDateTime.now());
+
+        Appointment appointmentFinished = repository.save(appointment);
+
+        return new AppointmentResponseDTO(appointmentFinished);
+    }
+
+    @Transactional
     public AppointmentResponseDTO start(Long id) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
@@ -117,9 +135,9 @@ public class AppointmentService {
         appointment.getClient().setInAppointment(true);
         appointment.setUpdatedAt(LocalDateTime.now());
 
-        repository.save(appointment);
+        Appointment appointmentInProgress = repository.save(appointment);
 
-        return new AppointmentResponseDTO(appointment);
+        return new AppointmentResponseDTO(appointmentInProgress);
     }
 
     @Transactional

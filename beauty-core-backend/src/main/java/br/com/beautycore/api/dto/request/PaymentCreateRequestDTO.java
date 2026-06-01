@@ -9,9 +9,6 @@ import java.math.BigDecimal;
 
 public record PaymentCreateRequestDTO(
 
-        @NotNull(message = "É nescessário ter associar com o atendimento finalizado.")
-        Long appointmentId,
-
         @NotNull(message = "Valor do pagamento é obrigatório")
         @DecimalMin(value = "0.01", message = "Valor do pagamento deve ser maior que zero")
         @Digits(integer = 6, fraction = 2, message = "Valor deve ter no máximo 2 casas decimais")

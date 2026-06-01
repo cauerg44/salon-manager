@@ -59,6 +59,13 @@ public class AppointmentController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @PatchMapping(value = "/{id}/finish")
+    public ResponseEntity<AppointmentResponseDTO> finishAppointment(@PathVariable Long id) {
+        var result = service.finish(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/{id}/start")
     public ResponseEntity<AppointmentResponseDTO> startAppointment(@PathVariable Long id) {
         var result = service.start(id);

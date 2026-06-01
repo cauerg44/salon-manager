@@ -27,8 +27,8 @@ public class PaymentService {
     private AppointmentRepository appointmentRepository;
 
     @Transactional
-    public PaymentResponseDTO createPayment(PaymentCreateRequestDTO dto) {
-        Appointment appointment = appointmentRepository.findById(dto.appointmentId())
+    public PaymentResponseDTO createPayment(Long appointmentId, PaymentCreateRequestDTO dto) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
         createPaymentValidationRules(appointment, dto);
