@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "v1/clients")
@@ -26,6 +27,13 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<Page<ClientResponseDTO>> findAllPaged(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
         var result = service.findAll(name, pageable);
+        return ResponseEntity.ok(result);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/not-in-appointment")
+    public ResponseEntity<List<ClientResponseDTO>> findAllClientsNotInAppointment() {
+        var result = service.findAllClientsNotInAppointment();
         return ResponseEntity.ok(result);
     }
 

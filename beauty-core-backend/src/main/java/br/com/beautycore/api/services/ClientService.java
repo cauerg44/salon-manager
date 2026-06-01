@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,6 +31,12 @@ public class ClientService {
     public Page<ClientResponseDTO> findAll(String name, Pageable pageable) {
         Page<Client> result = repository.searchByName(name, pageable);
         return result.map(client -> new ClientResponseDTO(client));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClientResponseDTO> findAllClientsNotInAppointment() {
+        List<Client> result = repository.findAllClientsNotInAppointment();
+        return result.stream().map(client -> new ClientResponseDTO(client)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
