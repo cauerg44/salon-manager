@@ -126,7 +126,7 @@ main {
   border: 1px solid var(--bfc--util-color-7);
 }
 
-.bcf-form-select[data-invalid="true"][data-dirty="true"]~div {
+.bcf-form-select[data-invalid="true"][data-dirty="true"]+div {
   display: unset;
 }
 

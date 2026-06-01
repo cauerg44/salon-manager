@@ -1,11 +1,36 @@
+import { Link, useNavigate } from 'react-router-dom';
 import type { AppointmentDTO } from '../../models/appointment';
 import './styles.css';
+import * as appointmentService from '../../services/appointment-service.ts';
 
 type Props = {
   appointmentDTO: AppointmentDTO;
 }
 
 export default function AppointmentsInWaitingCard({ appointmentDTO }: Props) {
+
+  const navigate = useNavigate();
+
+  function handleStartAppointmentClick() {
+    appointmentService.startAppointment(appointmentDTO.id)
+      .then(() => {
+        navigate(`/appointments/in-progress`);
+      })
+      .catch(() => {
+        navigate(`/appointments/in-waiting`);
+      })
+  }
+
+  function handleCancelAppointmentClick() {
+    appointmentService.cancelAppointment(appointmentDTO.id)
+      .then(() => {
+        navigate(`/appointments/in-progress`);
+      })
+      .catch(() => {
+        navigate(`/appointments/in-waiting`);
+      })
+  }
+
   return (
     <div className='bcf-appointment-card-container'>
 
@@ -34,6 +59,18 @@ export default function AppointmentsInWaitingCard({ appointmentDTO }: Props) {
           )
         }
 
+      </div>
+
+      <div className='bcf-appointment-in-waiting-card-actions'>
+        <h3>Ações rápidas: </h3>
+
+        <h4 onClick={handleStartAppointmentClick} className='bcf-action-start-appointment'>Iniciar atendimento</h4>
+
+        <Link to={`/appointments/edit/${appointmentDTO.id}`}>
+          <h4 className='bcf-action-edit-appointment'>Editar atendimento</h4>
+        </Link>
+
+        <h4 onClick={handleCancelAppointmentClick} className='bcf-action-cancel-appointment'>Cancelar atendimento</h4>
       </div>
 
     </div>
