@@ -9,6 +9,7 @@ export default function FormInput(props: any) {
     onTurnDirty,
     mask,
     replacement,
+    currency,
     ...inputProps
   } = props;
 

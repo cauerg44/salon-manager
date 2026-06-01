@@ -11,6 +11,7 @@ import * as appointmentService from '../../../../services/appointment-service.ts
 import * as professionalService from '../../../../services/professional-service.ts';
 import * as jobItemService from '../../../../services/job-item-service.ts';
 import type { ServiceDTO } from '../../../../models/service-dto.ts';
+import FormInput from '../../../../components/FormInput/index.tsx';
 
 export default function AppointmentForm() {
 
@@ -52,10 +53,21 @@ export default function AppointmentForm() {
       id: 'services',
       name: 'services',
       placeholder: 'Serviços',
-      validation: function (value: ServiceDTO[]) {
+      validation: function (value: any[]) {
         return value.length > 0;
       },
       message: "Escolha ao menos um serviço para esse atendimento"
+    },
+    discount: {
+      value: 0,
+      id: 'discount',
+      name: 'discount',
+      placeholder: 'Desconto',
+      type: 'number',
+      validation: function (value: number) {
+        return value >= 0;
+      },
+      message: "Desconto deve ser positivo"
     }
   })
 
@@ -100,7 +112,12 @@ export default function AppointmentForm() {
     setFormData(forms.dirtyAndValidate(formData, name));
   }
 
+  function handleInputChange(event: any) {
+    setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
+  }
+
   function handleSubmit(event: any) {
+
     event.preventDefault();
 
     const formDataValidated = forms.dirtyAndValidateAll(formData);
@@ -195,6 +212,18 @@ export default function AppointmentForm() {
               getOptionValue={(obj: any) => String(obj.id)}
             />
             <div className='bcf-form-error'>{formData.services.message}</div>
+
+            {
+              isEditing &&
+              <div className="bcf-form-control">
+                <FormInput
+                  {...formData.discount}
+                  onTurnDirty={handleTurnDirty}
+                  onChange={handleInputChange}
+                />
+                <div className='bcf-form-error'>{formData.discount.message}</div>
+              </div>
+            }
 
             <button type='submit'>
               {isEditing ? 'Salvar alterações' : 'Registrar'}

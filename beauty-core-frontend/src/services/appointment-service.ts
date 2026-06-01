@@ -2,6 +2,17 @@ import type { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/requests";
 import type { AppointmentDTO } from "../models/appointment";
 
+export function finishAppointment(appointmentId: number) {
+
+  const config: AxiosRequestConfig = {
+    method: "PATCH",
+    url: `/appointments/${appointmentId}/finish`,
+    withCredentials: true
+  }
+
+  return requestBackend(config);
+}
+
 export function startAppointment(appointmentId: number) {
 
   const config: AxiosRequestConfig = {

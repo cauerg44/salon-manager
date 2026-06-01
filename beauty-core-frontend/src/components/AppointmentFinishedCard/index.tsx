@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import type { AppointmentDTO } from '../../models/appointment';
 import './styles.css';
 
@@ -6,6 +7,7 @@ type Props = {
 }
 
 export default function AppointmentFinishedCard({ appointmentDTO }: Props) {
+
   return (
     <div className='bcf-appointment-card-container'>
 
@@ -37,6 +39,22 @@ export default function AppointmentFinishedCard({ appointmentDTO }: Props) {
         }
 
       </div>
+
+      {
+        appointmentDTO.isPaid === false &&
+        <div className='bcf-appointment-in-progress-card-actions'>
+          <h3>Este atendimento não foi pago, adicione um pagamento: </h3>
+
+          <Link to={`/appointments/pay/${appointmentDTO.id}`}>
+            <h4 className='bcf-action-add-payment-appointment'>Adicionar pagamento agora</h4>
+          </Link>
+
+          <Link to={`/appointments/edit/${appointmentDTO.id}`}>
+            <h4 className='bcf-action-edit-appointment'>Editar atendimento</h4>
+          </Link>
+
+        </div>
+      }
 
     </div>
   );

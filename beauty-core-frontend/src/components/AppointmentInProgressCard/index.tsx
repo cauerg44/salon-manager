@@ -1,11 +1,26 @@
+import { Link, useNavigate } from 'react-router-dom';
 import type { AppointmentDTO } from '../../models/appointment';
 import './styles.css';
+import * as appointmentService from '../../services/appointment-service.ts';
 
 type Props = {
   appointmentDTO: AppointmentDTO;
 }
 
 export default function AppointmentsInProgressCard({ appointmentDTO }: Props) {
+
+  const navigate = useNavigate();
+
+  function handleFinishAppointmentClick() {
+    appointmentService.finishAppointment(appointmentDTO.id)
+      .then(() => {
+        navigate("/appointments/finished")
+      })
+      .catch(() => {
+        navigate("/appointments/in-progress")
+      })
+  }
+
   return (
     <div className='bcf-appointment-card-container'>
 
@@ -34,6 +49,16 @@ export default function AppointmentsInProgressCard({ appointmentDTO }: Props) {
           )
         }
 
+      </div>
+
+      <div className='bcf-appointment-in-progress-card-actions'>
+        <h3>Ações rápidas: </h3>
+
+        <h4 onClick={handleFinishAppointmentClick} className='bcf-action-finish-appointment'>Finalizar atendimento</h4>
+
+        <Link to={`/appointments/edit/${appointmentDTO.id}`}>
+          <h4 className='bcf-action-edit-appointment'>Editar atendimento</h4>
+        </Link>
       </div>
 
     </div>
