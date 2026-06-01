@@ -49,6 +49,7 @@ export default function App() {
               <Route path="canceled" element={<AppointmentsCanceled />} />
               <Route path="not-paid" element={<AppointmentsNotPaid />} />
               <Route path="create" element={<AppointmentForm />} />
+              <Route path="edit/:appointmentId" element={<AppointmentForm />} />
             </Route>
 
             <Route path="professionals" element={<Professionals />}>

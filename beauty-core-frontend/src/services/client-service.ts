@@ -19,6 +19,16 @@ export function findAllClientsPaged(page: number, name: string, size = 12, sort 
   return requestBackend(config);
 }
 
+export function findAllClientsNotInAppointment() {
+
+  const config: AxiosRequestConfig = {
+    url: "/clients/not-in-appointment",
+    withCredentials: true
+  }
+
+  return requestBackend(config);
+}
+
 export function findClientById(clientId: number) {
 
   const config: AxiosRequestConfig = {

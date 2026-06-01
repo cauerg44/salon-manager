@@ -1,9 +1,16 @@
 import './styles.css';
-import FormInput from '../../../../components/FormInput/index.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as forms from '../../../../utils/forms.ts';
 import * as clientService from '../../../../services/client-service.ts';
+import type { ProfessionalDTO } from '../../../../models/professional.ts';
+import type { ClientDTO } from '../../../../models/client.ts';
+import FormSelect from '../../../../components/FormSelect/index.tsx';
+import { selectStyles } from '../../../../utils/select.ts';
+import * as appointmentService from '../../../../services/appointment-service.ts';
+import * as professionalService from '../../../../services/professional-service.ts';
+import * as jobItemService from '../../../../services/job-item-service.ts';
+import type { ServiceDTO } from '../../../../models/service-dto.ts';
 
 export default function AppointmentForm() {
 
@@ -11,66 +18,86 @@ export default function AppointmentForm() {
 
   const navigate = useNavigate();
 
-  const isEditing = params.clientId !== undefined;
+  const isEditing = params.appointmentId !== undefined;
+
+  const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);
+
+  const [clients, setClients] = useState<ClientDTO[]>([]);
+
+  const [services, setServices] = useState<ServiceDTO[]>([]);
 
   const [formData, setFormData] = useState<any>({
-    name: {
-      value: "",
-      id: "name",
-      name: "name",
-      type: "text",
-      placeholder: "Nome",
-      validation: function (value: string) {
-        return value.length >= 3 && value.length <= 80;
+    professionals: {
+      value: null,
+      id: 'professionals',
+      name: 'professionals',
+      placeholder: 'Selecionar profissional',
+      validation: function (value: ProfessionalDTO) {
+        return value != null;
       },
-      message: "Favor informar um nome de 3 e 80 caracteres"
+      message: "Favor escolher um profissional para o atendimento"
     },
-    phone: {
-      value: "",
-      id: "phone",
-      name: "phone",
-      type: "text",
-      placeholder: "Telefone",
-      validation: function (value: string = "") {
-        return /^\d{11}$/.test(value);
+    clients: {
+      value: null,
+      id: 'clients',
+      name: 'clients',
+      placeholder: 'Selecionar cliente',
+      validation: function (value: ClientDTO) {
+        return value != null;
       },
-      message: "Favor informar um telefone com 11 dígitos",
+      message: "Favor escolher um cliente para o atendimento"
     },
-    birthDate: {
-      value: "",
-      id: "birthDate",
-      name: "birthDate",
-      type: "text",
-      placeholder: "Data de nascimento (dia/mês/ano)",
-      mask: "dd/mm/yyyy",
-      replacement: {
-        d: /\d/,
-        m: /\d/,
-        y: /\d/,
+    services: {
+      value: [],
+      id: 'services',
+      name: 'services',
+      placeholder: 'Serviços',
+      validation: function (value: ServiceDTO[]) {
+        return value.length > 0;
       },
-      validation: function (value: string = "") {
-        return /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value);
-      },
-      message: "Favor informar uma data válida",
+      message: "Escolha ao menos um serviço para esse atendimento"
     }
   })
 
   useEffect(() => {
     if (isEditing) {
-      clientService.findClientById(Number(params.clientId))
+      appointmentService.findAppointmentById(Number(params.appointmentId))
         .then(response => {
-          const formDataUpdated = forms.updateAll(formData, response.data);
+          const adaptedData = {
+            professionals: response.data.professional,
+            clients: response.data.client,
+            services: response.data.services
+          };
+
+          const formDataUpdated = forms.updateAll(formData, adaptedData);
           setFormData(formDataUpdated);
-        })
+        });
     }
+  }, []);
+
+  useEffect(() => {
+    professionalService.findAllProfessionals(0, "", 100, "name")
+      .then(response => {
+        setProfessionals(response.data.content);
+      });
+  }, []);
+
+  useEffect(() => {
+    clientService.findAllClientsNotInAppointment()
+      .then(response => {
+        setClients(response.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    jobItemService.findAllServices()
+      .then(response => {
+        setServices(response.data);
+      });
   }, []);
 
   function handleTurnDirty(name: string) {
     setFormData(forms.dirtyAndValidate(formData, name));
-  }
-
-  function handleInputChange(event: any) {
-    setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
   }
 
   function handleSubmit(event: any) {
@@ -85,21 +112,28 @@ export default function AppointmentForm() {
 
     const requestBody = forms.toValues(formData);
 
+    requestBody.professionalId = requestBody.professionals.id;
+    requestBody.clientId = requestBody.clients.id;
+    requestBody.servicesIds = requestBody.services.map((obj: ServiceDTO) => obj.id);
+
+    delete requestBody.professionals;
+    delete requestBody.clients;
+    delete requestBody.services;
+
     if (isEditing) {
-      requestBody.id = Number(params.clientId);
+      requestBody.id = Number(params.appointmentId);
     }
 
     const request = isEditing
-      ? clientService.update(requestBody)
-      : clientService.create(requestBody);
+      ? appointmentService.update(requestBody)
+      : appointmentService.create(requestBody)
 
     request
       .then(() => {
-        navigate("/clients/listing");
+        navigate("/appointments/in-waiting");
       })
       .catch(error => {
-        const newInputs = forms.setBackendErrors(formData, error.response.data.errors);
-        setFormData(newInputs);
+        console.log(error);
       })
   }
 
@@ -108,40 +142,59 @@ export default function AppointmentForm() {
       <section id='professional-form-section' className='bcf-container-1200px'>
 
         <h2 className='bcf-form-title-section'>
-          {isEditing ? "Editar cliente:" : "Novo cliente:"}
+          {isEditing ? "Editar atendimento:" : "Novo atendimento:"}
         </h2>
 
         <div className='bcf-professional-form-modal-container'>
-          <h3>Dados do cliente: </h3>
+          <h3>Dados do atendimento: </h3>
 
           <form onSubmit={handleSubmit} className='bcf-professional-form'>
 
-            <div className="bcf-form-control">
-              <FormInput
-                {...formData.name}
-                onTurnDirty={handleTurnDirty}
-                onChange={handleInputChange}
-              />
-              <div className='bcf-form-error'>{formData.name.message}</div>
-            </div>
+            <FormSelect
+              {...formData.professionals}
+              className='bcf-form-select bcf-form-select-container'
+              styles={selectStyles}
+              options={professionals}
+              onChange={(obj: any) => {
+                const newFormData = forms.updateAndValidate(formData, "professionals", obj);
+                setFormData(newFormData);
+              }}
+              onTurnDirty={handleTurnDirty}
+              getOptionLabel={(obj: any) => obj.name}
+              getOptionValue={(obj: any) => String(obj.id)}
+            />
+            <div className='bcf-form-error'>{formData.professionals.message}</div>
 
-            <div className="bcf-form-control">
-              <FormInput
-                {...formData.phone}
-                onTurnDirty={handleTurnDirty}
-                onChange={handleInputChange}
-              />
-              <div className='bcf-form-error'>{formData.phone.message}</div>
-            </div>
+            <FormSelect
+              {...formData.clients}
+              className='bcf-form-select bcf-form-select-container'
+              styles={selectStyles}
+              options={clients}
+              onChange={(obj: any) => {
+                const newFormData = forms.updateAndValidate(formData, "clients", obj);
+                setFormData(newFormData);
+              }}
+              onTurnDirty={handleTurnDirty}
+              getOptionLabel={(obj: any) => obj.name + " " + obj.birthDate}
+              getOptionValue={(obj: any) => String(obj.id)}
+            />
+            <div className='bcf-form-error'>{formData.clients.message}</div>
 
-            <div className="bcf-form-control">
-              <FormInput
-                {...formData.birthDate}
-                onTurnDirty={handleTurnDirty}
-                onChange={handleInputChange}
-              />
-              <div className='bcf-form-error'>{formData.birthDate.message}</div>
-            </div>
+            <FormSelect
+              {...formData.services}
+              className='bcf-form-select bcf-form-select-container'
+              styles={selectStyles}
+              options={services}
+              onChange={(obj: any) => {
+                const newFormData = forms.updateAndValidate(formData, "services", obj);
+                setFormData(newFormData);
+              }}
+              onTurnDirty={handleTurnDirty}
+              isMulti
+              getOptionLabel={(obj: any) => obj.name}
+              getOptionValue={(obj: any) => String(obj.id)}
+            />
+            <div className='bcf-form-error'>{formData.services.message}</div>
 
             <button type='submit'>
               {isEditing ? 'Salvar alterações' : 'Registrar'}
