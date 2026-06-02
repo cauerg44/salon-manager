@@ -12,14 +12,14 @@ export default function FinancialReports() {
           <ReturnGeneralPageButton />
 
           <h2>Relatório financeiro:</h2>
-          <h3>Vizualize o lucro total ao vivo no dia, e por cada profissional:</h3>
+          <h3>Vizualize o total apurado no dia:</h3>
 
           <Link to={"/financial-reports/total-profit-in-live"}>
-            <h4>Ver lucro total ao vivo no dia de hoje</h4>
+            <h4>Ver total apurado hoje</h4>
           </Link>
 
           <Link to={"/financial-reports/professional-total-profit-in-live"}>
-            <h4>Ver meu lucro de hoje</h4>
+            <h4>Ver meu total apurado hoje</h4>
           </Link>
         </div>
       </section>

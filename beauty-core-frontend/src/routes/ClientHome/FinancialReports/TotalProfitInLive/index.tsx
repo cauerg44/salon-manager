@@ -25,7 +25,7 @@ export default function TotalProfitInLive() {
         <h3>Dinheiro: <span>R$ {totalProfitInLive?.cash.toFixed(2)}</span></h3>
         <h3>Débito: <span>R$ {totalProfitInLive?.debit.toFixed(2)}</span></h3>
         <h3>Crédito: <span>R$ {totalProfitInLive?.credit.toFixed(2)}</span></h3>
-        <h3>Total de lucro: <span>R$ {totalProfitInLive?.totalProfitInLive.toFixed(2)}</span></h3>
+        <h3>Total apurado: <span>R$ {totalProfitInLive?.totalProfitInLive.toFixed(2)}</span></h3>
       </div>
 
     </section>

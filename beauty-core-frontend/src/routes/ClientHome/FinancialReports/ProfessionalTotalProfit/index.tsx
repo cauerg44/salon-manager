@@ -26,6 +26,7 @@ export default function ProfessionalTotalProfit() {
     financialReportsService
       .getProfessionalTotalProfitInLive(professionalLogged.id)
       .then(response => {
+        console.log(response.data)
         setProfessionalTotalProfitInLive(response.data);
       });
   }, [professionalLogged]);
@@ -34,7 +35,7 @@ export default function ProfessionalTotalProfit() {
     <section id="professional-total-profit-in-live-section" className="bcf-container-1200px">
 
       <div className='bcf-professional-total-profit-in-live-modal-container'>
-        <h2>Meu lucro total ao vivo:</h2>
+        <h2>Meu total ao vivo:</h2>
 
         <h3>Pix: <span>R$ {professionalTotalProfitInLive?.pix.toFixed(2)}</span></h3>
         <h3>Dinheiro: <span>R$ {professionalTotalProfitInLive?.cash.toFixed(2)}</span></h3>

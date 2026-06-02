@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import type { AppointmentDTO } from '../../models/appointment';
 import './styles.css';
 
@@ -29,6 +30,15 @@ export default function AppointmentNotPaidCard({ appointmentDTO }: Props) {
               </div>
           )
         }
+
+      </div>
+
+      <div className='bcf-appointment-in-progress-card-actions'>
+        <h3>Este atendimento não foi pago por completo, adicione um pagamento: </h3>
+
+        <Link to={`/appointments/pay/${appointmentDTO.id}`}>
+          <h4 className='bcf-action-add-payment-appointment'>Adicionar pagamento agora</h4>
+        </Link>
 
       </div>
 
