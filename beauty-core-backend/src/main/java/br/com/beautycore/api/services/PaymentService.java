@@ -57,29 +57,20 @@ public class PaymentService {
             throw new DomainException("Atendimento já pago");
         }
 
-        BigDecimal remaining = appointment.getTotalValue().subtract(dto.amount());
+        BigDecimal remaining = appointment.getRemainingValue().subtract(dto.amount());
 
         // 1. If clients pays appointment total price:
-        if (dto.amount().compareTo(appointment.getTotalValue()) == 0) {
+        if (dto.amount().compareTo(appointment.getRemainingValue()) == 0) {
             appointment.setIsPaid(true);
-            appointment.setRemainingValue(remaining);
+            appointment.setRemainingValue(BigDecimal.ZERO);
             appointment.setUpdatedAt(LocalDateTime.now());
             return;
         }
 
         // 2. If client pays partial:
-        if (dto.amount().compareTo(appointment.getTotalValue()) < 0) {
+        if (dto.amount().compareTo(appointment.getRemainingValue()) < 0) {
             appointment.setIsPaid(false);
             appointment.setRemainingValue(remaining);
-            appointment.setUpdatedAt(LocalDateTime.now());
-            return;
-        }
-
-        // 3. If client pays more than appointment total price;
-        if (dto.amount().compareTo(appointment.getTotalValue()) > 0) {
-            appointment.setIsPaid(true);
-            appointment.setRemainingValue(BigDecimal.ZERO);
-            appointment.getClient().setCredit(remaining.abs());
             appointment.setUpdatedAt(LocalDateTime.now());
         }
     }

@@ -87,11 +87,9 @@ public class AppointmentService {
 
         updateAppointmentValidationRules(appointment, dto);
 
-        if (dto.discount() != null) {
-            appointment.setDiscount(dto.discount());
-            appointment.setTotalValue(appointment.getTotalValue().subtract(dto.discount()));
-            appointment.setRemainingValue(appointment.getTotalValue());
-        }
+        appointment.setDiscount(dto.discount());
+        appointment.setTotalValue(appointment.getRemainingValue().subtract(dto.discount()));
+        appointment.setRemainingValue(appointment.getRemainingValue().subtract(dto.discount()));
 
         appointment.setUpdatedAt(LocalDateTime.now());
 
@@ -156,24 +154,16 @@ public class AppointmentService {
     }
 
     private void updateAppointmentValidationRules(Appointment appointment, AppointmentPatchRequestDTO dto) {
-        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING && dto.professionalId() != null) {
-            Professional professional = professionalRepository.findById(dto.professionalId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
-            appointment.setProfessional(professional);
-        }
-        else throw new DomainException("É possível somente alterar o profissional se o atendimento não estiver em andamento");
-
-        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
+        if (appointment.getAppointmentStatus() != AppointmentStatus.CANCELED) {
             appointment.getServices().clear();
             BigDecimal sum = jobItemService.addServicesInAppointment(appointment, dto.servicesIds());
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);
-        }
-        else throw new DomainException("Apenas atendimentos com cliente em espera ou em atendimento podem editar os serviços desejados");
+        } else throw new DomainException("Apenas atendimentos não cancelados podem ser editados.");
 
-        if (dto.discount() != null && dto.discount().compareTo(appointment.getTotalValue()) > 0) {
+        if (dto.discount() != null && dto.discount().compareTo(appointment.getRemainingValue()) > 0) {
             throw new DomainException("O desconto não pode ser maior do que o preço do atendimento");
         }
     }
