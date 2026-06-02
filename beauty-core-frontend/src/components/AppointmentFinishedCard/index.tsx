@@ -18,6 +18,7 @@ export default function AppointmentFinishedCard({ appointmentDTO }: Props) {
           Finalizado
         </div>
         <h4>Desconto: R$ {appointmentDTO.discount.toFixed(2)}</h4>
+        <h4>Restante a ser pago: R$ {appointmentDTO.remainingValue.toFixed(2)}</h4>
         <h4>Preço total: <span>R$ {appointmentDTO.totalValue.toFixed(2)}</span></h4>
         {
           appointmentDTO.isPaid === false
@@ -43,14 +44,10 @@ export default function AppointmentFinishedCard({ appointmentDTO }: Props) {
       {
         appointmentDTO.isPaid === false &&
         <div className='bcf-appointment-in-progress-card-actions'>
-          <h3>Este atendimento não foi pago, adicione um pagamento: </h3>
+          <h3>Este atendimento não foi pago por completo, adicione um pagamento: </h3>
 
           <Link to={`/appointments/pay/${appointmentDTO.id}`}>
             <h4 className='bcf-action-add-payment-appointment'>Adicionar pagamento agora</h4>
-          </Link>
-
-          <Link to={`/appointments/edit/${appointmentDTO.id}`}>
-            <h4 className='bcf-action-edit-appointment'>Editar atendimento</h4>
           </Link>
 
         </div>

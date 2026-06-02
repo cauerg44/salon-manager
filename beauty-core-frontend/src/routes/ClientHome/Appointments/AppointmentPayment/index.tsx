@@ -1,5 +1,5 @@
 import './styles.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import * as forms from '../../../../utils/forms.ts';
 import FormSelect from '../../../../components/FormSelect/index.tsx';
@@ -12,7 +12,7 @@ export default function AppointmentPayment() {
 
   const params = useParams();
 
-  const navigate = useNavigate();
+  const [isPaid, setIsPaid] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<any>({
     paymentMethod: {
@@ -40,9 +40,9 @@ export default function AppointmentPayment() {
 
   const paymentMethods = [
     { value: 'PIX', label: 'PIX' },
-    { value: 'CASH', label: 'CASH' },
-    { value: 'DEBIT', label: 'DEBIT' },
-    { value: 'CREDIT', label: 'CREDIT' }
+    { value: 'Dinheiro', label: 'CASH' },
+    { value: 'Débito', label: 'DEBIT' },
+    { value: 'Crédito', label: 'CREDIT' }
   ];
 
   function handleTurnDirty(name: string) {
@@ -67,16 +67,16 @@ export default function AppointmentPayment() {
     const requestBody = forms.toValues(formData);
 
     const requestBodyAdapted = {
-      paymentMethod: requestBody.paymentMethod.value,
+      paymentMethod: requestBody.paymentMethod.label,
       amount: requestBody.amount
     }
 
     paymentService.createPayment(Number(params.appointmentId), requestBodyAdapted)
-      .then(response => {
-        console.log("deu certo", response.data)
+      .then(() => {
+        setIsPaid(true);
       })
-      .catch(error => {
-        console.log("deu erro", error.response)
+      .catch(() => {
+        setIsPaid(false);
       })
   }
 
@@ -121,11 +121,11 @@ export default function AppointmentPayment() {
             </button>
 
           </form>
-
-          {
-
-          }
         </div>
+        {
+          isPaid &&
+          <h3 className='bcf-payment-message'>Pagamento feito com sucesso!</h3>
+        }
       </section>
     </>
   );

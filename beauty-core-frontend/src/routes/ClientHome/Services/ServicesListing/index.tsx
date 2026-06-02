@@ -38,7 +38,6 @@ export default function ServicesListing() {
 
   function handleEditClick(serviceId: number) {
     navigate(`/services/edit/${serviceId}`);
-    console.log("cliquei")
   }
 
   function handleDialogInfoClose() {

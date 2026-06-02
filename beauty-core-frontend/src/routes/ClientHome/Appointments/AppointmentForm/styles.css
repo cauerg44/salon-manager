@@ -19,3 +19,7 @@
     font-size: 20px;
   }
 }
+
+.bcf-discount-message-form {
+  color: var(--bfc--util-color-senary);
+}
