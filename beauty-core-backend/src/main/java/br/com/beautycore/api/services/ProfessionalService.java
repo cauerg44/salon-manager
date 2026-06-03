@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -32,6 +34,12 @@ public class ProfessionalService {
     public Page<ProfessionalResponseDTO> findAll(Pageable pageable, String name) {
         Page<Professional> result = repository.searchByName(name, pageable);
         return result.map(professional -> new ProfessionalResponseDTO(professional));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProfessionalResponseDTO> findAllByStatus(Boolean status) {
+        List<Professional> result = repository.findAllByIsActive(status);
+        return result.stream().map(professional -> new ProfessionalResponseDTO(professional)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

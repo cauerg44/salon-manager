@@ -28,8 +28,15 @@ public class ProfessionalController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/is-active")
+    public ResponseEntity<List<ProfessionalResponseDTO>> findAllByStatus(@RequestParam Boolean status) {
+        var result = service.findAllByStatus(status);
+        return ResponseEntity.ok(result);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProfessionalResponseDTO> findAll(@PathVariable Long id) {
+    public ResponseEntity<ProfessionalResponseDTO> findById(@PathVariable Long id) {
         var result = service.findById(id);
         return ResponseEntity.ok(result);
     }

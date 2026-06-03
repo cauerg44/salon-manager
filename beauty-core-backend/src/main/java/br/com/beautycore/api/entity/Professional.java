@@ -33,6 +33,7 @@ public class Professional implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(name = "is_active")
     private Boolean isActive;
     private Boolean isWorking;
 
