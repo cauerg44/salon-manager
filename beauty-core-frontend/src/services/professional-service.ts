@@ -50,6 +50,16 @@ export function findAllProfessionals(page: number, name: string, size = 12, sort
   return requestBackend(config);
 }
 
+export function findAllProfessionalsByStatus(active: boolean) {
+
+  const config: AxiosRequestConfig = {
+    url: `professionals/is-active?status=${active}`,
+    withCredentials: true
+  }
+
+  return requestBackend(config);
+}
+
 export function deactivateProfessional(professionalId: number) {
 
   const config: AxiosRequestConfig = {

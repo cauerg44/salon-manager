@@ -85,13 +85,13 @@ export default function AppointmentPayment() {
       <section id='professional-form-section' className='bcf-container-1200px'>
 
         <h2 className='bcf-form-title-section'>
-          Registrar pagamento
+          Registrar pagamento para atendimento de número: {Number(params.appointmentId)}
         </h2>
 
-        <div className='bcf-professional-form-modal-container'>
+        <div className='bcf-form-modal-container'>
           <h3>Dados do pagamento: </h3>
 
-          <form onSubmit={handleSubmit} className='bcf-professional-form'>
+          <form onSubmit={handleSubmit} className='bcf-form-modal'>
 
             <FormSelect
               {...formData.paymentMethod}

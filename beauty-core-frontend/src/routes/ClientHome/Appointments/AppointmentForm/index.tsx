@@ -101,9 +101,9 @@ export default function AppointmentForm() {
   }, []);
 
   useEffect(() => {
-    professionalService.findAllProfessionals(0, "", 100, "name")
+    professionalService.findAllProfessionalsByStatus(true)
       .then(response => {
-        setProfessionals(response.data.content);
+        setProfessionals(response.data);
       });
   }, []);
 
@@ -188,10 +188,10 @@ export default function AppointmentForm() {
           {isEditing ? "Editar atendimento:" : "Novo atendimento:"}
         </h2>
 
-        <div className='bcf-professional-form-modal-container'>
+        <div className='bcf-form-modal-container'>
           <h3>Dados do atendimento: </h3>
 
-          <form onSubmit={handleSubmit} className='bcf-professional-form'>
+          <form onSubmit={handleSubmit} className='bcf-form-modal'>
 
             <FormSelect
               {...formData.professionals}

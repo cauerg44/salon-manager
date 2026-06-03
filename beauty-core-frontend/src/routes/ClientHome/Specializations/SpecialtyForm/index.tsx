@@ -87,11 +87,11 @@ export default function SpecialtyForm() {
           {isEditing ? "Editar especialidade:" : "Nova especialidade:"}
         </h2>
 
-        <div className='bcf-professional-form-modal-container'>
+        <div className='bcf-form-modal-container'>
 
           <h3>{isEditing ? 'Editar' : 'Cadastrar'}</h3>
 
-          <form onSubmit={handleSubmit} className='bcf-professional-form'>
+          <form onSubmit={handleSubmit} className='bcf-form-modal'>
 
             <div className="bcf-form-control">
               <FormInput

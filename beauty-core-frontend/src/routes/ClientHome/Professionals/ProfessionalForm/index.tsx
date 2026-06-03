@@ -132,10 +132,10 @@ export default function ProfessionalForm() {
           {isEditing ? "Editar profissional:" : "Novo profissional:"}
         </h2>
 
-        <div className='bcf-professional-form-modal-container'>
+        <div className='bcf-form-modal-container'>
           <h3>Dados do profissional: </h3>
 
-          <form onSubmit={handleSubmit} className='bcf-professional-form'>
+          <form onSubmit={handleSubmit} className='bcf-form-modal'>
 
             <div className="bcf-form-control">
               <FormInput

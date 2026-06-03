@@ -56,7 +56,7 @@ main {
   margin: 0 auto;
 }
 
-/* Appointment card: */
+/* ---------- appointment card styles: ---------- */
 
 .bcf-appointment-card-container {
   transition: 0.2s;
@@ -67,7 +67,13 @@ main {
   cursor: pointer;
 }
 
-/* Dialog modal styles */
+/* ---------- appointment card styles: ---------- */
+
+/* ============================================ */
+/* ============================================ */
+/* ============================================ */
+
+/* ---------- dialog modal styles ---------- */
 
 .bcf-dialog-background {
   position: fixed;
@@ -106,8 +112,82 @@ main {
   margin: 0 5px;
 }
 
+/* ---------- dialog modal styles ---------- */
 
-/* color for erros: */
+/* ============================================ */
+/* ============================================ */
+/* ============================================ */
+
+/* ----------- clean code ----------- */
+
+.bcf-form-title-section {
+  font-size: 28px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
+}
+
+.bcf-form-modal-container {
+  padding: 20px 15px;
+  margin: 20px 0;
+  width: 300px;
+  border: 2px solid var(--bfc--border-color-tertiary);
+  border-radius: 5px;
+}
+
+.bcf-form-modal-container h3 {
+  font-size: 24px;
+  text-align: center;
+  color: var(--bcf--font-color-tertiary);
+}
+
+.bcf-form-modal {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bcf-form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.bcf-form-modal input {
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid var(--bfc--util-color-quaternary);
+  margin-bottom: 10px;
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-form-modal input::placeholder {
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-form-modal input:focus {
+  outline: none;
+}
+
+.bcf-form-modal button {
+  width: 100%;
+  background-color: var(--bcf--bg-color-primary);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: var(--bcf--font-color-primary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* clean code - errors */
+
+.bcf-form-modal input[data-dirty="true"][data-invalid="true"] {
+  border: 1px solid var(--bfc--util-color-7);
+  margin-bottom: 2px;
+}
+
+.bcf-form-modal input[data-dirty="true"][data-invalid="true"]~div {
+  display: unset;
+}
 
 .bcf-form-error {
   color: var(--bfc--util-color-7);
@@ -117,20 +197,12 @@ main {
   display: none;
 }
 
-.bcf-form-control[data-invalid="true"][data-dirty="true"] {
-  border: 1px solid var(--bfc--util-color-7);
-}
-
 .bcf-form-select[data-invalid="true"][data-dirty="true"] {
   width: 100%;
   border: 1px solid var(--bfc--util-color-7);
 }
 
 .bcf-form-select[data-invalid="true"][data-dirty="true"]+div {
-  display: unset;
-}
-
-.bcf-form-control[data-invalid="true"]~div {
   display: unset;
 }
 
@@ -153,53 +225,4 @@ main {
   font-weight: 500;
 }
 
-
-/* global form styles */
-
-.bcf-modal-form {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.bcf-form-control {
-  display: flex;
-  flex-direction: column;
-}
-
-.bcf-modal-form input {
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid var(--bfc--border-color-tertiary);
-  background-color: var(--bcf--bg-color-quaternary);
-  color: var(--bfc--util-color-quaternary);
-}
-
-.bcf-modal-form input::placeholder {
-  color: var(--bfc--util-color-quaternary);
-}
-
-.bcf-modal-form input:focus {
-  outline: none;
-}
-
-.bcf-modal-form input[data-dirty="true"][data-invalid="true"] {
-  border: 1px solid var(--bfc--util-color-7);
-  margin-bottom: 2px;
-}
-
-.bcf-modal-form input[data-dirty="true"][data-invalid="true"]+div {
-  display: unset;
-}
-
-.bcf-modal-form button {
-  height: 40px;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--bcf--font-color-quaternary);
-  color: var(--bcf--font-color-primary);
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-}
+/* ----------- clean code ----------- */

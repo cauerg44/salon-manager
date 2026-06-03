@@ -95,10 +95,10 @@ export default function ServiceForm() {
           {isEditing ? "Editar serviço:" : "Novo serviço:"}
         </h2>
 
-        <div className='bcf-professional-form-modal-container'>
+        <div className='bcf-form-modal-container'>
           <h3>Dados do serviço: </h3>
 
-          <form onSubmit={handleSubmit} className='bcf-professional-form'>
+          <form onSubmit={handleSubmit} className='bcf-form-modal'>
 
             <div className="bcf-form-control">
               <FormInput

@@ -22,3 +22,14 @@
   text-transform: uppercase;
   color: var(--bcf--bg-color-tertiary);
 }
+
+.bcf-modal-form-login-container button {
+  width: 100%;
+  background-color: var(--bcf--bg-color-primary);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: var(--bcf--font-color-primary);
+  font-weight: 500;
+  cursor: pointer;
+}

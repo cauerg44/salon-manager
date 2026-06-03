@@ -63,9 +63,10 @@ export default function Login() {
     <section id="login-section" className="bcf-container-1200px">
       <div className='bcf-modal-form-login-container'>
 
+
         <h2>Login</h2>
 
-        <form className='bcf-modal-form' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='bcf-form-modal'>
 
           <div className="bcf-form-control">
             <FormInput

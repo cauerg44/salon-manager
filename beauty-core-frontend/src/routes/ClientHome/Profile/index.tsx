@@ -35,13 +35,13 @@ export default function Profile() {
 
 
         <Link to={"/financial-reports/total-profit-in-live"}>
-          <h4>Vizualizar lucro total ao vivo</h4>
+          <h4>Vizualizar total apurado de hoje</h4>
         </Link>
 
         {
           professionalLogged?.roles.some(role => role.authority !== "ROLE_RECEPCIONIST") &&
           < Link to={"/financial-reports/professional-total-profit-in-live"}>
-            <h4>Ver meu lucro no dia</h4>
+            <h4>Ver meu total apurado de hoje</h4>
           </Link>
         }
 

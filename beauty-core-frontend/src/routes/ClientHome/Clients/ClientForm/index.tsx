@@ -111,10 +111,10 @@ export default function ClientForm() {
           {isEditing ? "Editar cliente:" : "Novo cliente:"}
         </h2>
 
-        <div className='bcf-professional-form-modal-container'>
+        <div className='bcf-form-modal-container'>
           <h3>Dados do cliente: </h3>
 
-          <form onSubmit={handleSubmit} className='bcf-professional-form'>
+          <form onSubmit={handleSubmit} className='bcf-form-modal'>
 
             <div className="bcf-form-control">
               <FormInput
