@@ -1,0 +1,13 @@
+#total-profit-filtered-section {
+  padding: 20px 0;
+}
+
+#total-profit-filtered-section h4 {
+  color: var(--bcf--font-color-tertiary);
+}
+
+#total-profit-filtered-section span {
+  color: var(--bcf--font-color-senary);
+  font-size: 20px;
+  margin-top: 15px;
+}

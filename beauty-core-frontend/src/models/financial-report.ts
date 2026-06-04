@@ -13,3 +13,8 @@ export type ProfessionalTotalProfitInLive = {
   credit: number;
   totalProfit: number;
 }
+
+export type TotalProfitFilteredRequest = {
+  start: string;
+  end: string;
+}
