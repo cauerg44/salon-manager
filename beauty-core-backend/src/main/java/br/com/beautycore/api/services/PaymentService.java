@@ -60,7 +60,7 @@ public class PaymentService {
 
         BigDecimal remaining = appointment.getRemainingValue().subtract(dto.amount());
 
-        // 1. If clients pays appointment total price:
+        // When clients pays appointment total price:
         if (dto.amount().compareTo(appointment.getRemainingValue()) == 0) {
             appointment.setIsPaid(true);
             appointment.setRemainingValue(BigDecimal.ZERO);
@@ -68,7 +68,7 @@ public class PaymentService {
             return;
         }
 
-        // 2. If client pays partial:
+        // When client pays partial:
         if (dto.amount().compareTo(appointment.getRemainingValue()) < 0) {
             appointment.setIsPaid(false);
             appointment.setRemainingValue(remaining);

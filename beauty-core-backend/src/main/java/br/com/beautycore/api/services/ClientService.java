@@ -7,7 +7,6 @@ import br.com.beautycore.api.entity.Client;
 import br.com.beautycore.api.repository.ClientRepository;
 import br.com.beautycore.api.services.exception.DatabaseException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -30,13 +29,13 @@ public class ClientService {
     @Transactional(readOnly = true)
     public Page<ClientResponseDTO> findAll(String name, Pageable pageable) {
         Page<Client> result = repository.searchByName(name, pageable);
-        return result.map(client -> new ClientResponseDTO(client));
+        return result.map(ClientResponseDTO::new);
     }
 
     @Transactional(readOnly = true)
     public List<ClientResponseDTO> findAllClientsNotInAppointment() {
         List<Client> result = repository.findAllClientsNotInAppointment();
-        return result.stream().map(client -> new ClientResponseDTO(client)).collect(Collectors.toList());
+        return result.stream().map(ClientResponseDTO::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -49,30 +48,29 @@ public class ClientService {
 
     @Transactional
     public ClientResponseDTO save(ClientCreateRequestDTO dto) {
-        Client entity = new Client();
+        Client newClient = repository.save(Client.builder()
+                .name(dto.name())
+                .phone(dto.phone())
+                .birthDate(dto.birthDate())
+                .credit(BigDecimal.ZERO)
+                .inAppointment(false)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build());
 
-        createDtoToEntity(entity, dto);
-
-        entity = repository.save(entity);
-
-        return new ClientResponseDTO(entity);
+        return new ClientResponseDTO(newClient);
     }
 
     @Transactional
     public ClientResponseDTO patch(Long id, ClientPatchRequestDTO dto) {
-        try {
-            Client entity = repository.getReferenceById(id);
+        Client entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
-            patchDtoToEntity(entity, dto);
+        patchDtoToEntity(entity, dto);
 
-            entity = repository.save(entity);
+        Client clientUpdated = repository.save(entity);
 
-            return new ClientResponseDTO(entity);
-
-        }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Cliente não encontrado");
-        }
+        return new ClientResponseDTO(clientUpdated);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -86,17 +84,6 @@ public class ClientService {
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
         }
-    }
-
-    private void createDtoToEntity(Client entity, ClientCreateRequestDTO dto) {
-        entity.setName(dto.name());
-        entity.setPhone(dto.phone());
-        entity.setBirthDate(dto.birthDate());
-        entity.setCredit(BigDecimal.ZERO);
-        entity.setInAppointment(false);
-
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
     }
 
     private void patchDtoToEntity(Client entity, ClientPatchRequestDTO dto) {

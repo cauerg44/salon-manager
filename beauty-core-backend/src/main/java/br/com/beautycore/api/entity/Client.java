@@ -14,6 +14,8 @@ import java.util.List;
 @Table(name = "clients")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Client {
@@ -30,7 +32,7 @@ public class Client {
 
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal credit;
-    private Boolean InAppointment;
+    private Boolean inAppointment;
 
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "client")
@@ -39,16 +41,6 @@ public class Client {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-
+    @Column(nullable = false, updatable = false)
     private LocalDateTime updatedAt;
-
-    public Client(Long id, String name, String phone, LocalDate birthDate, BigDecimal credit, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.credit = credit;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 }
