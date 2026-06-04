@@ -10,6 +10,7 @@ import java.util.Set;
 @Table(name = "specializations")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")

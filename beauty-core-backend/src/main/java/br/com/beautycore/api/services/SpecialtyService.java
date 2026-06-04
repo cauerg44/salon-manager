@@ -1,12 +1,12 @@
 package br.com.beautycore.api.services;
 
 import br.com.beautycore.api.dto.request.SpecialtyCreateRequestDTO;
+import br.com.beautycore.api.dto.request.SpecialtyPatchRequestDTO;
 import br.com.beautycore.api.dto.response.SpecialtyResponseDTO;
 import br.com.beautycore.api.entity.Professional;
 import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.repository.SpecialtyRepository;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +29,7 @@ public class SpecialtyService {
     public List<SpecialtyResponseDTO> findAll() {
         List<Specialty> list = repository.findAll();
         return list.stream()
-                .map(item -> new SpecialtyResponseDTO(item.getId(), item.getName()))
+                .map(specialtyEntity -> new SpecialtyResponseDTO(specialtyEntity.getId(), specialtyEntity.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -43,30 +43,26 @@ public class SpecialtyService {
 
     @Transactional
     public SpecialtyResponseDTO save(SpecialtyCreateRequestDTO dto) {
-        Specialty entity = new Specialty();
-        entity.setName(dto.name());
-        entity = repository.save(entity);
+        Specialty newSpecialty = repository.save(Specialty.builder()
+                .name(dto.name())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build());
 
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
-
-        return new SpecialtyResponseDTO(entity.getId(), entity.getName());
+        return new SpecialtyResponseDTO(newSpecialty.getId(), newSpecialty.getName());
     }
 
     @Transactional
-    public SpecialtyResponseDTO patch(Long id, SpecialtyCreateRequestDTO dto) {
-        try {
-            Specialty entity = repository.getReferenceById(id);
+    public SpecialtyResponseDTO patch(Long id, SpecialtyPatchRequestDTO dto) {
+        Specialty entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
 
-            entity.setName(dto.name());
-            entity = repository.save(entity);
-            entity.setUpdatedAt(LocalDateTime.now());
+        entity.setName(dto.name());
+        entity.setUpdatedAt(LocalDateTime.now());
 
-            return new SpecialtyResponseDTO(entity.getId(), entity.getName());
-        }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Especialidade não encontrada");
-        }
+        Specialty specialtyUpdated = repository.save(entity);
+
+        return new SpecialtyResponseDTO(specialtyUpdated.getId(), specialtyUpdated.getName());
     }
 
     @Transactional
