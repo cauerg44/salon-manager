@@ -6,7 +6,7 @@ import br.com.beautycore.api.entity.Professional;
 import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.repository.ProfessionalRepository;
 import br.com.beautycore.api.repository.SpecialtyRepository;
-import br.com.beautycore.api.services.exception.DomainException;
+import br.com.beautycore.api.services.exception.BusinessException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import br.com.beautycore.api.utils.CustomProfessionalUtil;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +73,7 @@ public class ProfessionalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
         if (!professional.getIsActive()) {
-            throw new DomainException("Profissional já está desativado");
+            throw new BusinessException("Profissional já está desativado");
         }
 
         professional.setIsActive(false);
@@ -91,7 +91,7 @@ public class ProfessionalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
         if (professional.getIsActive()) {
-            throw new DomainException("Profissional já está ativo");
+            throw new BusinessException("Profissional já está ativo");
         }
 
         professional.setIsActive(true);

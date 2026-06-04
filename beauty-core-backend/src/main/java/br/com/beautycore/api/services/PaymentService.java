@@ -7,7 +7,7 @@ import br.com.beautycore.api.entity.Payment;
 import br.com.beautycore.api.enums.AppointmentStatus;
 import br.com.beautycore.api.repository.AppointmentRepository;
 import br.com.beautycore.api.repository.PaymentRepository;
-import br.com.beautycore.api.services.exception.DomainException;
+import br.com.beautycore.api.services.exception.BusinessException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +27,11 @@ public class PaymentService {
     private AppointmentRepository appointmentRepository;
 
     @Transactional
-    public PaymentResponseDTO createPayment(Long appointmentId, PaymentCreateRequestDTO dto) {
+    public PaymentResponseDTO addPayment(Long appointmentId, PaymentCreateRequestDTO dto) {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
-        createPaymentValidationRules(appointment, dto);
+        paymentValidationRules(appointment, dto);
 
         Payment payment = new Payment();
 
@@ -41,20 +41,21 @@ public class PaymentService {
         payment.setPaidAt(LocalDateTime.now());
 
         appointment.getPayments().add(payment);
+
         appointmentRepository.save(appointment);
 
         Payment paymentCreated = repository.save(payment);
         return new PaymentResponseDTO(paymentCreated);
     }
 
-    private void createPaymentValidationRules(Appointment appointment, PaymentCreateRequestDTO dto) {
+    private void paymentValidationRules(Appointment appointment, PaymentCreateRequestDTO dto) {
 
         if (appointment.getAppointmentStatus() == AppointmentStatus.CANCELED) {
-            throw new DomainException("É possível somente associar pagamento com atendimentos não cancelados.");
+            throw new BusinessException("É possível somente associar pagamento com atendimentos não cancelados.");
         }
 
         if (appointment.getIsPaid()) {
-            throw new DomainException("Atendimento já pago");
+            throw new BusinessException("Atendimento já pago");
         }
 
         BigDecimal remaining = appointment.getRemainingValue().subtract(dto.amount());

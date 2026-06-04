@@ -2,8 +2,8 @@ package br.com.beautycore.api.controller.handler;
 
 import br.com.beautycore.api.dto.handler.CustomErrorDTO;
 import br.com.beautycore.api.dto.handler.ValidationErrorDTO;
+import br.com.beautycore.api.services.exception.BusinessException;
 import br.com.beautycore.api.services.exception.DatabaseException;
-import br.com.beautycore.api.services.exception.DomainException;
 import br.com.beautycore.api.services.exception.ForbiddenException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,8 +26,8 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    @ExceptionHandler(DomainException.class)
-    public ResponseEntity<CustomErrorDTO> domain(DomainException e, HttpServletRequest request) {
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<CustomErrorDTO> domain(BusinessException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);

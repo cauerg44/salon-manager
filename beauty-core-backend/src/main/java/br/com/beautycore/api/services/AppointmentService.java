@@ -11,7 +11,7 @@ import br.com.beautycore.api.enums.AppointmentStatus;
 import br.com.beautycore.api.repository.AppointmentRepository;
 import br.com.beautycore.api.repository.ClientRepository;
 import br.com.beautycore.api.repository.ProfessionalRepository;
-import br.com.beautycore.api.services.exception.DomainException;
+import br.com.beautycore.api.services.exception.BusinessException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -64,7 +64,7 @@ public class AppointmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
         if (client.getInAppointment()) {
-            throw new DomainException("Cliente se encontra em outro atendimento no momento.");
+            throw new BusinessException("Cliente se encontra em outro atendimento no momento.");
         }
 
         Appointment entity = AppointmentConverter.createDtoToEntityConverter(professional, client);
@@ -104,7 +104,7 @@ public class AppointmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
         if (appointment.getAppointmentStatus() != AppointmentStatus.IN_PROGRESS) {
-            throw new DomainException("Apenas atendimentos em andamento podem ser finalizados");
+            throw new BusinessException("Apenas atendimentos em andamento podem ser finalizados");
         }
 
         appointment.setAppointmentStatus(AppointmentStatus.FINISHED);
@@ -122,7 +122,7 @@ public class AppointmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
         if (appointment.getAppointmentStatus() != AppointmentStatus.WAITING) {
-            throw new DomainException("Apenas atendimentos com clientes em espera podem ser iniciados");
+            throw new BusinessException("Apenas atendimentos com clientes em espera podem ser iniciados");
         }
 
         if (!appointment.getProfessional().getIsWorking()) {
@@ -144,7 +144,7 @@ public class AppointmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
         if (appointment.getAppointmentStatus() != AppointmentStatus.WAITING) {
-            throw new DomainException("É possível cancelar somente os atendimentos em espera");
+            throw new BusinessException("É possível cancelar somente os atendimentos em espera");
         }
 
         appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
@@ -161,10 +161,10 @@ public class AppointmentService {
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);
-        } else throw new DomainException("Apenas atendimentos não cancelados podem ser editados.");
+        } else throw new BusinessException("Apenas atendimentos não cancelados podem ser editados.");
 
         if (dto.discount() != null && dto.discount().compareTo(appointment.getRemainingValue()) > 0) {
-            throw new DomainException("O desconto não pode ser maior do que o preço do atendimento");
+            throw new BusinessException("O desconto não pode ser maior do que o preço do atendimento");
         }
     }
 }

@@ -11,7 +11,7 @@ import br.com.beautycore.api.entity.Specialty;
 import br.com.beautycore.api.enums.RoleType;
 import br.com.beautycore.api.repository.ProfessionalRepository;
 import br.com.beautycore.api.repository.RoleRepository;
-import br.com.beautycore.api.services.exception.DomainException;
+import br.com.beautycore.api.services.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +43,7 @@ public class AuthService {
         Professional professional = professionalRepository.findByEmail(dto.email()).orElse(null);
 
         if (professional != null) {
-            throw new DomainException("Profissional já cadastrado com esse email");
+            throw new BusinessException("Profissional já cadastrado com esse email");
         }
 
         Role role = roleRepository.findByAuthority(RoleType.ROLE_PROFESSIONAL.name())
@@ -76,7 +76,7 @@ public class AuthService {
             return new TokenResponseDTO(token, expirationTime);
         }
         catch (BadCredentialsException e) {
-            throw new DomainException("Credenciais inválidas");
+            throw new BusinessException("Credenciais inválidas");
         }
         catch (Exception e) {
             throw(e);
