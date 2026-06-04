@@ -23,8 +23,6 @@ public class SpecialtyService {
 
     private final SpecialtyRepository repository;
 
-    private final ProfessionalService professionalService;
-
     @Transactional(readOnly = true)
     public List<SpecialtyResponseDTO> findAll() {
         List<Specialty> list = repository.findAll();

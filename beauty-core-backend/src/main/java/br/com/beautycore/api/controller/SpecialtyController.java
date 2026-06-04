@@ -22,8 +22,8 @@ import java.util.List;
 @RequestMapping(value = "v1/specializations")
 @RequiredArgsConstructor
 @Tag(
-    name = "Specializations",
-    description = "Endpoints for managing professional specializations, including creation, retrieval, updates, and removal."
+name = "Specializations",
+description = "Endpoints for managing professional specializations, including creation, retrieval, updates, and removal."
 )
 public class SpecialtyController {
 

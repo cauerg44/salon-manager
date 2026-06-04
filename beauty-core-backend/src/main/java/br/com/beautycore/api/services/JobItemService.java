@@ -9,7 +9,6 @@ import br.com.beautycore.api.entity.JobItem;
 import br.com.beautycore.api.repository.JobItemRepository;
 import br.com.beautycore.api.services.exception.DatabaseException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -32,47 +31,41 @@ public class JobItemService {
     public List<JobItemResponseDTO> findAll() {
         List<JobItem> list = repository.findAll();
         return list.stream()
-                .map(item -> new JobItemResponseDTO(item.getId(), item.getName(), item.getBasePrice()))
+                .map(service -> new JobItemResponseDTO(service.getId(), service.getName(), service.getBasePrice()))
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public JobItemResponseDTO findById(Long id) {
-        JobItem result = repository.findById(id)
+        JobItem service = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
 
-        return new JobItemResponseDTO(result.getId(), result.getName(), result.getBasePrice());
+        return new JobItemResponseDTO(service.getId(), service.getName(), service.getBasePrice());
     }
 
     @Transactional
     public JobItemResponseDTO save(JobItemCreateRequestDTO dto) {
-        JobItem entity = new JobItem();
-        entity.setName(dto.name());
-        entity.setBasePrice(dto.basePrice());
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
-
-        entity = repository.save(entity);
+        JobItem entity = repository.save(JobItem.builder()
+                .name(dto.name())
+                .basePrice(dto.basePrice())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build());
 
         return new JobItemResponseDTO(entity.getId(), entity.getName(), entity.getBasePrice());
     }
 
     @Transactional
     public JobItemResponseDTO patch(Long id, JobItemPatchRequestDTO dto) {
-        try {
-            JobItem entity = repository.getReferenceById(id);
+        JobItem entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado"));
 
-            patchDtoToEntity(entity, dto);
+        patchDtoToEntity(entity, dto);
+        entity.setUpdatedAt(LocalDateTime.now());
 
-            entity.setUpdatedAt(LocalDateTime.now());
-            entity = repository.save(entity);
+        JobItem serviceUpdated = repository.save(entity);
 
-            return new JobItemResponseDTO(entity.getId(), entity.getName(), entity.getBasePrice());
-
-        }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Serviço não encontrado");
-        }
+        return new JobItemResponseDTO(serviceUpdated.getId(), serviceUpdated.getName(), serviceUpdated.getBasePrice());
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -89,7 +82,6 @@ public class JobItemService {
     }
 
     protected BigDecimal addServicesInAppointment(Appointment entity, Set<Long> servicesIds) {
-
         BigDecimal sum = BigDecimal.ZERO;
 
         for (long serviceId : servicesIds) {

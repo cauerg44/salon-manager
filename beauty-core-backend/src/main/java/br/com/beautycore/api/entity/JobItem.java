@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "services")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
