@@ -40,9 +40,15 @@ export default function Profile() {
 
         {
           professionalLogged?.roles.some(role => role.authority !== "ROLE_RECEPCIONIST") &&
-          < Link to={"/financial-reports/professional-total-profit-in-live"}>
-            <h4>Ver meu total apurado de hoje</h4>
-          </Link>
+          <>
+            < Link to={"/financial-reports/professional-total-profit-in-live"}>
+              <h4>Ver meu total apurado de hoje</h4>
+            </Link>
+
+            < Link to={"/financial-reports/professional-total-profit-filtered"}>
+              <h4>Acessar meu lucro total por filtragem</h4>
+            </Link>
+          </>
         }
 
 
