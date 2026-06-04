@@ -34,18 +34,17 @@ public class AppointmentService {
 
     @Transactional(readOnly = true)
     public Page<AppointmentResponseDTO> findAllByStatus(Pageable pageable, String appointmentStatus) {
-
         String status = AppointmentStatus.valueOf(appointmentStatus).name();
 
         Page<Appointment> page = repository.findAllByStatusAndOrderByCreatedAtDesc(pageable, status);
-        return page.map(appointment -> new AppointmentResponseDTO(appointment));
+        return page.map(AppointmentResponseDTO::new);
     }
 
     @Transactional(readOnly = true)
     public Page<AppointmentResponseDTO> findAllAppointmentsNotPaid(Pageable pageable) {
 
         Page<Appointment> page = repository.findAllAppointmentsNotPaid(pageable);
-        return page.map(appointment -> new AppointmentResponseDTO(appointment));
+        return page.map(AppointmentResponseDTO::new);
     }
 
     @Transactional(readOnly = true)
@@ -85,7 +84,7 @@ public class AppointmentService {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
 
-        updateAppointmentValidationRules(appointment, dto);
+        appointmentUpdateValidationRules(appointment, dto);
 
         appointment.setDiscount(dto.discount());
         appointment.setTotalValue(appointment.getRemainingValue().subtract(dto.discount()));
@@ -153,15 +152,15 @@ public class AppointmentService {
         return new AppointmentResponseDTO(appointment);
     }
 
-    private void updateAppointmentValidationRules(Appointment appointment, AppointmentPatchRequestDTO dto) {
-
+    private void appointmentUpdateValidationRules(Appointment appointment, AppointmentPatchRequestDTO dto) {
         if (appointment.getAppointmentStatus() != AppointmentStatus.CANCELED) {
             appointment.getServices().clear();
             BigDecimal sum = jobItemService.addServicesInAppointment(appointment, dto.servicesIds());
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);
-        } else throw new BusinessException("Apenas atendimentos não cancelados podem ser editados.");
+        }
+        else throw new BusinessException("Apenas atendimentos não cancelados podem ser editados.");
 
         if (dto.discount() != null && dto.discount().compareTo(appointment.getRemainingValue()) > 0) {
             throw new BusinessException("O desconto não pode ser maior do que o preço do atendimento");
