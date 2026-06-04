@@ -9,7 +9,6 @@ import br.com.beautycore.api.repository.SpecialtyRepository;
 import br.com.beautycore.api.services.exception.DomainException;
 import br.com.beautycore.api.services.exception.ResourceNotFoundException;
 import br.com.beautycore.api.utils.CustomProfessionalUtil;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,13 +32,13 @@ public class ProfessionalService {
     @Transactional(readOnly = true)
     public Page<ProfessionalResponseDTO> findAll(Pageable pageable, String name) {
         Page<Professional> result = repository.searchByName(name, pageable);
-        return result.map(professional -> new ProfessionalResponseDTO(professional));
+        return result.map(ProfessionalResponseDTO::new);
     }
 
     @Transactional(readOnly = true)
-    public List<ProfessionalResponseDTO> findAllByStatus(Boolean status) {
-        List<Professional> result = repository.findAllByIsActive(status);
-        return result.stream().map(professional -> new ProfessionalResponseDTO(professional)).collect(Collectors.toList());
+    public List<ProfessionalResponseDTO> findAllByActivity(Boolean active) {
+        List<Professional> result = repository.findAllByIsActive(active);
+        return result.stream().map(ProfessionalResponseDTO::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -58,18 +57,14 @@ public class ProfessionalService {
 
     @Transactional
     public ProfessionalResponseDTO patch(Long id, ProfessionalPatchRequestDTO dto) {
-        try {
-            Professional entity = repository.getReferenceById(id);
+        Professional entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Profissional não encontrado"));
 
-            patchDtoToEntity(entity, dto);
+        patchDtoToEntity(entity, dto);
 
-            entity = repository.save(entity);
+        Professional professionalUpdated = repository.save(entity);
 
-            return new ProfessionalResponseDTO(entity);
-        }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Profissional não encontrado");
-        }
+        return new ProfessionalResponseDTO(professionalUpdated);
     }
 
     @Transactional

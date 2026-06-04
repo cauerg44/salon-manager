@@ -21,17 +21,20 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "v1/professionals")
 @RequiredArgsConstructor
-@Tag(name = "Professionals", description = "Controller for Professionals")
+@Tag(
+name = "Professionals",
+description = "Endpoints for managing professionals, including listing, searching, profile retrieval, status management, and profile updates."
+)
 public class ProfessionalController {
 
     private final ProfessionalService service;
 
     @Operation(
-            description = "Get all professionals by name",
-            summary = "List all professionals sorted by name",
+            summary = "List professionals",
+            description = "Returns a paginated list of professionals. Results can be filtered by name and sorted using pageable parameters.",
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200"),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401")
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized")
             }
     )
     @SecurityRequirement(name = "bearerAuth")
@@ -43,28 +46,28 @@ public class ProfessionalController {
     }
 
     @Operation(
-            description = "Endpoint for get professional by activity",
-            summary = "Return list of all professionals if is working or not",
+            summary = "Filter professionals by status",
+            description = "Returns all professionals filtered by their active status.",
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200"),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401")
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized")
             }
     )
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/is-active", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProfessionalResponseDTO>> findAllByActivity(@RequestParam Boolean active) {
-        var result = service.findAllByStatus(active);
+        var result = service.findAllByActivity(active);
         return ResponseEntity.ok(result);
     }
 
     @Operation(
-            description = "Endpoint for get professional by id",
-            summary = "Return professional by id",
+            summary = "Get professional by ID",
+            description = "Returns the details of a specific professional based on the provided identifier.",
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200"),
-                    @ApiResponse(description = "Not found", responseCode = "404"),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401")
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not found"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized")
             }
     )
     @SecurityRequirement(name = "bearerAuth")
@@ -76,12 +79,12 @@ public class ProfessionalController {
     }
 
     @Operation(
-            description = "Endpoint for get professional logged",
-            summary = "Return professional logged",
+            summary = "Get current professional profile",
+            description = "Returns the profile information of the authenticated professional.",
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200"),
-                    @ApiResponse(description = "Not found", responseCode = "404"),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401")
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not found"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized")
             }
     )
     @SecurityRequirement(name = "bearerAuth")
@@ -93,55 +96,55 @@ public class ProfessionalController {
     }
 
     @Operation(
-            description = "Endpoint for update professional",
-            summary = "Update a professional",
+            summary = "Update professional information",
+            description = "Updates one or more fields of an existing professional using partial update semantics.",
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200"),
-                    @ApiResponse(description = "Bad Request", responseCode = "400"),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401"),
-                    @ApiResponse(description = "Forbidden", responseCode = "403"),
-                    @ApiResponse(description = "Unprocessable Entity", responseCode = "422")
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not found"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+                    @ApiResponse(responseCode = "403", description = "Forbidden"),
+                    @ApiResponse(responseCode = "422", description = "Unprocessable entity")
             }
     )
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{id}")
+    @PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfessionalResponseDTO> patch(@PathVariable Long id, @Valid @RequestBody ProfessionalPatchRequestDTO dto) {
         var result = service.patch(id, dto);
         return ResponseEntity.ok(result);
     }
 
     @Operation(
-            description = "Endpoint for deactivate professional",
             summary = "Deactivate professional",
+            description = "Marks a professional as inactive",
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200"),
-                    @ApiResponse(description = "Bad Request", responseCode = "400"),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401"),
-                    @ApiResponse(description = "Forbidden", responseCode = "403")
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not found"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+                    @ApiResponse(responseCode = "403", description = "Forbidden")
             }
     )
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{id}/deactivate")
+    @PatchMapping(value = "/{id}/deactivate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfessionalResponseDTO> deactivate(@PathVariable Long id) {
         var result = service.deactivate(id);
         return ResponseEntity.ok(result);
     }
 
     @Operation(
-            description = "Endpoint for activate professional",
             summary = "Activate professional",
+            description = "Marks a professional as active",
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200"),
-                    @ApiResponse(description = "Bad Request", responseCode = "400"),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401"),
-                    @ApiResponse(description = "Forbidden", responseCode = "403")
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not found"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+                    @ApiResponse(responseCode = "403", description = "Forbidden")
             }
     )
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{id}/activate")
+    @PatchMapping(value = "/{id}/activate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfessionalResponseDTO> activate(@PathVariable Long id) {
         var result = service.activate(id);
         return ResponseEntity.ok(result);
