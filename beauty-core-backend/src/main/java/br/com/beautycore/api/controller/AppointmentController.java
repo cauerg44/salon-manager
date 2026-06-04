@@ -3,7 +3,6 @@ package br.com.beautycore.api.controller;
 import br.com.beautycore.api.dto.request.AppointmentCreateRequestDTO;
 import br.com.beautycore.api.dto.request.AppointmentPatchRequestDTO;
 import br.com.beautycore.api.dto.response.AppointmentResponseDTO;
-import br.com.beautycore.api.enums.AppointmentStatus;
 import br.com.beautycore.api.services.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -46,8 +46,11 @@ public class AuthService {
             throw new BusinessException("Profissional já cadastrado com esse email");
         }
 
-        Role role = roleRepository.findByAuthority(RoleType.ROLE_PROFESSIONAL.name())
-                .orElseGet(() -> roleRepository.save(Role.builder().authority(RoleType.ROLE_PROFESSIONAL.name()).build()));
+        Role role = roleRepository
+                .findByAuthority(RoleType.ROLE_PROFESSIONAL.name())
+                .orElseGet(() -> roleRepository.save(Role.builder()
+                        .authority(RoleType.ROLE_PROFESSIONAL.name())
+                        .build()));
 
         Set<Specialty> specializations = specialtyService.addSpecializations(dto.specializationsIds());
 
