@@ -1,4 +1,4 @@
--- 1. Desativa temporariamente as travas de chave estrangeira
+-- Desativa temporariamente as travas de chave estrangeira
 SET FOREIGN_KEY_CHECKS = 0;
 
 TRUNCATE TABLE payments;
@@ -12,7 +12,7 @@ TRUNCATE TABLE roles;
 TRUNCATE TABLE clients;
 TRUNCATE TABLE services;
 
--- 2. Reativa as travas de segurança
+-- Reativa as travas de segurança
 SET FOREIGN_KEY_CHECKS = 1;
 
 insert into specializations (name) VALUES ('Barbeiro');
@@ -23,7 +23,7 @@ insert into professionals (name, email, password) VALUES ('Iasmin Dantas', 'iasm
 insert into professionals (name, email, password) VALUES ('Júnior', 'junior@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
 insert into professionals (name, email, password) VALUES ('Alan', 'alan@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
 insert into professionals (name, email, password) VALUES ('Daniel', 'daniel@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
-insert into professionals (name, email, password) VALUES ('Thayla', 'thayla@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
+insert into professionals (name, email, password) VALUES ('Thalyta', 'thayla@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
 insert into professionals (name, email, password) VALUES ('David', 'david@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
 
 insert into professional_specialty (professional_id, specialty_id) VALUES (1, 3);

@@ -1,11 +1,13 @@
 package br.com.beautycore.api.repository;
 
 import br.com.beautycore.api.entity.Payment;
+import br.com.beautycore.api.projections.TotalProfitFiltered;
 import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.projections.TotalProfitProfessionalProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public interface FinancialReportRepository extends JpaRepository<Payment, Long> {
@@ -38,4 +40,12 @@ public interface FinancialReportRepository extends JpaRepository<Payment, Long> 
        and pay.paid_at < current_date() + interval 1 day;
     """)
     TotalProfitProfessionalProjection getProfessionalTotalProfit(Long professionalId);
+
+    @Query(nativeQuery = true, value = """
+        SELECT sum(pay.amount_paid) as total_calculated
+        FROM payments pay
+        WHERE pay.paid_at >= :start
+        AND pay.paid_at < :end + INTERVAL 1 DAY;
+    """)
+    TotalProfitFiltered getTotalProfitFiltered(LocalDate start, LocalDate end);
 }
