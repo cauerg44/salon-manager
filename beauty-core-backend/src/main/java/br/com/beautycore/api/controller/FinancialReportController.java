@@ -1,6 +1,5 @@
 package br.com.beautycore.api.controller;
 
-import br.com.beautycore.api.projections.TotalProfitFiltered;
 import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.projections.TotalProfitProfessionalProjection;
 import br.com.beautycore.api.services.FinancialReportService;
@@ -13,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("v1/financial-reports")
@@ -35,7 +36,7 @@ public class FinancialReportController {
     )
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/total-profit-in-live", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/profit", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TotalProfitInLiveProjection> getTotalProfitInLive() {
         var result = service.getTotalProfitInLive();
         return ResponseEntity.ok(result);
@@ -53,7 +54,7 @@ public class FinancialReportController {
     )
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSIONAL')")
-    @GetMapping(value = "/{professionalId}/professional-total-profit-in-live", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{professionalId}/profit", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TotalProfitProfessionalProjection> getProfessionalTotalProfitInLive(@PathVariable Long professionalId) {
         var result = service.getProfessionalTotalProfitInLive(professionalId);
         return ResponseEntity.ok(result);
@@ -70,8 +71,8 @@ public class FinancialReportController {
     )
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/total-profit-filtered", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TotalProfitFiltered> getTotalProfitFiltered(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
+    @GetMapping(value = "/summary", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BigDecimal> getTotalProfitFiltered(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
         var result = service.getTotalProfitFiltered(start, end);
         return ResponseEntity.ok(result);
     }
