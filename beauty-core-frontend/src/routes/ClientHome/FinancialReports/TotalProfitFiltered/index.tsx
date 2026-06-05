@@ -82,7 +82,7 @@ export default function TotalProfitFiltered() {
 
     financialReportsServices.getTotalProfitFiltered(requestBody)
       .then(response => {
-        setTotalProfitFiltered(response.data.totalCalculated);
+        setTotalProfitFiltered(response.data);
       })
       .catch(() => {
         console.log("Deu erro");

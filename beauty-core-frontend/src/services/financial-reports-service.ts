@@ -5,7 +5,7 @@ import type { TotalProfitFilteredRequest } from "../models/financial-report";
 export function getTotalProfitFiltered(request: TotalProfitFilteredRequest) {
 
   const config: AxiosRequestConfig = {
-    url: `/financial-reports/total-profit-filtered?start=${request.start}&end=${request.end}`,
+    url: `/financial-reports/summary?start=${request.start}&end=${request.end}`,
     withCredentials: true
   }
 
@@ -15,7 +15,7 @@ export function getTotalProfitFiltered(request: TotalProfitFilteredRequest) {
 export function getTotalProfitInLive() {
 
   const config: AxiosRequestConfig = {
-    url: "/financial-reports/total-profit-in-live",
+    url: "/financial-reports/profit",
     withCredentials: true
   }
 
@@ -25,7 +25,7 @@ export function getTotalProfitInLive() {
 export function getProfessionalTotalProfitInLive(professionalId: number) {
 
   const config: AxiosRequestConfig = {
-    url: `/financial-reports/${professionalId}/professional-total-profit-in-live`,
+    url: `/financial-reports/${professionalId}/profit`,
     withCredentials: true,
     params: {
       professionalId,

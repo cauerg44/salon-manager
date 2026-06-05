@@ -14,7 +14,7 @@ export default function FinancialReports() {
           <h2>Relatório financeiro:</h2>
           <h3>Vizualize o total apurado no dia:</h3>
 
-          <Link to={"/financial-reports/total-profit-in-live"}>
+          <Link to={"/financial-reports/summary"}>
             <h4>Ver total apurado hoje</h4>
           </Link>
 

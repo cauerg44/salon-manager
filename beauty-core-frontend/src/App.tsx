@@ -80,7 +80,7 @@ export default function App() {
             </Route>
 
             <Route path="financial-reports" element={<FinancialReports />}>
-              <Route path="total-profit-in-live" element={<TotalProfitInLive />} />
+              <Route path="summary" element={<TotalProfitInLive />} />
               <Route path="professional-total-profit-in-live" element={<ProfessionalTotalProfit />} />
               <Route path="professional-total-profit-filtered" element={<TotalProfitFiltered />} />
             </Route>
