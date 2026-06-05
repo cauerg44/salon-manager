@@ -25,16 +25,19 @@ public class Professional implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", length = 40, nullable = false)
     private String name;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password", length = 225, nullable = false)
     private String password;
 
-    @Column(name = "is_active")
+    @Column(name = "is_active", columnDefinition = "DEFAULT TRUE NOT NULL")
     private Boolean isActive;
+
+    @Column(name = "is_working", columnDefinition = "DEFAULT FALSE NOT NULL")
     private Boolean isWorking;
 
     @Setter(AccessLevel.NONE)
@@ -51,7 +54,10 @@ public class Professional implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "specialty_id"))
     private Set<Specialty> specializations = new HashSet<>();
 
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     public void addSpecialty(Specialty specialty) {

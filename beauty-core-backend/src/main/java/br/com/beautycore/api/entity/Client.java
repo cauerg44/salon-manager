@@ -24,23 +24,29 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
+
+    @Column(name = "phone", length = 11, nullable = false, unique = true)
     private String phone;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(nullable = false, precision = 5, scale = 2)
+    @Column(name = "credit", nullable = false, precision = 5, scale = 2)
     private BigDecimal credit;
+
+    @Column(name = "in_appointment", columnDefinition = "DEFAULT FALSE NOT NULL")
     private Boolean inAppointment;
 
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "client")
     private List<Appointment> appointments = new ArrayList<>();
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

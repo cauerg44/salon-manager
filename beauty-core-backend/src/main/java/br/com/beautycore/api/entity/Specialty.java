@@ -20,11 +20,15 @@ public class Specialty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "specializations")
     private Set<Professional> professionals;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

@@ -20,11 +20,15 @@ public class JobItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", length = 30, nullable = false)
     private String name;
 
-    @Column(nullable = false, precision = 5, scale = 2)
+    @Column(name = "base_price", nullable = false, precision = 5, scale = 2)
     private BigDecimal basePrice;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

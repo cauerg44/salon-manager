@@ -1,5 +1,6 @@
 package br.com.beautycore.api.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -18,6 +19,7 @@ public class AppointmentServiceEntity {
     @EmbeddedId
     private AppointmentServicePK id = new AppointmentServicePK();
 
+    @Column(name = "price_at_moment", precision = 5, scale = 2, nullable = false)
     private BigDecimal priceAtMoment;
 
     public AppointmentServiceEntity(Appointment appointment, JobItem service, BigDecimal priceAtMoment) {

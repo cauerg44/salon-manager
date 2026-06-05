@@ -1,5 +1,6 @@
 package br.com.beautycore.api.entity;
 
+import ch.qos.logback.core.model.NamedModel;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jspecify.annotations.Nullable;
@@ -18,6 +19,8 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "authority", length = 30, nullable = false)
     private String authority;
 
     @Override

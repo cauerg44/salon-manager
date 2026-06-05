@@ -22,15 +22,17 @@ public class Payment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "appointment_id")
+    @JoinColumn(name = "appointment_id", nullable = false)
     private Appointment appointment;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", nullable = false)
     private PaymentMethod paymentMethod;
 
-    @Column(nullable = false, precision = 5, scale = 2)
+    @Column(name = "amount_paid", nullable = false, precision = 5, scale = 2)
     private BigDecimal amountPaid;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Column(name = "paid_at", columnDefinition = "DEFAULT CURRENT TIMESTAMP")
     private LocalDateTime paidAt;
 }
