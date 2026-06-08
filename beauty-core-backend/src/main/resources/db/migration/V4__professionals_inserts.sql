@@ -1,0 +1,3 @@
+insert into professionals (name, email, password) VALUES ('Júnior', 'junior@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
+insert into professionals (name, email, password) VALUES ('Alan', 'alan@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');
+insert into professionals (name, email, password) VALUES ('Daniel', 'daniel@beauty.com', '$2a$10$k8fKUlWIUnrB0GEUgTYuzu3QXcyH9dTRZKDIbzbfj0iUKquuKTupi');

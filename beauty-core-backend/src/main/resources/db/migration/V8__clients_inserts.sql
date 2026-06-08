@@ -1,0 +1,2 @@
+insert into clients (name, phone, birth_date, credit) values ('Cauê', '1140028922', '2004-11-08', 00.00);
+insert into clients (name, phone, birth_date, credit) values ('Herivelto', '1140028923', '1976-10-27', 00.00);
