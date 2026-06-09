@@ -53,8 +53,8 @@ export function findAllProfessionals(page: number, name: string, size = 12, sort
 export function findAllProfessionalsByStatus(active: boolean) {
 
   const config: AxiosRequestConfig = {
-    url: `professionals/is-active?status=${active}`,
-    withCredentials: true
+    url: `professionals/is-active?active=${active}`,
+    withCredentials: false
   }
 
   return requestBackend(config);

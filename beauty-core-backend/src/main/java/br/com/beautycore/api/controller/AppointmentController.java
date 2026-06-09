@@ -90,8 +90,6 @@ public class AppointmentController {
                     @ApiResponse(responseCode = "422", description = "Unprocessable entity")
             }
     )
-    @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("isAuthenticated()")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AppointmentResponseDTO> create(@Valid @RequestBody AppointmentCreateRequestDTO dto) {
         var result = service.save(dto);

@@ -53,8 +53,6 @@ public class ProfessionalController {
                     @ApiResponse(responseCode = "401", description = "Unauthorized")
             }
     )
-    @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/is-active", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProfessionalResponseDTO>> findAllByActivity(@RequestParam Boolean active) {
         var result = service.findAllByActivity(active);
