@@ -1,5 +1,7 @@
 # Sistema de gestão para salão de beleza
 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/cauerg44/beauty-ledger-platform/blob/feat/docker/LICENSE) 
+
 # Sobre o projeto
 
 Este projeto é uma aplicação full stack desenvolvida com o objetivo de otimizar a gestão de salões de beleza, centralizando processos essenciais do negócio em uma única plataforma. O sistema oferece funcionalidades como gerenciamento de atendimentos, controle financeiro, cadastro de clientes, serviços, profissionais e agendamentos, proporcionando mais organização, produtividade e eficiência operacional.
