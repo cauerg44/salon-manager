@@ -1,0 +1,25 @@
+#professionals-listing-section {
+  padding: 20px 0;
+}
+
+.bcf-professionals-cards-modal {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+}
+
+.bcf-search-bar-message {
+  font-size: 28px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
+}
+
+@media(max-width: 576px) {
+  .bcf-search-bar-message {
+    font-size: 20px;
+  }
+}
+
+.bcf-payment-message {
+  color: var(--bcf--font-color-senary);
+}

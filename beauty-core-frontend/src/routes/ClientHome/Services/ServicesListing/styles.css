@@ -1,0 +1,66 @@
+#services-listing-section {
+  padding: 20px 0;
+}
+
+.bcf-services-cards-modal {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* service card styles */
+.bcf-services-card-modal-container {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.bcf-listing-services-title {
+  font-size: 28px;
+  color: var(--bcf--font-color-tertiary);
+}
+
+.bcf-services-cards-modal {
+  margin-top: 20px;
+}
+
+.bcf-services-card-container {
+  padding: 5px 10px;
+  background-color: var(--bcf--bg-color-primary);
+  border: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.bcf-services-card-modal-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+.bcf-services-card-container h3 {
+  color: var(--bcf--font-color-primary);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.bcf-services-card-container h4 {
+  font-size: 14px;
+  color: var(--bcf--font-color-primary);
+}
+
+.bcf-services-card-actions {
+  border: 2px solid var(--bfc--border-color-primary);
+  border-radius: 0 0 8px 8px;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bcf-services-card-action-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bcf-services-card-action-item h5 {
+  margin-left: 5px;
+}

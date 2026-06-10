@@ -1,0 +1,62 @@
+.bcf-appointment-not-paid-card-infos {
+  padding: 10px;
+  background-color: var(--bcf--bg-color-primary);
+  color: var(--bcf--font-color-primary);
+  border-radius: 8px 8px 0 0;
+}
+
+.bcf-appointment-not-paid-card-infos h3 {
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.bcf-appointment-not-paid-card-infos h4 {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.bcf-appointment-not-paid-card-infos span {
+  font-weight: 700;
+  color: var(--bcf--font-color-senary);
+}
+
+.bcf-appointment-canceled-card-services {
+  border-top: 0;
+  border: 2px solid var(--bfc--border-color-primary);
+  border-radius: 0 0 8px 8px;
+  background-color: var(--bcf--bg-color-quaternary);
+  padding: 10px 10px 0 10px;
+}
+
+.bcf-appointment-card-service-item {
+  background-color: var(--bcf--bg-color-senary);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.bcf-appointment-card-service-item h4 {
+  font-weight: 500;
+}
+
+.bcf-appointment-card-service-item span {
+  font-weight: 700;
+  color: var(--bcf--font-color-senary);
+}
+
+.bcf-appointment-not-paid-card-status {
+  margin: 10px 0;
+  border-radius: 10px;
+  background-color: var(--bcf--bg-color-quintanary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 100%;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}

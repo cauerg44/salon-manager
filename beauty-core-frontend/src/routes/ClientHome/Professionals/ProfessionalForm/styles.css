@@ -1,0 +1,13 @@
+#professional-form-section {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media(max-width: 576px) {
+  .bcf-form-title-section {
+    font-size: 20px;
+  }
+}

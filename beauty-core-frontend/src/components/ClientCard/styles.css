@@ -1,0 +1,52 @@
+.bcf-card-client-container {
+  transition: 0.2s;
+}
+
+.bcf-card-client-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.bcf-card-client {
+  border: none;
+  border-radius: 5px 5px 0 0;
+  background-color: var(--bcf--bg-color-primary);
+  padding: 10px;
+}
+
+.bcf-card-client h2 {
+  text-align: center;
+  color: var(--bcf--font-color-primary);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.bcf-card-client h3 {
+  color: var(--bcf--font-color-primary);
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.bcf-card-client-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 2px solid var(--bfc--border-color-primary);
+  border-radius: 0 0 5px 5px;
+  padding: 10px 20px;
+}
+
+.bcf-card-client-actions-item {
+  display: flex;
+}
+
+.bcf-card-client-actions-item img {
+  margin-right: 10px;
+}
+
+.bcf-card-client-actions-item h4 {
+  color: var(--bcf--font-color-quaternary);
+}

@@ -1,0 +1,32 @@
+.bcf-profile-modal {
+  margin-top: 30px;
+}
+
+.bcf-profile-modal h2 {
+  font-size: 30px;
+  color: var(--bcf--font-color-secondary);
+  margin-bottom: 10px;
+}
+
+.bcf-profile-modal h3 {
+  font-size: 20px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 25px;
+}
+
+.bcf-profile-modal h4 {
+  font-size: 17px;
+  color: var(--bcf--font-color-quaternary);
+  margin-bottom: 25px;
+}
+
+.bcf-profile-modal button {
+  font-size: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--bcf--bg-color-quintanary);
+  color: var(--bcf--font-color-primary);
+  font-weight: 500;
+  cursor: pointer;
+}

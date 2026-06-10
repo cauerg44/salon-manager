@@ -1,0 +1,26 @@
+.bcf-specialty-card {
+  border: 2px solid var(--bcf--bg-color-primary);
+  color: var(--bcf--font-color-quaternary);
+  border-radius: 8px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.bcf-specialty-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+.bcf-specialty-card-icons {
+  display: flex;
+  align-items: center;
+}
+
+.bcf-specialty-card-icons img {
+  margin-left: 15px;
+}

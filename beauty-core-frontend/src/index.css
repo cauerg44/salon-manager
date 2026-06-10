@@ -1,111 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --bcf--bg-color-primary: #1B4D3E;
+  --bcf--bg-color-secondary: #A64D64;
+  --bcf--bg-color-tertiary: #263238;
+  --bcf--bg-color-quaternary: #e0e0e0;
+  --bcf--bg-color-quintanary: #e95353;
+  --bcf--bg-color-senary: #c6c6c6;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --bcf--font-color-primary: #fff;
+  --bcf--font-color-secondary: #263238;
+  --bcf--font-color-tertiary: #888888;
+  --bcf--font-color-quaternary: #1B4D3E;
+  --bcf--font-color-quintanary: #3c3c3c;
+  --bcf--font-color-senary: #0CAF1D;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bfc--border-color-primary: #1B4D3E;
+  --bfc--border-color-secondary: #155a45;
+  --bfc--border-color-tertiary: #c6c6c6;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --bfc--util-color-primary: #426aa6;
+  --bfc--util-color-secondary: #4b44c9;
+  --bfc--util-color-tertiary: #249e51;
+  --bfc--util-color-quaternary: #c6c6c6;
+  --bcf--util-color-quintanary: #888888;
+  --bfc--util-color-senary: #3e6db8;
+  --bfc--util-color-7: #e95353;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
+a,
+a:hover {
+  text-decoration: none;
+  color: unset;
+}
+
+html,
+body {
+  background-color: var(--bcf--bg-color-quaternary);
+}
+
+main {
+  padding: 0 20px;
+}
+
+.bcf-container-1200px {
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+}
+
+/* ---------- appointment card styles: ---------- */
+
+.bcf-appointment-card-container {
+  transition: 0.2s;
+}
+
+.bcf-appointment-card-container:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
+/* ---------- appointment card styles: ---------- */
+
+/* ============================================ */
+/* ============================================ */
+/* ============================================ */
+
+/* ---------- dialog modal styles ---------- */
+
+.bcf-dialog-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bcf-dialog-box {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bcf--bg-color-quaternary);
+  border-radius: 5px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-body {
-  margin: 0;
+.bcf-dialog-box h2 {
+  font-size: 20px;
+  color: var(--bcf--font-color-quintanary);
+  margin-bottom: 20px;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+.bcf-dialog-btn-container {
+  display: flex;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+.bcf-dialog-btn-container button {
+  margin: 0 5px;
 }
-h2 {
+
+/* ---------- dialog modal styles ---------- */
+
+/* ============================================ */
+/* ============================================ */
+/* ============================================ */
+
+/* ----------- clean code ----------- */
+
+.bcf-form-title-section {
+  font-size: 28px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
+}
+
+.bcf-form-modal-container {
+  padding: 20px 15px;
+  margin: 20px 0;
+  width: 300px;
+  border: 2px solid var(--bfc--border-color-tertiary);
+  border-radius: 5px;
+}
+
+.bcf-form-modal-container h3 {
   font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+  text-align: center;
+  color: var(--bcf--font-color-tertiary);
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.bcf-form-modal {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.bcf-form-control {
+  display: flex;
+  flex-direction: column;
 }
+
+.bcf-form-modal input {
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid var(--bfc--util-color-quaternary);
+  margin-bottom: 10px;
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-form-modal input::placeholder {
+  color: var(--bfc--util-color-quaternary);
+}
+
+.bcf-form-modal input:focus {
+  outline: none;
+}
+
+.bcf-form-modal button {
+  width: 100%;
+  background-color: var(--bcf--bg-color-primary);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: var(--bcf--font-color-primary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* clean code - errors */
+
+.bcf-form-modal input[data-dirty="true"][data-invalid="true"] {
+  border: 1px solid var(--bfc--util-color-7);
+  margin-bottom: 2px;
+}
+
+.bcf-form-modal input[data-dirty="true"][data-invalid="true"]~div {
+  display: unset;
+}
+
+.bcf-form-error {
+  color: var(--bfc--util-color-7);
+  font-size: 12px;
+  padding-left: 4px;
+  margin-bottom: 15px;
+  display: none;
+}
+
+.bcf-form-select[data-invalid="true"][data-dirty="true"] {
+  width: 100%;
+  border: 1px solid var(--bfc--util-color-7);
+}
+
+.bcf-form-select[data-invalid="true"][data-dirty="true"]+div {
+  display: unset;
+}
+
+.bcf-form-select-container {
+  padding: unset;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.bcf-form-global-error {
+  border: 2px solid var(--bfc--util-color-7);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: var(--bfc--util-color-7);
+  border-radius: 5px;
+  margin: 15px 0;
+  font-weight: 500;
+}
+
+/* ----------- clean code ----------- */

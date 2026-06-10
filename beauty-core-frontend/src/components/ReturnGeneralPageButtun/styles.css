@@ -1,0 +1,13 @@
+.bcf-option-back-general {
+  border: 2px solid var(--bcf--font-color-quaternary);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  padding: 5px;
+  font-size: 14px;
+  color: var(--bcf--font-color-quaternary);
+  font-weight: 700;
+  margin-bottom: 20px;
+}

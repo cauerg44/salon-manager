@@ -1,0 +1,175 @@
+#professionals-listing-section {
+  padding: 20px 0;
+}
+
+.bcf-professionals-cards-modal {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+}
+
+.bcf-search-bar-message {
+  font-size: 28px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 15px;
+}
+
+.bcf-professionals-count-info {
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 20px;
+}
+
+@media(max-width: 576px) {
+  .bcf-search-bar-message {
+    font-size: 20px;
+  }
+}
+
+/* professional card styles */
+
+.bfc-professional-card-modal-container {
+  transition: 0.2s;
+}
+
+.bfc-professional-card-modal-container:hover {
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.bfc-professional-card-modal-infos {
+  border-radius: 8px 8px 0 0;
+  background-color: var(--bcf--bg-color-primary);
+  padding: 10px;
+}
+
+.bfc-professional-card-modal-infos h3 {
+  font-size: 25px;
+  color: var(--bcf--font-color-primary);
+}
+
+.bfc-professional-card-modal-info-status-working {
+  background-color: rgb(182, 129, 13);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 700;
+  width: 50%;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.bfc-professional-card-modal-info-status-available {
+  background-color: var(--bfc--util-color-tertiary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 700;
+  width: 50%;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.bfc-professional-card-modal-info-status-active {
+  background-color: var(--bfc--util-color-tertiary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 700;
+  width: 50%;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.bfc-professional-card-modal-info-status-desactivated {
+  background-color: orangered;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 700;
+  width: 50%;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.bfc-professional-card-modal-specializations {
+  display: grid;
+  grid-gap: 5px;
+  border: 2px solid var(--bfc--border-color-primary);
+  padding: 10px;
+}
+
+.bfc-professional-card-modal-specializations h4 {
+  color: var(--bcf--font-color-tertiary);
+}
+
+.bfc-professional-card-modal-specialization-item {
+  background-color: var(--bfc--util-color-senary);
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.bfc-professional-card-modal-actions {
+  border: 2px solid var(--bfc--border-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: var(--bcf--bg-color-primary);
+}
+
+.bfc-professional-card-action-option-activate {
+  font-weight: 500;
+  color: white;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(63, 127, 63);
+  width: 100%;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.bfc-professional-card-action-option-deactivate {
+  font-weight: 500;
+  color: white;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(189, 131, 15);
+  width: 100%;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.bfc-professional-card-modal-action-edit {
+  border: 2px solid var(--bfc--border-color-primary);
+  border-radius: 0 0 8px 8px;
+  padding: 10px;
+}
+
+.bfc-professional-card-edit-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bcf--font-color-quintanary);
+  font-weight: 500;
+}
+
+.bfc-professional-card-edit-item img {
+  margin-right: 5px;
+}

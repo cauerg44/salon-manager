@@ -1,0 +1,20 @@
+package br.com.beautycore.api.dto.request;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+import java.util.Set;
+
+public record AppointmentCreateRequestDTO(
+
+        @NotNull(message = "É nescessário selecionar o profissional para o atendimento")
+        Long professionalId,
+
+        @NotNull(message = "É nescessário selecionar o barbeiro para o atendimento")
+        Long clientId,
+
+        @NotEmpty(message = "O atendimento deve ter pelo menos 1 serviço")
+        Set<@NotNull(message = "ID da serviço não pode ser nulo") @Positive(message = "ID do serviço deve ser positivo") Long> servicesIds
+) {
+}

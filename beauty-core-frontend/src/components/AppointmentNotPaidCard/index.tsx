@@ -1,0 +1,47 @@
+import { Link } from 'react-router-dom';
+import type { AppointmentDTO } from '../../models/appointment';
+import './styles.css';
+
+type Props = {
+  appointmentDTO: AppointmentDTO;
+}
+
+export default function AppointmentNotPaidCard({ appointmentDTO }: Props) {
+  return (
+    <div className='bcf-appointment-card-container'>
+
+      <div className='bcf-appointment-canceled-card-infos'>
+        <h3>Profissional: {appointmentDTO.professional.name}</h3>
+        <h3>Cliente: {appointmentDTO.client.name}</h3>
+        <div className='bcf-appointment-canceled-card-status'>
+          Não pago
+        </div>
+        <h4>Preço total: <span>R$ {appointmentDTO.totalValue.toFixed(2)}</span></h4>
+
+      </div>
+
+      <div className='bcf-appointment-in-waiting-card-services'>
+        {
+          appointmentDTO.services.map(
+            service =>
+              <div key={service.id} className='bcf-appointment-card-service-item'>
+                <h4>{service.name}</h4>
+                <span>R$ {service.basePrice.toFixed(2)}</span>
+              </div>
+          )
+        }
+
+      </div>
+
+      <div className='bcf-appointment-in-progress-card-actions'>
+        <h3>Este atendimento não foi pago por completo, adicione um pagamento: </h3>
+
+        <Link to={`/appointments/pay/${appointmentDTO.id}`}>
+          <h4 className='bcf-action-add-payment-appointment'>Adicionar pagamento agora</h4>
+        </Link>
+
+      </div>
+
+    </div>
+  );
+}

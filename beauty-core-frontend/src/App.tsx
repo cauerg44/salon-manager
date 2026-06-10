@@ -1,122 +1,93 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Navigate, Route, Routes } from "react-router-dom";
+import ClientHome from "./routes/ClientHome";
+import Home from "./routes/ClientHome/Home";
+import General from "./routes/ClientHome/General";
+import Specializations from "./routes/ClientHome/Specializations";
+import SpecializationsListing from "./routes/ClientHome/Specializations/SpecializationsListing";
+import Login from "./routes/ClientHome/Login";
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { history } from './utils/history';
+import ClientsListing from "./routes/ClientHome/Clients/ClientsListing";
+import Clients from "./routes/ClientHome/Clients";
+import Services from "./routes/ClientHome/Services";
+import ServicesListing from "./routes/ClientHome/Services/ServicesListing";
+import FinancialReports from "./routes/ClientHome/FinancialReports";
+import TotalProfitInLive from "./routes/ClientHome/FinancialReports/TotalProfitInLive";
+import Appointments from "./routes/ClientHome/Appointments";
+import AppointmentsInWaiting from "./routes/ClientHome/Appointments/AppointmentsInWaiting";
+import AppointmentsInProgress from "./routes/ClientHome/Appointments/AppointmentsInProgress";
+import AppointmentsFinished from "./routes/ClientHome/Appointments/AppointmentsFinished";
+import AppointmentsCanceled from "./routes/ClientHome/Appointments/AppointmentsCanceled";
+import AppointmentsNotPaid from "./routes/ClientHome/Appointments/AppointmentsNotPaid";
+import Professionals from "./routes/ClientHome/Professionals";
+import ProfessionalsListing from "./routes/ClientHome/Professionals/ProfessionalsListing";
+import ProfessionalTotalProfit from "./routes/ClientHome/FinancialReports/ProfessionalTotalProfit";
+import Profile from "./routes/ClientHome/Profile";
+import ProfessionalForm from "./routes/ClientHome/Professionals/ProfessionalForm";
+import SpecialtyForm from "./routes/ClientHome/Specializations/SpecialtyForm";
+import ClientForm from "./routes/ClientHome/Clients/ClientForm";
+import ServiceForm from "./routes/ClientHome/Services/ServiceForm";
+import AppointmentForm from "./routes/ClientHome/Appointments/AppointmentForm";
+import AppointmentPayment from "./routes/ClientHome/Appointments/AppointmentPayment";
+import TotalProfitFiltered from "./routes/ClientHome/FinancialReports/TotalProfitFiltered";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <HistoryRouter history={history}>
+        <Routes>
+          <Route path="/" element={<ClientHome />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="login" element={<Login />} />
+            <Route path="general" element={<General />} />
 
-      <div className="ticks"></div>
+            <Route path="appointments" element={<Appointments />}>
+              <Route path="in-waiting" element={<AppointmentsInWaiting />} />
+              <Route path="in-progress" element={<AppointmentsInProgress />} />
+              <Route path="finished" element={<AppointmentsFinished />} />
+              <Route path="canceled" element={<AppointmentsCanceled />} />
+              <Route path="not-paid" element={<AppointmentsNotPaid />} />
+              <Route path="create" element={<AppointmentForm />} />
+              <Route path="edit/:appointmentId" element={<AppointmentForm />} />
+              <Route path="pay/:appointmentId" element={<AppointmentPayment />} />
+            </Route>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <Route path="professionals" element={<Professionals />}>
+              <Route path="listing" element={<ProfessionalsListing />} />
+              <Route path="create" element={<ProfessionalForm />} />
+              <Route path="edit/:professionalId" element={<ProfessionalForm />} />
+            </Route>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+            <Route path="services" element={<Services />}>
+              <Route path="listing" element={<ServicesListing />} />
+              <Route path="create" element={<ServiceForm />} />
+              <Route path="edit/:serviceId" element={<ServiceForm />} />
+            </Route>
+
+            <Route path="specializations" element={<Specializations />}>
+              <Route path="listing" element={<SpecializationsListing />} />
+              <Route path="create" element={<SpecialtyForm />} />
+              <Route path="edit/:specialtyId" element={<SpecialtyForm />} />
+            </Route>
+
+            <Route path="clients" element={<Clients />}>
+              <Route path="listing" element={<ClientsListing />} />
+              <Route path="create" element={<ClientForm />} />
+              <Route path="edit/:clientId" element={<ClientForm />} />
+            </Route>
+
+            <Route path="financial-reports" element={<FinancialReports />}>
+              <Route path="summary" element={<TotalProfitInLive />} />
+              <Route path="professional-total-profit-in-live" element={<ProfessionalTotalProfit />} />
+              <Route path="professional-total-profit-filtered" element={<TotalProfitFiltered />} />
+            </Route>
+          </Route>
+          <Route path="*" element={<Navigate to={"/"} />} />
+        </Routes>
+      </HistoryRouter>
     </>
   )
 }
-
-export default App

@@ -1,0 +1,44 @@
+#appointments-section {
+  padding: 20px 0;
+}
+
+.bcf-appointments-modal h2 {
+  font-size: 30px;
+  color: var(--bcf--font-color-secondary);
+  margin-bottom: 10px;
+}
+
+.bcf-appointments-modal h3 {
+  font-size: 20px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 10px;
+}
+
+.bcf-appointments-modal button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.bcf-appointments-modal h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: var(--bcf--font-color-quaternary);
+  transition: 0.2s;
+}
+
+.bcf-appointments-modal h4:hover {
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.bcf-appointment-status-title-section {
+  font-size: 30px;
+  color: var(--bcf--font-color-tertiary);
+  margin-bottom: 30px;
+}
+
+.bcf-appointments-cards-container {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}

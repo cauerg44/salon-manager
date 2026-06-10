@@ -1,0 +1,11 @@
+.bcf-btn-secondary {
+  border: none;
+  border-radius: 8px;
+  width: 140px;
+  height: 40px;
+  background-color: var(--bcf--bg-color-primary);
+  color: var(--bcf--font-color-primary);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+}
