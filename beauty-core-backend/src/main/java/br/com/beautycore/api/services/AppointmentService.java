@@ -108,6 +108,7 @@ public class AppointmentService {
 
         appointment.setAppointmentStatus(AppointmentStatus.FINISHED);
         appointment.getClient().setInAppointment(false);
+        appointment.getProfessional().setIsWorking(false);
         appointment.setUpdatedAt(LocalDateTime.now());
 
         Appointment appointmentFinished = repository.save(appointment);
