@@ -61,7 +61,7 @@ A aplicação pode ser executada em ambiente isolado utilizando **Docker**, gara
 
 ### Ferramentas de Desenvolvimento
 
-Durante o desenvolvimento foram utilizados os ambientes **IntelliJ IDEA** e **Visual Studio Code**.
+Durante o desenvolvimento foram utilizados **IntelliJ IDEA** e **Visual Studio Code**.
 
 <div align="left">
   <img src="https://skillicons.dev/icons?i=idea,vscode"/>
