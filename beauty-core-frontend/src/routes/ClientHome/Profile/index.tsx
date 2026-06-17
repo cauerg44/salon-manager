@@ -35,7 +35,7 @@ export default function Profile() {
 
 
         <Link to={"/financial-reports/total-profit-in-live"}>
-          <h4>Vizualizar total apurado de hoje</h4>
+          <h4>Vizualizar total apurado de hoje no salão</h4>
         </Link>
 
         {

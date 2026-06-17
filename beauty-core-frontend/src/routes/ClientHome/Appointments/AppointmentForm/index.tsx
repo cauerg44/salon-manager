@@ -77,6 +77,17 @@ export default function AppointmentForm() {
         return Number(value) >= 0;
       },
       message: "Desconto deve ser positivo"
+    },
+    totalValue: {
+      value: null,
+      id: 'totalValue',
+      name: 'totalValue',
+      placeholder: 'Valor total do atendimento',
+      type: 'number',
+      validation: function (value: any) {
+        return Number(value) >= 0;
+      },
+      message: "Preço deve ser positivo"
     }
   })
 
@@ -91,7 +102,8 @@ export default function AppointmentForm() {
             professionals: response.data.professional,
             clients: response.data.client,
             services: response.data.services,
-            discount: response.data.discount
+            discount: response.data.discount,
+            totalValue: response.data.totalValue
           };
 
           const formDataUpdated = forms.updateAll(formData, adaptedData);
@@ -246,7 +258,7 @@ export default function AppointmentForm() {
             }
 
             {
-              isEditing && appointment?.appointmentStatus !== 'FINISHED' &&
+              isEditing && appointment?.appointmentStatus === 'FINISHED' &&
               <>
                 <h5 className='bcf-discount-message-form'>Aplique o desconto se desejar:</h5>
                 <div className="bcf-form-control">
@@ -257,6 +269,23 @@ export default function AppointmentForm() {
                   />
                   <div className='bcf-form-error'>{formData.discount.message}</div>
                 </div>
+
+                <h5 className='bcf-discount-message-form'>Altere o valor do atendimento, se desejar:</h5>
+                <div className="bcf-form-control">
+                  <FormInput
+                    {...formData.totalValue}
+                    onTurnDirty={handleTurnDirty}
+                    onChange={handleInputChange}
+                  />
+                  <div className='bcf-form-error'>{formData.discount.message}</div>
+                </div>
+              </>
+            }
+
+            {
+              appointment?.appointmentStatus === 'FINISHED' &&
+              <>
+
               </>
             }
 

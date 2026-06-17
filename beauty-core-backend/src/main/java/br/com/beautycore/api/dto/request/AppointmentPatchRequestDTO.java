@@ -13,6 +13,10 @@ public record AppointmentPatchRequestDTO(
 
         Set<@NotNull(message = "ID do serviço não pode ser nulo") @Positive(message = "ID do serviço deve ser positivo") Long> servicesIds,
 
+        @PositiveOrZero(message = "Preço não pode ser negativo")
+        @Digits(integer = 6, fraction = 2, message = "Preço deve ter no máximo 2 casas decimais")
+        BigDecimal totalValue,
+
         @PositiveOrZero(message = "Desconto não pode ser negativo")
         @Digits(integer = 6, fraction = 2, message = "Desconto deve ter no máximo 2 casas decimais")
         BigDecimal discount

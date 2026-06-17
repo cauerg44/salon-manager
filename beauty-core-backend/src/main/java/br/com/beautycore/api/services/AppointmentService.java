@@ -80,24 +80,6 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponseDTO patch(Long id, AppointmentPatchRequestDTO dto) {
-        Appointment appointment = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
-
-        appointmentUpdateValidationRules(appointment, dto);
-
-        appointment.setDiscount(dto.discount());
-        appointment.setTotalValue(appointment.getRemainingValue().subtract(dto.discount()));
-        appointment.setRemainingValue(appointment.getRemainingValue().subtract(dto.discount()));
-
-        appointment.setUpdatedAt(LocalDateTime.now());
-
-        Appointment appointmentUpdated = repository.save(appointment);
-
-        return new AppointmentResponseDTO(appointmentUpdated);
-    }
-
-    @Transactional
     public AppointmentResponseDTO finish(Long id) {
         Appointment appointment = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
@@ -153,17 +135,40 @@ public class AppointmentService {
         return new AppointmentResponseDTO(appointment);
     }
 
+    @Transactional
+    public AppointmentResponseDTO patch(Long id, AppointmentPatchRequestDTO dto) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado"));
+
+        appointmentUpdateValidationRules(appointment, dto);
+
+        appointment.setUpdatedAt(LocalDateTime.now());
+
+        Appointment appointmentUpdated = repository.save(appointment);
+
+        return new AppointmentResponseDTO(appointmentUpdated);
+    }
+
     private void appointmentUpdateValidationRules(Appointment appointment, AppointmentPatchRequestDTO dto) {
-        if (appointment.getAppointmentStatus() != AppointmentStatus.CANCELED) {
+        if (appointment.getAppointmentStatus() == AppointmentStatus.WAITING || appointment.getAppointmentStatus() == AppointmentStatus.IN_PROGRESS) {
             appointment.getServices().clear();
             BigDecimal sum = jobItemService.addServicesInAppointment(appointment, dto.servicesIds());
 
             appointment.setTotalValue(sum);
             appointment.setRemainingValue(sum);
         }
-        else throw new BusinessException("Apenas atendimentos não cancelados podem ser editados.");
 
-        if (dto.discount() != null && dto.discount().compareTo(appointment.getRemainingValue()) > 0) {
+        if (appointment.getAppointmentStatus() == AppointmentStatus.FINISHED) {
+            appointment.setDiscount(dto.discount());
+            appointment.setTotalValue(dto.totalValue().subtract(appointment.getDiscount()));
+            appointment.setRemainingValue(appointment.getTotalValue());
+        }
+
+        if (dto.totalValue() != null && dto.totalValue().compareTo(BigDecimal.ZERO) < 0) {
+            throw new BusinessException("O preço do atendimento deve ser positivo");
+        }
+
+        if (dto.discount() != null && dto.discount().compareTo(appointment.getTotalValue()) > 0) {
             throw new BusinessException("O desconto não pode ser maior do que o preço do atendimento");
         }
     }
