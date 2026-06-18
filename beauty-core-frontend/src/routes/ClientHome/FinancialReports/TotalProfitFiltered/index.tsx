@@ -1,19 +1,16 @@
 import './styles.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as financialReportsServices from '../../../../services/financial-reports-service.ts';
 import FormInput from '../../../../components/FormInput/index.tsx';
 import * as forms from '../../../../utils/forms.ts';
-import type { TotalProfitFilteredRequest } from '../../../../models/financial-report.ts';
-import type { ProfessionalLoggedDTO } from '../../../../models/professional-logged.ts';
-import * as professionalService from '../../../../services/professional-service.ts';
+import type { DailyProfitDTO, TotalProfitFilteredRequest } from '../../../../models/financial-report.ts';
 
 export default function TotalProfitFiltered() {
 
-  const [totalProfitFiltered, setTotalProfitFiltered] = useState<number>();
-
   const [totalProfitFilteredData, setTotalProfitFilteredData] = useState<TotalProfitFilteredRequest>();
 
-  const [professionalLogged, setProfessionalLogged] = useState<ProfessionalLoggedDTO>();
+  const [dailyProfit, setDailyProfit] = useState<DailyProfitDTO[]>();
+  const [totalCalculated, setTotalCalculated] = useState<number>();
 
   const [formData, setFormData] = useState<any>({
     start: {
@@ -52,13 +49,6 @@ export default function TotalProfitFiltered() {
     }
   });
 
-  useEffect(() => {
-    professionalService.findProfessionalLogged()
-      .then(response => {
-        setProfessionalLogged(response.data);
-      })
-  }, []);
-
   function handleTurnDirty(name: string) {
     setFormData(forms.dirtyAndValidate(formData, name));
   }
@@ -82,18 +72,19 @@ export default function TotalProfitFiltered() {
 
     financialReportsServices.getTotalProfitFiltered(requestBody)
       .then(response => {
-        setTotalProfitFiltered(response.data);
+        setDailyProfit(response.data.list);
+        setTotalCalculated(response.data.totalCalculated);
       })
       .catch(() => {
-        console.log("Deu erro");
-      })
+        console.log("Deu erro na requisição");
+      });
   }
 
   return (
     <section id="total-profit-filtered-section" className="bcf-container-1200px">
 
       <h2 className='bcf-form-title-section'>
-        Filtre seu total apurado
+        Consulte total por período
       </h2>
 
       <div className='bcf-form-modal-container'>
@@ -127,8 +118,18 @@ export default function TotalProfitFiltered() {
       </div>
 
       {
-        totalProfitFiltered &&
-        <h4><strong>{professionalLogged?.name}</strong>, seu total filtrado entre {totalProfitFilteredData?.start} e {totalProfitFilteredData?.end}: <br /><span>R$ {totalProfitFiltered.toFixed(2)}</span></h4>
+        dailyProfit && totalCalculated &&
+        <>
+          <h4><strong>Relatório</strong> do total filtrado entre {totalProfitFilteredData?.start} e {totalProfitFilteredData?.end}:</h4><br />
+          {
+            dailyProfit.map(resultSet => (
+              <div key={resultSet.date} className='bcf-result-set-info'>
+                <h4>{resultSet.date}: </h4> <h5>R$ {resultSet.total.toFixed(2)}</h5>
+              </div>
+            ))
+          }
+          <h4><strong>Total: </strong> <span>R$ {totalCalculated.toFixed(2)}</span></h4>
+        </>
       }
     </section>
   );
