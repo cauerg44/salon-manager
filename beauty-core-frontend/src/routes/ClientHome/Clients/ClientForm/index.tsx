@@ -98,6 +98,7 @@ export default function ClientForm() {
         navigate("/clients/listing");
       })
       .catch(error => {
+        console.log(error.response.data.errors)
         const newInputs = forms.setBackendErrors(formData, error.response.data.errors);
         setFormData(newInputs);
       })

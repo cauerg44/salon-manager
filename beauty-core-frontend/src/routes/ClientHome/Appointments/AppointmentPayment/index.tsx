@@ -14,6 +14,8 @@ export default function AppointmentPayment() {
 
   const [isPaid, setIsPaid] = useState<boolean>(false);
 
+  const [messageErrorPayment, setMessageErrorPayment] = useState<string>();
+
   const [formData, setFormData] = useState<any>({
     paymentMethod: {
       value: null,
@@ -75,8 +77,9 @@ export default function AppointmentPayment() {
       .then(() => {
         setIsPaid(true);
       })
-      .catch(() => {
+      .catch(error => {
         setIsPaid(false);
+        setMessageErrorPayment(error.response.data.error)
       })
   }
 
@@ -114,6 +117,10 @@ export default function AppointmentPayment() {
                 onChange={handleInputChange}
               />
               <div className='bcf-form-error'>{formData.amount.message}</div>
+              {
+                messageErrorPayment &&
+                <h4 className='bcf-message-error-payment-amount'>{messageErrorPayment}</h4>
+              }
             </div>
 
             <button type='submit'>
