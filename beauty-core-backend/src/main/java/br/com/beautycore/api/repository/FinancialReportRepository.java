@@ -45,7 +45,8 @@ public interface FinancialReportRepository extends JpaRepository<Payment, Long> 
     @Query(nativeQuery = true, value = """
         SELECT DATE(pay.paid_at) as date, SUM(pay.amount_paid) as total FROM payments pay
         WHERE pay.paid_at BETWEEN :start AND :end + INTERVAL 1 DAY
-        GROUP BY DATE(pay.paid_at);
+        GROUP BY DATE(pay.paid_at)
+        ORDER BY DATE(pay.paid_at) ASC
     """)
     List<DataFiltered> getTotalProfitFiltered(LocalDate start, LocalDate end);
 }
