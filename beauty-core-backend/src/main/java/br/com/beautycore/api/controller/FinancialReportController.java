@@ -1,5 +1,6 @@
 package br.com.beautycore.api.controller;
 
+import br.com.beautycore.api.dto.response.TotalProfitFiltered;
 import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.projections.TotalProfitProfessionalProjection;
 import br.com.beautycore.api.services.FinancialReportService;
@@ -72,7 +73,7 @@ public class FinancialReportController {
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/summary", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BigDecimal> getTotalProfitFiltered(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
+    public ResponseEntity<TotalProfitFiltered> getTotalProfitFiltered(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
         var result = service.getTotalProfitFiltered(start, end);
         return ResponseEntity.ok(result);
     }

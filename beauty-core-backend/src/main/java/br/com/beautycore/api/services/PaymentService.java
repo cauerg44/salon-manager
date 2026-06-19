@@ -58,6 +58,10 @@ public class PaymentService {
             throw new BusinessException("Atendimento já pago");
         }
 
+        if (dto.amount().compareTo(appointment.getTotalValue()) > 0) {
+            throw new BusinessException("O pagamento não pode ser maior do que o preço do atendimento");
+        }
+
         BigDecimal remaining = appointment.getRemainingValue().subtract(dto.amount());
 
         // When clients pays appointment total price:

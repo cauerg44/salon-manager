@@ -40,6 +40,10 @@ export default function AppointmentNotPaidCard({ appointmentDTO }: Props) {
           <h4 className='bcf-action-add-payment-appointment'>Adicionar pagamento agora</h4>
         </Link>
 
+        <Link to={`/appointments/edit/${appointmentDTO.id}`}>
+          <h5>Alterar o valor do atendimento: </h5>
+        </Link>
+
       </div>
 
     </div>

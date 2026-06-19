@@ -85,6 +85,8 @@ export function hasAnyInvalid(inputs: any) {
 }
 
 export function setBackendErrors(inputs: any, errors: any[]) {
+  console.log(errors);
+
   const newInputs = { ...inputs };
 
   errors.forEach(item => {

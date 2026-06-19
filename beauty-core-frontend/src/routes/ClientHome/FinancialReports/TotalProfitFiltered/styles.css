@@ -4,10 +4,22 @@
 
 #total-profit-filtered-section h4 {
   color: var(--bcf--font-color-tertiary);
+  margin-top: 15px;
 }
 
 #total-profit-filtered-section span {
   color: var(--bcf--font-color-senary);
   font-size: 20px;
   margin-top: 15px;
+}
+
+.bcf-result-set-info h4 {
+  display: inline;
+  color: black;
+}
+
+.bcf-result-set-info h5 {
+  display: inline;
+  font-size: 16px;
+  color: var(--bcf--font-color-senary);
 }

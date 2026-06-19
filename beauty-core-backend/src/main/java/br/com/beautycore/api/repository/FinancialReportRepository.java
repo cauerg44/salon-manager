@@ -1,5 +1,6 @@
 package br.com.beautycore.api.repository;
 
+import br.com.beautycore.api.dto.response.DataFiltered;
 import br.com.beautycore.api.entity.Payment;
 import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.projections.TotalProfitProfessionalProjection;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public interface FinancialReportRepository extends JpaRepository<Payment, Long> {
 
@@ -25,26 +27,26 @@ public interface FinancialReportRepository extends JpaRepository<Payment, Long> 
     TotalProfitInLiveProjection getTotalProfitInLive();
 
     @Query(nativeQuery = true, value = """
-       select
-       coalesce(sum(case when pay.amount_paid > 0 then pay.amount_paid else 0 end), 0) as total_profit,
-       coalesce(sum(case when pay.payment_method = 'PIX' then pay.amount_paid else 0 end), 0) as pix,
-       coalesce(sum(case when pay.payment_method = 'CASH' then pay.amount_paid else 0 end), 0) as cash,
-       coalesce(sum(case when pay.payment_method = 'DEBIT' then pay.amount_paid else 0 end), 0) as debit,
-       coalesce(sum(case when pay.payment_method = 'CREDIT' then pay.amount_paid else 0 end), 0) as credit
-       from payments pay
-       inner join appointments app on pay.appointment_id = app.id
-       inner join professionals prof on app.professional_id = prof.id
-       where prof.id = :professionalId
-       and pay.paid_at >= current_date()
-       and pay.paid_at < current_date() + interval 1 day;
+       SELECT
+       coalesce(sum(CASE WHEN pay.amount_paid > 0 THEN pay.amount_paid ELSE 0 END), 0) AS total_profit,
+       coalesce(sum(CASE WHEN pay.payment_method = 'PIX' THEN pay.amount_paid ELSE 0 END), 0) AS pix,
+       coalesce(sum(CASE WHEN pay.payment_method = 'CASH' THEN pay.amount_paid ELSE 0 END), 0) AS cash,
+       coalesce(sum(CASE WHEN pay.payment_method = 'DEBIT' THEN pay.amount_paid ELSE 0 END), 0) AS debit,
+       coalesce(sum(CASE WHEN pay.payment_method = 'CREDIT' THEN pay.amount_paid ELSE 0 END), 0) AS credit
+       FROM payments pay
+       INNER JOIN appointments app ON pay.appointment_id = app.id
+       INNER JOIN professionals prof ON app.professional_id = prof.id
+       WHERE prof.id = :professionalId
+       AND pay.paid_at >= current_date()
+       AND pay.paid_at < current_date() + INTERVAL 1 DAY;
     """)
     TotalProfitProfessionalProjection getProfessionalTotalProfit(Long professionalId);
 
     @Query(nativeQuery = true, value = """
-        SELECT sum(pay.amount_paid) as total_calculated
-        FROM payments pay
-        WHERE pay.paid_at >= :start
-        AND pay.paid_at < :end + INTERVAL 1 DAY;
+        SELECT DATE(pay.paid_at) as date, SUM(pay.amount_paid) as total FROM payments pay
+        WHERE pay.paid_at BETWEEN :start AND :end + INTERVAL 1 DAY
+        GROUP BY DATE(pay.paid_at)
+        ORDER BY DATE(pay.paid_at) ASC
     """)
-    BigDecimal getTotalProfitFiltered(LocalDate start, LocalDate end);
+    List<DataFiltered> getTotalProfitFiltered(LocalDate start, LocalDate end);
 }
