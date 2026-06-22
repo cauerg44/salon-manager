@@ -12,6 +12,16 @@ export function getTotalProfitFiltered(request: TotalProfitFilteredRequest) {
   return requestBackend(config);
 }
 
+export function findTotalProfitGroupedByProfessionalAndDate(request: TotalProfitFilteredRequest) {
+
+  const config: AxiosRequestConfig = {
+    url: `financial-reports/professional-profits?start=${request.start}&end=${request.end}`,
+    withCredentials: true
+  }
+
+  return requestBackend(config);
+}
+
 export function getTotalProfitInLive() {
 
   const config: AxiosRequestConfig = {

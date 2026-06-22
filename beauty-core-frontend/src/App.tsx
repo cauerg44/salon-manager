@@ -30,6 +30,7 @@ import ServiceForm from "./routes/ClientHome/Services/ServiceForm";
 import AppointmentForm from "./routes/ClientHome/Appointments/AppointmentForm";
 import AppointmentPayment from "./routes/ClientHome/Appointments/AppointmentPayment";
 import TotalProfitFiltered from "./routes/ClientHome/FinancialReports/TotalProfitFiltered";
+import ProfessionalProfitGroupByDate from "./routes/ClientHome/FinancialReports/ProfessionalProfitGroupByDate";
 
 export default function App() {
 
@@ -83,6 +84,7 @@ export default function App() {
               <Route path="summary" element={<TotalProfitInLive />} />
               <Route path="professional-total-profit-in-live" element={<ProfessionalTotalProfit />} />
               <Route path="professional-total-profit-filtered" element={<TotalProfitFiltered />} />
+              <Route path="professional-profit-group-by-date" element={<ProfessionalProfitGroupByDate />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate to={"/"} />} />

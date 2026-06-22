@@ -28,3 +28,9 @@ export type TotalProfitFilteredResponse = {
   list: DailyProfitDTO[];
   totalCalculated: number;
 }
+
+export type ProfessionalProfitByDate = {
+  professional: string;
+  date: string;
+  total: number;
+}
