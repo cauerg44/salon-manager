@@ -1,5 +1,6 @@
 package br.com.beautycore.api.controller;
 
+import br.com.beautycore.api.dto.response.ProfessionalProfitGroupByDate;
 import br.com.beautycore.api.dto.response.TotalProfitFiltered;
 import br.com.beautycore.api.projections.TotalProfitInLiveProjection;
 import br.com.beautycore.api.projections.TotalProfitProfessionalProjection;
@@ -15,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/financial-reports")
@@ -75,6 +77,23 @@ public class FinancialReportController {
     @GetMapping(value = "/summary", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TotalProfitFiltered> getTotalProfitFiltered(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
         var result = service.getTotalProfitFiltered(start, end);
+        return ResponseEntity.ok(result);
+    }
+
+    @Operation(
+            summary = "Get total profit by period group by professional and date",
+            description = "Returns the total professional profit calculated within a specified date range.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "400", description = "Bad request"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized")
+            }
+    )
+    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/professional-profits", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ProfessionalProfitGroupByDate>> findTotalProfitGroupedByProfessionalAndDate(@RequestParam(name = "start") String start, @RequestParam(name = "end") String end) {
+        var result = service.findTotalProfitGroupedByProfessionalAndDate(start, end);
         return ResponseEntity.ok(result);
     }
 }
