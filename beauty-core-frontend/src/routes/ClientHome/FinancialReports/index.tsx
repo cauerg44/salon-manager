@@ -25,6 +25,10 @@ export default function FinancialReports() {
           <Link to={"/financial-reports/professional-total-profit-filtered"}>
             <h4>Filtrar total apurado por datas</h4>
           </Link>
+
+          <Link to={"/financial-reports/professional-profit-group-by-date"}>
+            <h4>Filtrar total dos profissionais por datas</h4>
+          </Link>
         </div>
       </section>
       <Outlet />
