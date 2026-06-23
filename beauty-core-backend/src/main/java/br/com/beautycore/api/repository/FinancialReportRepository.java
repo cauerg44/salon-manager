@@ -23,7 +23,7 @@ public interface FinancialReportRepository extends JpaRepository<Payment, Long> 
             COALESCE(SUM(CASE WHEN p.payment_method = 'CREDIT' THEN p.amount_paid ELSE 0 END), 0) AS credit
         FROM payments p
         INNER JOIN appointments a ON a.id = p.appointment_id
-        WHERE p.paid_at >= current_date() and p.paid_at < current_date() + interval 1 day;
+        WHERE p.paid_at >= current_date() and p.paid_at < current_date() + interval 1 day
     """)
     TotalProfitInLiveProjection getTotalProfitInLive();
 
@@ -39,7 +39,7 @@ public interface FinancialReportRepository extends JpaRepository<Payment, Long> 
        INNER JOIN professionals prof ON app.professional_id = prof.id
        WHERE prof.id = :professionalId
        AND pay.paid_at >= current_date()
-       AND pay.paid_at < current_date() + INTERVAL 1 DAY;
+       AND pay.paid_at < current_date() + INTERVAL 1 DAY
     """)
     TotalProfitProfessionalProjection getProfessionalTotalProfit(Long professionalId);
 
@@ -57,7 +57,7 @@ public interface FinancialReportRepository extends JpaRepository<Payment, Long> 
         INNER JOIN professionals prof ON app.professional_id = prof.id
         WHERE pay.paid_at >= :start AND pay.paid_at < :end + INTERVAL 1 DAY
         GROUP BY DATE(pay.paid_at), prof.name
-        ORDER BY DATE(pay.paid_at) ASC, prof.name;
+        ORDER BY DATE(pay.paid_at) ASC, prof.name
     """)
     List<ProfessionalProfitGroupByDate> findTotalProfitGroupedByProfessionalAndDate(LocalDate start, LocalDate end);
 }
