@@ -55,7 +55,7 @@ public interface FinancialReportRepository extends JpaRepository<Payment, Long> 
         SELECT prof.name AS profissional, DATE(pay.paid_at) AS data, SUM(pay.amount_paid) AS total FROM payments pay
         INNER JOIN appointments app ON pay.appointment_id = app.id
         INNER JOIN professionals prof ON app.professional_id = prof.id
-        WHERE pay.paid_at >= :start AND pay.paid_at < :end + INTERVAL 1 DAY
+        WHERE pay.paid_at >= :start AND pay.paid_at <= :end
         GROUP BY DATE(pay.paid_at), prof.name
         ORDER BY DATE(pay.paid_at) ASC, prof.name
     """)
