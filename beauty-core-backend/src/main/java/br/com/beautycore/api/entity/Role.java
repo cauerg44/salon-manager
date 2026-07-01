@@ -1,6 +1,5 @@
 package br.com.beautycore.api.entity;
 
-import ch.qos.logback.core.model.NamedModel;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jspecify.annotations.Nullable;

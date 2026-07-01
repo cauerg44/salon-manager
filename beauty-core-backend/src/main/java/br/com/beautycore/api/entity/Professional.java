@@ -5,10 +5,8 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Professional implements UserDetails {
+public class Professional extends EntityBase implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,12 +51,6 @@ public class Professional implements UserDetails {
             joinColumns = @JoinColumn(name = "professional_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id"))
     private Set<Specialty> specializations = new HashSet<>();
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
 
     public void addSpecialty(Specialty specialty) {
         this.specializations.add(specialty);

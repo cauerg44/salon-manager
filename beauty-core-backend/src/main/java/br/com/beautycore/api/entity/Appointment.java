@@ -3,8 +3,6 @@ package br.com.beautycore.api.entity;
 import br.com.beautycore.api.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Appointment {
+public class Appointment extends EntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,12 +54,6 @@ public class Appointment {
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "appointment")
     private List<Payment> payments;
-
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
     @Column(name = "finished_at")
     private LocalDateTime finishedAt;
