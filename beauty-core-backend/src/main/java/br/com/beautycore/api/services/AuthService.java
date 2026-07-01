@@ -14,6 +14,7 @@ import br.com.beautycore.api.repository.RoleRepository;
 import br.com.beautycore.api.services.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -62,10 +63,10 @@ public class AuthService {
                 .roles(Set.of(role))
                 .specializations(specializations)
                 .password(passwordEncoder.encode(dto.password()))
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build()
         );
+
+        professionalRegistered.setCreatedAt(LocalDateTime.now());
 
         return new ProfessionalResponseDTO(professionalRegistered);
     }

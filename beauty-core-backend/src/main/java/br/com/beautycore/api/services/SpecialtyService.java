@@ -41,11 +41,10 @@ public class SpecialtyService {
 
     @Transactional
     public SpecialtyResponseDTO save(SpecialtyCreateRequestDTO dto) {
-        Specialty newSpecialty = repository.save(Specialty.builder()
-                .name(dto.name())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build());
+        Specialty newSpecialty = new Specialty();
+
+        newSpecialty.setName(dto.name());
+        newSpecialty.setCreatedAt(LocalDateTime.now());
 
         return new SpecialtyResponseDTO(newSpecialty.getId(), newSpecialty.getName());
     }

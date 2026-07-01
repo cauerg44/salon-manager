@@ -45,12 +45,11 @@ public class JobItemService {
 
     @Transactional
     public JobItemResponseDTO save(JobItemCreateRequestDTO dto) {
-        JobItem entity = repository.save(JobItem.builder()
-                .name(dto.name())
-                .basePrice(dto.basePrice())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build());
+        JobItem entity = new JobItem();
+
+        entity.setName(dto.name());
+        entity.setBasePrice(dto.basePrice());
+        entity.setCreatedAt(LocalDateTime.now());
 
         return new JobItemResponseDTO(entity.getId(), entity.getName(), entity.getBasePrice());
     }

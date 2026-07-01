@@ -54,9 +54,9 @@ public class ClientService {
                 .birthDate(dto.birthDate())
                 .credit(BigDecimal.ZERO)
                 .inAppointment(false)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build());
+
+        newClient.setCreatedAt(LocalDateTime.now());
 
         return new ClientResponseDTO(newClient);
     }
